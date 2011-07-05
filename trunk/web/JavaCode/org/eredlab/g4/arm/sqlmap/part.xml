@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- UI组件权限管理手工映射SQL语句 -->
+<sqlMap namespace="Part">
+	<typeAlias alias="dto" type="org.eredlab.g4.ccl.datastructure.impl.BaseDto"/>
+	
+	<!-- 查询UI组件 -->
+	<select id="queryParts" parameterClass="map" resultClass="dto">
+		SELECT
+			   partid,
+			   menuid,
+			   cmpid,
+			   cmptype,
+			   remark
+		FROM eamenupart a
+	   WHERE 1 = 1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="partid"> 
+									a.partid = #partid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="menuid"> 
+									a.menuid = #menuid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cmptype"> 
+									a.cmptype = #cmptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cmpid"> 
+									a.cmpid = #cmpid#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY partid DESC
+	</select>
+	
+	<!-- 统计UI组件 -->
+	<select id="queryPartsForPageCount" parameterClass="map" resultClass="java.lang.Integer">
+		SELECT count(*) as count
+		  FROM eamenupart a WHERE 1 = 1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="partid"> 
+									a.partid = #partid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="menuid"> 
+									a.menuid = #menuid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cmptype"> 
+									a.cmptype = #cmptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cmpid"> 
+									a.cmpid = #cmpid#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+</sqlMap>

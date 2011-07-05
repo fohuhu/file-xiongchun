@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://www.starlims.com/webservices/encodedTypes" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.starlims.com/webservices/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="http://www.starlims.com/webservices/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema targetNamespace="http://www.starlims.com/webservices/encodedTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <s:complexType name="ArrayOfAnyType">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:attribute wsdl:arrayType="s:anyType[]" ref="soapenc:arrayType" />
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RunActionDirectSoapIn">
+    <wsdl:part name="actionID" type="s:string" />
+    <wsdl:part name="parameters" type="s0:ArrayOfAnyType" />
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RunActionDirectSoapOut">
+    <wsdl:part name="RunActionDirectResult" type="s:anyType" />
+  </wsdl:message>
+  <wsdl:message name="RunActionSoapIn">
+    <wsdl:part name="actionID" type="s:string" />
+    <wsdl:part name="parameters" type="s0:ArrayOfAnyType" />
+  </wsdl:message>
+  <wsdl:message name="RunActionSoapOut">
+    <wsdl:part name="RunActionResult" type="s:anyType" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileSoapIn">
+    <wsdl:part name="actionID" type="s:string" />
+    <wsdl:part name="FileName" type="s:string" />
+    <wsdl:part name="FileContent" type="s:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="UploadFileSoapOut">
+    <wsdl:part name="UploadFileResult" type="s:anyType" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginSoapOut">
+    <wsdl:part name="UserLoginResult" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UserLogoutSoapIn" />
+  <wsdl:message name="UserLogoutSoapOut" />
+  <wsdl:message name="UserLoggedSoapIn" />
+  <wsdl:message name="UserLoggedSoapOut">
+    <wsdl:part name="UserLoggedResult" type="s:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="GenericServicesSoap">
+    <wsdl:operation name="RunActionDirect">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Run any StarLIMS action in one single call passing all information it requires together with STARLIMS Credentials. This web service method is here to provide the maximul flexibility in accessing StarLIMS functionality and is intended to be used from very rare calls to STARLIMS.</documentation>
+      <wsdl:input message="tns:RunActionDirectSoapIn" />
+      <wsdl:output message="tns:RunActionDirectSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RunAction">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Run any StarLIMS action. This web service method is here to provide the maximul flexibility in accessing StarLIMS functionality.</documentation>
+      <wsdl:input message="tns:RunActionSoapIn" />
+      <wsdl:output message="tns:RunActionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Upload a local file to STARLIMS Application Server.</documentation>
+      <wsdl:input message="tns:UploadFileSoapIn" />
+      <wsdl:output message="tns:UploadFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Authenticate a user based on login information. You need to have a cookie capable client in order to make authentication</documentation>
+      <wsdl:input message="tns:UserLoginSoapIn" />
+      <wsdl:output message="tns:UserLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Logout user from StarLIMS system</documentation>
+      <wsdl:input message="tns:UserLogoutSoapIn" />
+      <wsdl:output message="tns:UserLogoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogged">
+      <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">Returns true is the user is logged to the system</documentation>
+      <wsdl:input message="tns:UserLoggedSoapIn" />
+      <wsdl:output message="tns:UserLoggedSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GenericServicesSoap" type="tns:GenericServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <wsdl:operation name="RunActionDirect">
+      <soap:operation soapAction="http://www.starlims.com/webservices/RunActionDirect" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunAction">
+      <soap:operation soapAction="http://www.starlims.com/webservices/RunAction" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadFile">
+      <soap:operation soapAction="http://www.starlims.com/webservices/UploadFile" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogin">
+      <soap:operation soapAction="http://www.starlims.com/webservices/UserLogin" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogout">
+      <soap:operation soapAction="http://www.starlims.com/webservices/UserLogout" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogged">
+      <soap:operation soapAction="http://www.starlims.com/webservices/UserLogged" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.starlims.com/webservices/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GenericServices">
+    <documentation xmlns="http://schemas.xmlsoap.org/wsdl/">&lt;b&gt;Standard Web Services interface for STARLIMS.&lt;br&gt;&lt;br&gt;
+	&lt;a href='http://www.starlims.com'&gt;StarLIMS&lt;/a&gt; is a powerful, full-featured, highly extensible and scalable laboratory information management system. StarLIMS Corp. primary goal has been to deliver leading edge, flexible and easy-to-use, collaborative LIMS solutions to organizations worldwide, comprising corporate, government, municipal, and private laboratories, within the chemical, clinical, environmental, food, forensics, petrochemical and pharmaceutical industries.&lt;/b&gt;</documentation>
+    <wsdl:port name="GenericServicesSoap" binding="tns:GenericServicesSoap">
+      <soap:address location="http://192.168.3.90/STARLIMS10.scdc/services/generic.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

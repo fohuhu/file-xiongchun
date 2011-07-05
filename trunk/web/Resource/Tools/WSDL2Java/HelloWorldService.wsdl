@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice" xmlns:tns="http://webservice" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding" xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+<xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="example">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="in0" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="exampleResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="createExample">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="in0" nillable="true" type="xsd:string"/>
+<xsd:element maxOccurs="1" minOccurs="1" name="in1" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="User">
+<xsd:sequence>
+<xsd:element minOccurs="0" name="name" nillable="true" type="xsd:string"/>
+<xsd:element minOccurs="0" name="password" nillable="true" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:element name="createExampleResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element maxOccurs="1" minOccurs="1" name="out" nillable="true" type="tns:User"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="createExampleResponse">
+    <wsdl:part name="parameters" element="tns:createExampleResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="exampleRequest">
+    <wsdl:part name="parameters" element="tns:example">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="exampleResponse">
+    <wsdl:part name="parameters" element="tns:exampleResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createExampleRequest">
+    <wsdl:part name="parameters" element="tns:createExample">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IHelloWorldPortType">
+    <wsdl:operation name="example">
+      <wsdl:input name="exampleRequest" message="tns:exampleRequest">
+    </wsdl:input>
+      <wsdl:output name="exampleResponse" message="tns:exampleResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createExample">
+      <wsdl:input name="createExampleRequest" message="tns:createExampleRequest">
+    </wsdl:input>
+      <wsdl:output name="createExampleResponse" message="tns:createExampleResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IHelloWorldHttpBinding" type="tns:IHelloWorldPortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="example">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="exampleRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="exampleResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createExample">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="createExampleRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createExampleResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IHelloWorld">
+    <wsdl:port name="IHelloWorldHttpPort" binding="tns:IHelloWorldHttpBinding">
+      <wsdlsoap:address location="http://localhost/webservicehello/HelloWorldService.ws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
