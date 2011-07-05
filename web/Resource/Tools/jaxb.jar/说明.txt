@@ -1,0 +1,5 @@
+解决CXF与JDK1.6低版本冲突的问题
+和JDK6有冲突，异常信息如下：
+Caused by: java.lang.LinkageError: JAXB 2.0 API is being loaded from the bootstrap classloader, but this RI (from jar:file:/F:/%e4%bc%98%e7%a7%80%e5%bc%80%e6%ba%90%e9%a1%b9%e7%9b%ae/CXF/apache-cxf-2.2.10/lib/jaxb-impl-2.1.13.jar!/com/sun/xml/bind/v2/model/impl/ModelBuilder.class) needs 2.1 API. Use the endorsed directory mechanism to place jaxb-api.jar in the bootstrap classloader. (See http://java.sun.com/j2se/1.5.0/docs/guide/standards/)
+解决办法：
+在D:\Java\JDK1.6\jre\lib\endorsed路径下加入如下2个jar包：jaxb-api.jar  jaxws-api.jar
