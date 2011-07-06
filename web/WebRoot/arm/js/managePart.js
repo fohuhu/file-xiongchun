@@ -40,10 +40,6 @@ Ext.onReady(function() {
 
 	var sm = new Ext.grid.CheckboxSelectionModel();
 	var cm = new Ext.grid.ColumnModel([new Ext.grid.RowNumberer(), sm, {
-				header : 'UI组件编号',
-				dataIndex : 'partid',
-				width : 120
-			}, {
 				header : '菜单编号',
 				dataIndex : 'menuid',
 				width : 120
@@ -51,7 +47,12 @@ Ext.onReady(function() {
 				header : '组件ID',
 				dataIndex : 'cmpid',
 				sortable : true,
-				width : 120
+				width : 120,
+				editor : new Ext.grid.GridEditor(new Ext.form.TextField({
+							allowBlank : false,
+							maxLength : 20
+						}))
+
 			}, {
 				header : '组件类型',
 				dataIndex : 'cmptype',
@@ -65,22 +66,39 @@ Ext.onReady(function() {
 						return '容器面板组件';
 					else
 						return value;
-				}
+				},
+				editor : new Ext.grid.GridEditor(new Ext.form.TextField({
+							allowBlank : false
+						}))
 			}, {
-				header : '菜单类型',
-				dataIndex : 'menutype',
-				renderer : function(value) {
-					if (value == '1')
-						return '系统菜单';
-					else if (value == '0')
-						return '业务菜单';
-					else
-						return value;
-				}
-			},{
+				header : 'UI组件编号',
+				dataIndex : 'partid',
+				width : 120
+			}, {
 				id : 'remark',
 				header : '备注',
-				dataIndex : 'remark'
+				dataIndex : 'remark',
+				editor : new Ext.grid.GridEditor(new Ext.form.TextField({
+							allowBlank : false,
+							maxLength : 50
+						}))
+			}]);
+
+	var rec_part = new Ext.data.Record.create([{
+				name : 'partid',
+				type : 'string'
+			}, {
+				name : 'menuid',
+				type : 'string'
+			}, {
+				name : 'cmpid',
+				type : 'string'
+			}, {
+				name : 'cmptype',
+				type : 'string'
+			}, {
+				name : 'remark',
+				type : 'string'
 			}]);
 
 	/**
@@ -130,9 +148,9 @@ Ext.onReady(function() {
 				editable : false,
 				width : 85
 			});
-			
+
 	var number = parseInt(pagesize_combo.getValue());
-	
+
 	pagesize_combo.on("select", function(comboBox) {
 				bbar.pageSize = parseInt(comboBox.getValue());
 				number = parseInt(comboBox.getValue());
@@ -153,7 +171,7 @@ Ext.onReady(function() {
 				items : ['-', '&nbsp;&nbsp;', pagesize_combo]
 			});
 
-	var grid = new Ext.grid.GridPanel({
+	var grid = new Ext.grid.EditorGridPanel({
 				title : '<span class="commoncss">托管UI组件列表</span>',
 				iconCls : 'application_view_listIcon',
 				height : 500,
@@ -201,7 +219,7 @@ Ext.onReady(function() {
 						}],
 				bbar : bbar
 			});
-			
+
 	store.load({
 				params : {
 					start : 0,
@@ -235,4 +253,12 @@ Ext.onReady(function() {
 							items : [grid]
 						}]
 			});
+
+	function addInit() {
+		var rec = new rec_part({});
+		rec.set('partid', '保存后自动生成');
+		grid.stopEditing();
+		store.insert(0, rec);
+		grid.startEditing(0, 3);
+	}
 });
