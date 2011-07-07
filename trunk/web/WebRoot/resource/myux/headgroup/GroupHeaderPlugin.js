@@ -21,7 +21,7 @@ Ext.extend(Ext.ux.plugins.GroupHeaderGrid, Ext.util.Observable, {
 			if (!ts.gcell) {
 				ts.gcell = new Ext.XTemplate(
 					'<td class="x-grid3-hd x-grid3-gcell x-grid3-td-{id} ux-grid-hd-group-row-{row} {cls}" style="{style}">',
-					'<div {tooltip} class="x-grid3-hd-inner x-grid3-hd-{id}" unselectable="on" style="{istyle}">',
+					'<div {tooltip} class="x-grid3-hd-inner x-grid3-hd-{id}" unselectable="on" style="{istyle}" id="{domid}">',
                     this.grid.enableHdMenu ? '<a class="x-grid3-hd-btn" href="#"></a>' : '',
 					'{value}</div></td>'
 				);
@@ -42,6 +42,7 @@ Ext.extend(Ext.ux.plugins.GroupHeaderGrid, Ext.util.Observable, {
 					cells[i] = ts.gcell.apply({
 						cls: (group.header&&!group.rowmerge) ? 'ux-grid-hd-group-cell' : 'ux-grid-hd-nogroup-cell',
 						id: id,
+						domid:group.domid,
 						row: row,
 						style: 'width:' + gs.width + ';' + (gs.hidden ? 'display:none;' : '') + (group.align ? 'text-align:' + group.align + ';' : ''),
 						tooltip: group.tooltip ? (Ext.QuickTips.isEnabled() ? 'ext:qtip' : 'title') + '="' + group.tooltip + '"' : '',
