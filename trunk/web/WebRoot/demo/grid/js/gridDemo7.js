@@ -27,6 +27,7 @@ Ext.onReady(function() {
 			}, {
 				header : '单位',
 				rowmerge:true,
+				domid:'group_dw',
 				align : 'center'
 			}, {
 				header : '分组2-3',
@@ -214,6 +215,18 @@ Ext.onReady(function() {
 							iconCls : 'page_refreshIcon',
 							handler : function() {
 								store.reload();
+							}
+						},'->' ,{
+							text : '重设列标题',
+							iconCls : 'acceptIcon',
+							handler : function() {
+								cm.setColumnHeader('2','开天辟地');
+							}
+						}, {
+							text : '重设分组列标题',
+							iconCls : 'acceptIcon',
+							handler : function() {
+								Ext.getDom('group_dw').innerHTML = '开天辟地';
 							}
 						}]
 			});
