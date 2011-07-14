@@ -26,7 +26,6 @@ Ext.onReady(function() {
 			});
 
 	menuTree.on('click', function(node) {
-				menuid = node.attributes.id;
 				store.load({
 							params : {
 								start : 0,
@@ -57,18 +56,17 @@ Ext.onReady(function() {
 				header : '组件类型',
 				dataIndex : 'cmptype',
 				width : 120,
-				renderer : function(value) {
-					if (value == '1')
-						return '按钮组件';
-					else if (value == '2')
-						return '表单输入组件';
-					else if (value == '3')
-						return '容器面板组件';
-					else
-						return value;
-				},
-				editor : new Ext.grid.GridEditor(new Ext.form.TextField({
-							allowBlank : false
+				renderer : CMPTYPERender,
+				editor : new Ext.grid.GridEditor(new Ext.form.ComboBox({
+							store : CMPTYPEStore,
+							mode : 'local',
+							triggerAction : 'all',
+							valueField : 'value',
+							displayField : 'text',
+							allowBlank : false,
+							forceSelection : true,
+							editable : false,
+							typeAhead : true
 						}))
 			}, {
 				header : 'UI组件编号',
@@ -186,6 +184,7 @@ Ext.onReady(function() {
 				autoExpandColumn : 'remark',
 				cm : cm,
 				sm : sm,
+				clicksToEdit : 1,
 				tbar : [{
 							text : '新增一行',
 							iconCls : 'addIcon',
@@ -193,16 +192,10 @@ Ext.onReady(function() {
 								addInit();
 							}
 						}, '-', {
-							text : '保存新增',
+							text : '保存',
 							iconCls : 'acceptIcon',
 							handler : function() {
-								editInit();
-							}
-						}, '-', {
-							text : '保存修改',
-							iconCls : 'acceptIcon',
-							handler : function() {
-								editInit();
+								saveOrUpdateData();
 							}
 						}, '-', {
 							text : '删除',
@@ -255,10 +248,49 @@ Ext.onReady(function() {
 			});
 
 	function addInit() {
+		var selectModel = menuTree.getSelectionModel();
+		var selectNode = selectModel.getSelectedNode();
+		alert(selectNode.attributes.text);
 		var rec = new rec_part({});
 		rec.set('partid', '保存后自动生成');
+		rec.set('menuid', menuid);
 		grid.stopEditing();
 		store.insert(0, rec);
 		grid.startEditing(0, 3);
+	}
+
+	function saveOrUpdateData() {
+		var m = store.modified.slice(0); // 获取修改过的record数组对象
+		if (Ext.isEmpty(m)) {
+			Ext.MessageBox.alert('提示', '没有数据需要保存!');
+			return;
+		}
+		if (!validateEditGrid(m, 'xmmc')) {
+			Ext.Msg.alert('提示', '项目名称字段数据校验不合法,请重新输入!', function() {
+						grid.startEditing(0, 2);
+					});
+			return;
+		}
+		var jsonArray = [];
+		// 将record数组对象转换为简单Json数组对象
+		Ext.each(m, function(item) {
+					jsonArray.push(item.data);
+				});
+		// 提交到后台处理
+		Ext.Ajax.request({
+					url : 'gridDemo.ered?reqCode=saveDirtyDatas',
+					success : function(response) { // 回调函数有1个参数
+						var resultArray = Ext.util.JSON
+								.decode(response.responseText);
+						Ext.Msg.alert('提示', resultArray.msg);
+					},
+					failure : function(response) {
+						Ext.MessageBox.alert('提示', '数据保存失败');
+					},
+					params : {
+						// 系列化为Json资料格式传入后台处理
+						dirtydata : Ext.encode(jsonArray)
+					}
+				});
 	}
 });

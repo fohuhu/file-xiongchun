@@ -29,7 +29,8 @@
 			<forward name="3dLineColumnView" path="/flashReport/3dLineColumn.jsp" />
 			<forward name="2dBarView" path="/flashReport/2dBar.jsp" />
 			<forward name="2dBarMsView" path="/flashReport/2dBarMs.jsp" />
-			<forward name="integrateFlashReportView" path="/flashReport/integrateFlashReport1.jsp" />
+			<forward name="integrateFlashReport1View" path="/flashReport/integrateFlashReport1.jsp" />
+			<forward name="integrateFlashReport2View" path="/flashReport/integrateFlashReport2.jsp" />
 		</action>
 
 		<!-- JasperReport报表示例 -->
