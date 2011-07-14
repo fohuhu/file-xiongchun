@@ -42,7 +42,7 @@ public class FlashReportAction extends BaseAction {
 		//实例化一个图形配置对象
 		GraphConfig graphConfig = new GraphConfig();
 		//主标题
-		graphConfig.setCaption("Google软件2010年月度销售业绩图表");
+		graphConfig.setCaption("Google软件2010年月度销售业绩图表 (产品一)");
 		//X坐标轴名称
 		graphConfig.setXAxisName("月度");
 		//数字值前缀
@@ -929,7 +929,7 @@ public class FlashReportAction extends BaseAction {
 	}
 	
 	/**
-	 * FlashReport报表综合图示
+	 * FlashReport报表综合图示一
 	 * 
 	 * @param
 	 * @return
@@ -965,7 +965,19 @@ public class FlashReportAction extends BaseAction {
 		String xmlString = FcfDataMapper.toFcfXmlData(dataList, graphConfig);
 		//此Key对应的<flashReport />标签的datavar属性
 		request.setAttribute("xmlString", xmlString);
-		return mapping.findForward("integrateFlashReportView");
+		return mapping.findForward("integrateFlashReport1View");
+	}
+	
+	/**
+	 * FlashReport报表综合图示二
+	 * 
+	 * @param
+	 * @return
+	 */
+	public ActionForward integrateFlashReport2Init(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		return mapping.findForward("integrateFlashReport2View");
 	}
 	
 	/**
