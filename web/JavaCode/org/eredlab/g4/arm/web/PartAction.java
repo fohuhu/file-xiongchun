@@ -25,7 +25,7 @@ import org.eredlab.g4.rif.web.CommonActionForm;
  */
 public class PartAction extends BaseAction {
 	
-	private PartService partService = (PartService)getService("partService");
+	private PartService service = (PartService)getService("partService");
 
 	/**
 	 * 页面初始化
@@ -80,6 +80,44 @@ public class PartAction extends BaseAction {
 		Integer countInteger = (Integer) g4Reader.queryForObject("Part.queryPartsForPageCount", dto);
 		String jsonString = encodeList2PageJson(list, countInteger, null);
 		write(jsonString, response);
+		return mapping.findForward(null);
+	}
+	
+	/**
+	 * 保存脏数据
+	 * 
+	 * @param
+	 * @return
+	 */
+	public ActionForward saveDirtyDatas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CommonActionForm aForm = (CommonActionForm) form;
+		List list  = aForm.getGridDirtyData(request);
+		Dto inDto = new BaseDto();
+		inDto.setDefaultAList(list);
+		service.saveDirtyDatas(inDto);
+		Dto outDto = new BaseDto();
+		outDto.put("success", new Boolean(true));
+		outDto.put("msg", "数据保存成功");
+		write(JsonHelper.encodeObject2Json(outDto), response);
+		return mapping.findForward(null);
+	}
+	
+	/**
+	 * 删除数据
+	 * 
+	 * @param
+	 * @return
+	 */
+	public ActionForward deleteItem(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		CommonActionForm aForm = (CommonActionForm) form;
+		Dto inDto = aForm.getParamAsDto(request);
+		service.deleteItem(inDto);
+		Dto outDto = new BaseDto();
+		outDto.put("success", new Boolean(true));
+		outDto.put("msg", "数据删除成功");
+		write(JsonHelper.encodeObject2Json(outDto), response);
 		return mapping.findForward(null);
 	}
 	
