@@ -71,6 +71,11 @@ public class IDHelper {
 	 */
 	private static DefaultIDGenerator defaultIDGenerator_fileid = null;
 	
+	/**
+	 * PARTID
+	 */
+	private static DefaultIDGenerator defaultIDGenerator_partid = null;
+	
 	
 	static {
 		IdGenerator idGenerator_eventid = new IdGenerator();
@@ -142,6 +147,12 @@ public class IDHelper {
 		IdGenerator idGenerator_fileid = new IdGenerator();
 		idGenerator_fileid.setFieldname("FILEID");
 		defaultIDGenerator_fileid = idGenerator_fileid.getDefaultIDGenerator();
+	}
+	
+	static {
+		IdGenerator idGenerator_partid = new IdGenerator();
+		idGenerator_partid.setFieldname("PARTID");
+		defaultIDGenerator_partid = idGenerator_partid.getDefaultIDGenerator();
 	}
 
 	/**
@@ -250,5 +261,14 @@ public class IDHelper {
 	 */
 	public static String getFileID() {
 		return defaultIDGenerator_fileid.create();
+	}
+	
+	/**
+	 * 返回PARTID
+	 * 
+	 * @return
+	 */
+	public static String getPartID() {
+		return defaultIDGenerator_partid.create();
 	}
 }

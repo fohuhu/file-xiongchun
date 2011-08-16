@@ -549,7 +549,7 @@
 		<parameter property="sum" jdbcType="DOUBLE" javaType="java.math.BigDecimal" mode="OUT" /> <!-- 出参 -->
 		<parameter property="result" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" /> <!-- 出参 -->
 		<parameter property="appCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" /> <!-- 执行代码 -->
-		<parameter property="errorMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" /> <!-- 出错信息 -->
+		<parameter property="errMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" /> <!-- 出错信息 -->
 	</parameterMap>
 	<!-- 演示调用存储过程:如果你将存储过程是通过oracle的package的方式来组织,则使用packagename.prcname的方式来调用 -->
 	<procedure id="g4_prc_demo" parameterMap="demo.prcdto">{call g4_prc_demo(?,?,?,?,?,?,?)}</procedure>

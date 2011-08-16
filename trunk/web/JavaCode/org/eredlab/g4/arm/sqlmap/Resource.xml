@@ -9,6 +9,13 @@
 		  FROM codeview order by codeid , sortno
 	</select>
 	
+	<!-- 读取字典视图到内存(演示系统使用)
+	<select id="getCodeViewList" parameterClass="map" resultClass="dto">
+		SELECT codeid, field, fieldname, code, codedesc, sortno
+		  FROM eacode order by codeid , sortno
+	</select>
+	-->
+	
 	<!-- 读取全局参数表到内存 -->
 	<select id="getParamList" parameterClass="map" resultClass="dto">
 		SELECT paramid, paramkey, paramvalue

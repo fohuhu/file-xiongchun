@@ -7,13 +7,14 @@
 	<!-- 查询UI组件 -->
 	<select id="queryParts" parameterClass="map" resultClass="dto">
 		SELECT
-			   partid,
-			   menuid,
-			   cmpid,
-			   cmptype,
-			   remark
-		FROM eamenupart a
-	   WHERE 1 = 1
+			   a.partid,
+			   a.menuid,
+			   b.menuname,
+			   a.cmpid,
+			   a.cmptype,
+			   a.remark
+		FROM eamenupart a, eamenu b
+	   WHERE 1 = 1 and a.menuid=b.menuid
 		<dynamic>
 			<isNotEmpty prepend="AND" property="partid"> 
 									a.partid = #partid#
@@ -50,5 +51,40 @@
 			</isNotEmpty>
 		</dynamic>
 	</select>
+	
+	<!-- 插入一条UI托管组件记录 -->
+	<insert id="savePartItem" parameterClass="dto">
+		INSERT INTO eamenupart (
+		   partid, menuid, cmpid, 
+		   cmptype, remark) 
+		VALUES (#partid#, #menuid#, #cmpid#, 
+		   #cmptype#, #remark#)
+	</insert>
+	
+	<!-- 根据主键更新托管组件 -->
+	<update id="updatePartItem" parameterClass="dto">
+         UPDATE eamenupart
+		<dynamic prepend="SET"> 
+			<isNotNull prepend="," property="menuid">
+	         menuid = #menuid#
+			</isNotNull>
+			<isNotNull prepend="," property="cmpid">
+	         cmpid = #cmpid#
+			</isNotNull>
+			<isNotNull prepend="," property="cmptype">
+	         cmptype = #cmptype#
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+	         remark = #remark#
+			</isNotNull>										
+		</dynamic> 
+	        WHERE partid = #partid#    
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deletePartItem" parameterClass="map" >
+		DELETE FROM eamenupart
+		      WHERE partid = #partid#
+	</delete>
 
 </sqlMap>
