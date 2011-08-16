@@ -6,6 +6,7 @@
  */
 
 Ext.onReady(function() {
+	var menuid;
 	var root = new Ext.tree.AsyncTreeNode({
 				text : root_menuname,
 				expanded : true,
@@ -26,6 +27,9 @@ Ext.onReady(function() {
 			});
 
 	menuTree.on('click', function(node) {
+				if (!node.isLeaf())
+					return;
+				menuid = node.id
 				store.load({
 							params : {
 								start : 0,
@@ -37,16 +41,20 @@ Ext.onReady(function() {
 
 	menuTree.root.select();
 
-	var sm = new Ext.grid.CheckboxSelectionModel();
-	var cm = new Ext.grid.ColumnModel([new Ext.grid.RowNumberer(), sm, {
-				header : '菜单编号',
-				dataIndex : 'menuid',
+	var cm = new Ext.grid.ColumnModel([new Ext.grid.RowNumberer(), {
+				header : '删除',
+				dataIndex : 'delete',
+				width : 35,
+				renderer : iconColumnRender
+			}, {
+				header : '组件编号',
+				dataIndex : 'partid',
 				width : 120
 			}, {
-				header : '组件ID',
+				header : '组件唯一标识',
 				dataIndex : 'cmpid',
 				sortable : true,
-				width : 120,
+				width : 150,
 				editor : new Ext.grid.GridEditor(new Ext.form.TextField({
 							allowBlank : false,
 							maxLength : 20
@@ -69,17 +77,22 @@ Ext.onReady(function() {
 							typeAhead : true
 						}))
 			}, {
-				header : 'UI组件编号',
-				dataIndex : 'partid',
-				width : 120
-			}, {
-				id : 'remark',
-				header : '备注',
+				header : '组件描述',
 				dataIndex : 'remark',
+				width : 200,
 				editor : new Ext.grid.GridEditor(new Ext.form.TextField({
-							allowBlank : false,
 							maxLength : 50
 						}))
+			}, {
+				header : '托管页面功能菜单',
+				dataIndex : 'menuname',
+				id : 'menuname',
+				width : 150
+			}, {
+				header : '菜单编号',
+				dataIndex : 'menuid',
+				hidden : true,
+				width : 120
 			}]);
 
 	var rec_part = new Ext.data.Record.create([{
@@ -89,6 +102,9 @@ Ext.onReady(function() {
 				name : 'menuid',
 				type : 'string'
 			}, {
+				name : 'menuname',
+				type : 'string'
+			}, {
 				name : 'cmpid',
 				type : 'string'
 			}, {
@@ -96,6 +112,9 @@ Ext.onReady(function() {
 				type : 'string'
 			}, {
 				name : 'remark',
+				type : 'string'
+			}, {
+				name : 'dirtytype',
 				type : 'string'
 			}]);
 
@@ -114,6 +133,8 @@ Ext.onReady(function() {
 								}, {
 									name : 'menuid'
 								}, {
+									name : 'menuname'
+								}, {
 									name : 'cmpid'
 								}, {
 									name : 'cmptype'
@@ -122,9 +143,21 @@ Ext.onReady(function() {
 								}])
 			});
 
-	// 翻页排序时带上查询条件
 	store.on('beforeload', function() {
-				this.baseParams = {};
+				this.baseParams = {
+					menuid : menuid
+				};
+			});
+
+	store.on('load', function() {
+				if (store.getTotalCount() == 0) {
+					Ext.getCmp('id_addRow').setDisabled(true);
+					Ext.getCmp('id_save').setDisabled(true);
+				} else {
+					Ext.getCmp('id_addRow').setDisabled(false);
+					Ext.getCmp('id_save').setDisabled(false);
+				}
+
 			});
 
 	var pagesize_combo = new Ext.form.ComboBox({
@@ -181,27 +214,22 @@ Ext.onReady(function() {
 				},
 				stripeRows : true,
 				frame : true,
-				autoExpandColumn : 'remark',
+				autoExpandColumn : 'menuname',
 				cm : cm,
-				sm : sm,
 				clicksToEdit : 1,
 				tbar : [{
 							text : '新增一行',
 							iconCls : 'addIcon',
+							id : 'id_addRow',
 							handler : function() {
 								addInit();
 							}
 						}, '-', {
 							text : '保存',
 							iconCls : 'acceptIcon',
+							id : 'id_save',
 							handler : function() {
 								saveOrUpdateData();
-							}
-						}, '-', {
-							text : '删除',
-							iconCls : 'deleteIcon',
-							handler : function() {
-								deleteMenuItems('1', '');
 							}
 						}, '->', {
 							text : '刷新',
@@ -213,13 +241,32 @@ Ext.onReady(function() {
 				bbar : bbar
 			});
 
-	store.load({
-				params : {
-					start : 0,
-					limit : bbar.pageSize
+	grid.on("cellclick", function(pGrid, rowIndex, columnIndex, e) {
+				var store = pGrid.getStore();
+				var record = store.getAt(rowIndex);
+				var fieldName = pGrid.getColumnModel()
+						.getDataIndex(columnIndex);
+				if (fieldName == 'delete' && columnIndex == 1) {
+					Ext.Msg.confirm('请确认', '你确认要删除当前对象吗?', function(btn, text) {
+								if (btn == 'yes') {
+									store.remove(record);
+									if (Ext.isEmpty(record.get('dirtytype'))) {
+										delItem(record.get('partid'));
+									}
+								} else {
+									return;
+								}
+							});
 				}
+
 			});
 
+	Ext.getCmp('id_addRow').setDisabled(true);
+	Ext.getCmp('id_save').setDisabled(true);
+
+	/*
+	 * store.load({ params : { start : 0, limit : bbar.pageSize } });
+	 */
 	var viewport = new Ext.Viewport({
 				layout : 'border',
 				items : [{
@@ -239,47 +286,55 @@ Ext.onReady(function() {
 							region : 'west',
 							autoScroll : true,
 							items : [menuTree]
-						}, {
-							region : 'center',
-							layout : 'fit',
-							border : false,
-							items : [grid]
-						}]
+						}, grid]
 			});
 
 	function addInit() {
 		var selectModel = menuTree.getSelectionModel();
 		var selectNode = selectModel.getSelectedNode();
-		alert(selectNode.attributes.text);
 		var rec = new rec_part({});
 		rec.set('partid', '保存后自动生成');
-		rec.set('menuid', menuid);
+		rec.set('menuid', selectNode.id);
+		rec.set('menuname', selectNode.text);
+		rec.set('dirtytype', '1');
 		grid.stopEditing();
 		store.insert(0, rec);
-		grid.startEditing(0, 3);
+		grid.startEditing(0, 2);
+		// store.getAt(0).dirty=true;
 	}
 
 	function saveOrUpdateData() {
-		var m = store.modified.slice(0); // 获取修改过的record数组对象
+		var m = store.modified.slice(0);
 		if (Ext.isEmpty(m)) {
 			Ext.MessageBox.alert('提示', '没有数据需要保存!');
 			return;
 		}
-		if (!validateEditGrid(m, 'xmmc')) {
-			Ext.Msg.alert('提示', '项目名称字段数据校验不合法,请重新输入!', function() {
-						grid.startEditing(0, 2);
-					});
-			return;
+
+		for (var i = 0; i < m.length; i++) {
+			var record = m[i];
+			var rowIndex = store.indexOfId(record.id);
+			if (Ext.isEmpty(record.get('cmpid'))) {
+				Ext.Msg.alert('提示', '组件唯一标识字段数据校验不合法,请重新输入!', function() {
+							grid.startEditing(rowIndex, 2);
+						});
+				return false;
+			}
+			if (Ext.isEmpty(record.get('cmptype'))) {
+				Ext.Msg.alert('提示', '组件类型字段数据校验不合法,请重新输入!', function() {
+							grid.startEditing(rowIndex, 3);
+						});
+				return false;
+			}
 		}
+
 		var jsonArray = [];
-		// 将record数组对象转换为简单Json数组对象
 		Ext.each(m, function(item) {
 					jsonArray.push(item.data);
 				});
-		// 提交到后台处理
 		Ext.Ajax.request({
-					url : 'gridDemo.ered?reqCode=saveDirtyDatas',
-					success : function(response) { // 回调函数有1个参数
+					url : 'part.ered?reqCode=saveDirtyDatas',
+					success : function(response) {
+						store.reload();
 						var resultArray = Ext.util.JSON
 								.decode(response.responseText);
 						Ext.Msg.alert('提示', resultArray.msg);
@@ -288,9 +343,32 @@ Ext.onReady(function() {
 						Ext.MessageBox.alert('提示', '数据保存失败');
 					},
 					params : {
-						// 系列化为Json资料格式传入后台处理
 						dirtydata : Ext.encode(jsonArray)
 					}
 				});
 	}
+
+	function delItem(partid) {
+		Ext.Ajax.request({
+					url : 'part.ered?reqCode=deleteItem',
+					success : function(response) {
+						store.reload();
+						var resultArray = Ext.util.JSON
+								.decode(response.responseText);
+						Ext.Msg.alert('提示', resultArray.msg);
+					},
+					failure : function(response) {
+						Ext.MessageBox.alert('提示', '数据删除失败');
+					},
+					params : {
+						partid : partid
+					}
+				});
+	}
+
+	function iconColumnRender(value) {
+		return "<a href='javascript:void(0);'><img src='" + webContext
+				+ "/resource/image/ext/delete.png'/></a>";;
+	}
+
 });

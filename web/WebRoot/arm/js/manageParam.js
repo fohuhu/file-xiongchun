@@ -424,6 +424,7 @@ Ext
 				var record = grid.getSelectionModel().getSelected();
 				if (Ext.isEmpty(record)) {
 					Ext.MessageBox.alert('提示', '请先选中要修改的项目');
+					return;
 				}
 				addParamFormPanel.getForm().loadRecord(record);
 				addParamWindow.show();

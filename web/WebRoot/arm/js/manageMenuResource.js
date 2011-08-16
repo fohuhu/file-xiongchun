@@ -695,6 +695,7 @@ Ext.onReady(function() {
 		var record = grid.getSelectionModel().getSelected();
 		if (Ext.isEmpty(record)) {
 			Ext.Msg.alert('提示', '请先选择您要修改的菜单项目');
+			return;
 		}
 		record = grid.getSelectionModel().getSelected();
 		if (record.get('menutype') == '1') {

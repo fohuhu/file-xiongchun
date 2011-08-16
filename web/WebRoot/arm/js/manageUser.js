@@ -633,11 +633,15 @@ Ext
 			 * 根据条件查询人员
 			 */
 			function queryUserItem() {
+				var selectModel = deptTree.getSelectionModel();
+				var selectNode = selectModel.getSelectedNode();
+				var deptid = selectNode.attributes.id;
 				store.load({
 					params : {
 						start : 0,
 						limit : bbar.pageSize,
-						queryParam : Ext.getCmp('queryParam').getValue()
+						queryParam : Ext.getCmp('queryParam').getValue(),
+						deptid : deptid
 					}
 				});
 			}
@@ -777,6 +781,7 @@ Ext
 				var record = grid.getSelectionModel().getSelected();
 				if (Ext.isEmpty(record)) {
 					Ext.MessageBox.alert('提示', '请先选择要修改的项目!');
+					return;
 				}
 				if (record.get('usertype') == '3') {
 					Ext.MessageBox.alert('提示', '系统内置人员,不能修改!');

@@ -12,6 +12,7 @@ Ext.onReady(function() {
 		border : false,
 		items : {
 			xtype : 'tabpanel',
+			id:'loginTabs',
 			activeTab : 0,
 			height : 180,
 			border : false,
@@ -64,7 +65,7 @@ Ext.onReady(function() {
 							xtype : 'panel',
 							border : false,
 							hidden : true,
-							html : '<br><div id="id_reg_div" style="font-size:12px;color:blue; margin-left:105px">[点偶,1o秒钟注册新帐户]</div>'
+							html : '<br><div id="id_reg_div" style="font-size:12px;color:blue; margin-left:105px">点此查看登录演示账户</div>'
 						}]
 			}, {
 				title : '信息公告',
@@ -164,8 +165,10 @@ Ext.onReady(function() {
 	}, this);
 
 	Ext.get('id_reg_div').on('click', function() {
-				addUserFormPanel.getForm().reset();
-				addUserWindow.show();
+				//addUserFormPanel.getForm().reset();
+				//addUserWindow.show();
+		        //panel.setActiveTab(1);
+		        Ext.getCmp('loginTabs').setActiveTab(1);
 			});
 
 	var addUserFormPanel = new Ext.form.FormPanel({
@@ -245,39 +248,37 @@ Ext.onReady(function() {
 	function login() {
 		if (Ext.getCmp('loginForm').form.isValid()) {
 			Ext.getCmp('loginForm').form.submit({
-						url : 'login.ered?reqCode=login',
-						waitTitle : '提示',
-						method : 'POST',
-						waitMsg : '正在验证您的身份,请稍候.....',
-						success : function(form, action) {
-							var account = Ext.getCmp('loginForm')
-									.findById('account');
-							setCookie("eredg4.login.account", account.getValue(), 240);
-							setCookie("eredg4.login.userid", action.result.userid, 240);
-							window.location.href = 'index.ered?reqCode=indexInit';
-						},
-						failure : function(form, action) {
-							var errmsg = action.result.msg;
-							var errtype = action.result.errorType;
-							Ext.Msg.alert('提示', errmsg, function() {
-										var account = Ext.getCmp('loginForm')
-												.findById('account');
-										var password = Ext.getCmp('loginForm')
-												.findById('password');
-										if (errtype == '1') {
-											Ext.getCmp('loginForm').form
-													.reset();
-											account.focus();
-											account.validate();
-										} else if (errtype == '2') {
-											password.focus();
-											password.setValue('');
-										} else if (errtype == '3') {
-											account.focus();
-										}
-									});
-						}
-					});
+				url : 'login.ered?reqCode=login',
+				waitTitle : '提示',
+				method : 'POST',
+				waitMsg : '正在验证您的身份,请稍候.....',
+				success : function(form, action) {
+					var account = Ext.getCmp('loginForm').findById('account');
+					setCookie("eredg4.login.account", account.getValue(), 240);
+					setCookie("eredg4.login.userid", action.result.userid, 240);
+					window.location.href = 'index.ered?reqCode=indexInit';
+				},
+				failure : function(form, action) {
+					var errmsg = action.result.msg;
+					var errtype = action.result.errorType;
+					Ext.Msg.alert('提示', errmsg, function() {
+								var account = Ext.getCmp('loginForm')
+										.findById('account');
+								var password = Ext.getCmp('loginForm')
+										.findById('password');
+								if (errtype == '1') {
+									Ext.getCmp('loginForm').form.reset();
+									account.focus();
+									account.validate();
+								} else if (errtype == '2') {
+									password.focus();
+									password.setValue('');
+								} else if (errtype == '3') {
+									account.focus();
+								}
+							});
+				}
+			});
 		}
 	}
 
@@ -317,10 +318,10 @@ Ext.onReady(function() {
 	}
 
 	// 演示模式
-	if (runMode == '0') {
-		// Ext.getCmp('account').setValue('developer');
-		// Ext.getCmp('password').setValue('111111');
-		Ext.getCmp('id_reg_panel').show();
-	}
+	//if (runMode == '0') {
+		 //Ext.getCmp('account').setValue('developer');
+		 //Ext.getCmp('password').setValue('111111');
+		 Ext.getCmp('id_reg_panel').show();
+	//}
 
 });

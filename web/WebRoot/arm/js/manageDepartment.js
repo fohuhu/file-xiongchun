@@ -590,6 +590,7 @@ Ext.onReady(function() {
 			var record = grid.getSelectionModel().getSelected();
 			if (Ext.isEmpty(record)) {
 				Ext.MessageBox.alert('提示', '请先选择要修改的部门!');
+				return;
 			}
 			record = grid.getSelectionModel().getSelected();
 			if (record.get('leaf') == '0' || record.get('usercount') != '0'
