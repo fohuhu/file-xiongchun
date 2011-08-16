@@ -117,13 +117,6 @@
 			<forward name="excelInitView" path="/resource/jasper/excelInit.jsp" />
 		</action>  
 		
-		<!-- 项目主页相关功能 -->
-		<action name="commonActionForm" path="/projectHome" scope="request" validate="false" parameter="reqCode"
-			type="org.eredlab.g4.arm.web.ProjectHomeAction">
-			<forward name="forumView" path="/arm/projecthome/forum.jsp" />
-			<forward name="topicDetailView" path="/arm/projecthome/topicDetail.jsp" />
-		</action> 
-		
 	</action-mappings>
 	<!-- 系统初始化插件 
 		<plug-in className="org.eredlab.g4.rif.web.util.SystemInitPlugin" />
