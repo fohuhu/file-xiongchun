@@ -100,7 +100,7 @@
 			<filter-name>resourceFilter</filter-name>
 			<url-pattern>*.css</url-pattern>
 		</filter-mapping>
-		-->
+	-->
 	 
 	<!-- 配置ActionServlet,加载Struts配置文件 -->
 	<servlet>
