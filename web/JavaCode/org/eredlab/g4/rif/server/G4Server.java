@@ -7,7 +7,7 @@ import org.eredlab.g4.bmf.util.SpringBeanLoader;
 import org.eredlab.g4.ccl.properties.PropertiesFactory;
 import org.eredlab.g4.ccl.properties.PropertiesFile;
 import org.eredlab.g4.ccl.properties.PropertiesHelper;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.mortbay.jetty.Connector;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.nio.SelectChannelConnector;
@@ -65,12 +65,12 @@ public class G4Server {
 		 * 解决直接使用iBatis源码带来的初始化Spring容器报错的问题
 		 */
 	    if(forceLoad.equals(ArmConstants.FORCELOAD_Y)){
-		    System.out.println("********************************************");
-		    System.out.println("易道系统集成与应用开发平台[eRedG4]开始启动...");
-		    System.out.println("********************************************");
-		    System.out.println("系统正在初始化服务容器...");
+		    log.info("********************************************");
+		    log.info("G4系统集成与应用开发平台[G4Studio]开始启动...");
+		    log.info("********************************************");
+		    log.info("系统正在初始化服务容器...");
 		    SpringBeanLoader.getApplicationContext();
-		    System.out.println("容器初始化成功啦，您的托管Bean已经被实例化。");
+		    log.info("容器初始化成功啦，您的托管Bean已经被实例化。");
 		}
 		
 		Connector connector = new SelectChannelConnector();
@@ -83,7 +83,7 @@ public class G4Server {
 		try {
 			server.start();
 		} catch (Exception e) {
-			log.error(GlobalConstants.Exception_Head + "\n eRedG4Server启动出错.\n");
+			log.error(G4Constants.Exception_Head + "\n G4Server启动出错.\n");
 			e.printStackTrace();
 		}
 	}
@@ -95,7 +95,7 @@ public class G4Server {
 		try {
 			server.stop();
 		} catch (Exception e) {
-			log.error(GlobalConstants.Exception_Head + "\n eRedG4Server未能正常停止.\n");
+			log.error(G4Constants.Exception_Head + "\n G4Server未能正常停止.\n");
 			e.printStackTrace();
 		}
 	}

@@ -5,7 +5,7 @@ import java.io.StringWriter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eredlab.g4.ccl.datastructure.Dto;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 模板引擎抽象基类
@@ -30,7 +30,7 @@ public abstract class AbstractTemplateEngine implements TemplateEngine {
 		}else if(pTemplate instanceof FileTemplate){
 			writer = mergeFileTemplate(pTemplate, dto);
 		}else{
-			throw new IllegalArgumentException(GlobalConstants.Exception_Head + "不支持的模板" );
+			throw new IllegalArgumentException(G4Constants.Exception_Head + "不支持的模板" );
 		}
 		return writer;
 	}

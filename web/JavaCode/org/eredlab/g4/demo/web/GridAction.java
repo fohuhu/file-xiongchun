@@ -13,7 +13,7 @@ import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.web.BaseAction;
 import org.eredlab.g4.rif.web.CommonActionForm;
 
@@ -149,7 +149,7 @@ public class GridAction extends BaseAction {
 		Dto dto = aForm.getParamAsDto(request);
 		List list = g4Reader.queryForPage("Demo.queryCatalogsForGridDemo", dto);
 		Integer countInteger = (Integer) g4Reader.queryForObject("Demo.countCatalogsForGridDemo", dto);
-		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, GlobalConstants.FORMAT_Date);
+		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, G4Constants.FORMAT_Date);
 		super.write(jsonString, response);
 		return mapping.findForward(null);
 	}
@@ -176,7 +176,7 @@ public class GridAction extends BaseAction {
 		}
 		Integer countInteger = (Integer) g4Reader.queryForObject("Demo.countBalanceInfo", dto);
 		super.setSessionAttribute(request, "GRIDACTION_QUERYBALANCEINFO_DTO", dto);
-		String jsonString = encodeList2PageJson(list, countInteger, GlobalConstants.FORMAT_Date);
+		String jsonString = encodeList2PageJson(list, countInteger, G4Constants.FORMAT_Date);
 		super.write(jsonString, response);
 		return mapping.findForward(null);
 	}

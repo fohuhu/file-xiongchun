@@ -10,7 +10,7 @@ import java.util.List;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.assistant.TypeCaseHelper;
 import org.eredlab.g4.ccl.json.JsonHelper;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.xml.XmlHelper;
 
 /**
@@ -28,6 +28,11 @@ public class BaseDto extends HashMap implements Dto, Serializable {
 	
 	public BaseDto(String key, Object value){
 		put(key, value);
+	}
+	
+	public BaseDto(Boolean success, String msg){
+		setSuccess(success);
+		setMsg(msg);
 	}
 
 	/**
@@ -130,6 +135,21 @@ public class BaseDto extends HashMap implements Dto, Serializable {
 		else
 			return null;
 	}
+	
+	/**
+	 * 以Boolean类型返回键值
+	 * 
+	 * @param key
+	 *            键名
+	 * @return Timestamp 键值
+	 */
+	public Boolean getAsBoolean(String key){
+		Object obj = TypeCaseHelper.convert(get(key), "Boolean", null);
+		if (obj != null)
+			return (Boolean) obj;
+		else
+			return null;
+	}
 
 	/**
 	 * 给Dto压入第一个默认List对象<br>
@@ -200,10 +220,10 @@ public class BaseDto extends HashMap implements Dto, Serializable {
 	 */
 	public String toXml(String pStyle) {
 		String strXml = null;
-		if (pStyle.equals(GlobalConstants.XML_Attribute))
+		if (pStyle.equals(G4Constants.XML_Attribute))
 			// 节点属性值风格
 			strXml = XmlHelper.parseDto2Xml(this, "root", "row");
-		else if (pStyle.equals(GlobalConstants.XML_Node))
+		else if (pStyle.equals(G4Constants.XML_Node))
 			// 节点元素值风格
 			strXml = XmlHelper.parseDto2Xml(this, "root");
 		return strXml;
@@ -242,5 +262,47 @@ public class BaseDto extends HashMap implements Dto, Serializable {
 		String strJson = null;
 		strJson = JsonHelper.encodeObject2Json(this, pFormat);
 		return strJson;
+	}
+	
+	/**
+	 * 设置交易状态
+	 * 
+	 * @param pSuccess
+	 */
+	public void setSuccess(Boolean pSuccess){
+		put("success", pSuccess);
+		if (pSuccess) {
+			put("bflag", "1");
+		}else {
+			put("bflag", "0");
+		}
+		
+	}
+	
+	/**
+	 * 获取交易状态
+	 * 
+	 * @param pSuccess
+	 */
+	public Boolean getSuccess(){
+		return getAsBoolean("success");
+	}
+	
+	/**
+	 * 设置交易提示信息
+	 * 
+	 * @param pSuccess
+	 */
+	public void setMsg(String pMsg){
+		put("msg", pMsg);
+	}
+	
+	/**
+	 * 获取交易提示信息
+	 * 
+	 * @param pSuccess
+	 */
+	public String getMsg(){
+		return getAsString("msg");
 	}
 }

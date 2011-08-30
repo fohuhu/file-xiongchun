@@ -6,7 +6,7 @@ package org.eredlab.g4.ccl.util;
  * @author XiongChun
  * @since 2009-07-13
  */
-public interface GlobalConstants {
+public interface G4Constants {
 	/**
 	 * XML文档风格<br>
 	 * 0:节点属性值方式
@@ -120,6 +120,16 @@ public interface GlobalConstants {
 	 * 998:当前会话userid和登录时候的userid不一致(会话被覆盖)
 	 */
 	public static final int Ajax_Session_Unavaliable = 998;
+	
+	/**
+	 * 交易状态:成功
+	 */
+	public static final Boolean TRUE = new Boolean(true);
+	
+	/**
+	 * 交易状态:失败
+	 */
+	public static final Boolean FALSE = new Boolean(false);
 
 	/**
 	 * 分页查询分页参数缺失错误信息

@@ -20,7 +20,7 @@ import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.ftp.FtpHelper;
 import org.eredlab.g4.ccl.json.JsonHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.demo.service.DemoService;
 import org.eredlab.g4.rif.web.BaseAction;
 import org.eredlab.g4.rif.web.CommonActionForm;
@@ -65,7 +65,7 @@ public class OtherAction extends BaseAction {
 		String sqlid = G4Utils.defaultJdbcTypeOracle() ? "Demo.queryFiles4Oracle" : "Demo.queryFiles";
 		List list = g4Reader.queryForPage(sqlid, dto);
 		Integer countInteger = (Integer) g4Reader.queryForObject("Demo.countFiles", dto);
-		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, GlobalConstants.FORMAT_DateTime);
+		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, G4Constants.FORMAT_DateTime);
 		super.write(jsonString, response);
 		return mapping.findForward(null);
 	}

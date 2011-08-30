@@ -86,5 +86,64 @@
 		DELETE FROM eamenupart
 		      WHERE partid = #partid#
 	</delete>
+	
+	<select id="queryPartByDto" parameterClass="map" resultClass="dto">
+		SELECT
+			   a.partid,
+			   a.menuid,
+			   a.cmpid,
+			   a.cmptype,
+			   a.remark
+		FROM eamenupart a
+	   WHERE 1 = 1
+		<dynamic>
+			<isNotEmpty prepend="AND" property="partid"> 
+									a.partid = #partid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="menuid"> 
+									a.menuid = #menuid#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cmptype"> 
+									a.cmptype = #cmptype#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="cmpid"> 
+									a.cmpid = #cmpid#
+			</isNotEmpty>
+		</dynamic>
+		ORDER BY a.partid DESC
+	</select>
+	
+	<!-- 查询UI组件 -->
+	<select id="queryPart4UserGrant" parameterClass="map" resultClass="dto">
+		SELECT
+			   a.authorizeid,
+			   a.partauthtype,
+			   a.userid
+		FROM eausermenupart a
+	   WHERE a.userid = #userid# and a.menuid=#menuid# and a.partid = #partid#
+	</select>
+	
+	<!-- 插入一条UI人员授权记录 -->
+	<insert id="insertEausermenupartItem" parameterClass="dto">
+		INSERT INTO eausermenupart ( authorizeid, userid,menuid, partid, partauthtype) 
+		     VALUES (#authorizeid#, #userid#, #menuid#, #partid#, #partauthtype#)
+	</insert>
+	
+	<!-- 删除一条UI人员授权记录 -->
+	<delete id="deleteEausermenupartItem" parameterClass="dto">
+		DELETE FROM eausermenupart
+		      WHERE authorizeid = #authorizeid#
+	</delete>
+	
+	<!-- 修改UI人员授权类型 -->
+	<update id="updateEausermenupartItem" parameterClass="dto">
+         UPDATE eausermenupart
+		<dynamic prepend="SET"> 
+			<isNotNull prepend="," property="partauthtype">
+	         partauthtype = #partauthtype#
+			</isNotNull>										
+		</dynamic> 
+	        WHERE authorizeid = #authorizeid#   
+	</update>
 
 </sqlMap>

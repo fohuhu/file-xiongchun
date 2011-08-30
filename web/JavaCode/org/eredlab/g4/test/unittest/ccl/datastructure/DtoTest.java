@@ -5,7 +5,7 @@ import junit.textui.TestRunner;
 
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 数据结构DTO单元测试用例
@@ -28,7 +28,7 @@ public class DtoTest extends TestCase {
 		dto.put("age", "28");
 		String xml = dto.toXml();
 		assertEquals("<root><age>28</age><name>XiongChun</name></root>", xml);
-		String xml2 = dto.toXml(GlobalConstants.XML_Attribute);
+		String xml2 = dto.toXml(G4Constants.XML_Attribute);
 		assertEquals("<root><row age=\"28\" name=\"XiongChun\"/></root>", xml2);
 	}
 	

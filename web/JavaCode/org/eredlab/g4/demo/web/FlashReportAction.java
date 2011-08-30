@@ -13,7 +13,7 @@ import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.report.fcf.Categorie;
 import org.eredlab.g4.rif.report.fcf.CategoriesConfig;
 import org.eredlab.g4.rif.report.fcf.DataSet;
@@ -995,7 +995,7 @@ public class FlashReportAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto dto = aForm.getParamAsDto(request);
 		List list = g4Reader.queryForPage("Demo.getFcfDataList", dto);
-		String jsonString = JsonHelper.encodeList2PageJson(list, new Integer(12), GlobalConstants.FORMAT_Date);
+		String jsonString = JsonHelper.encodeList2PageJson(list, new Integer(12), G4Constants.FORMAT_Date);
 		super.write(jsonString, response);
 		return mapping.findForward(null);
 	}

@@ -17,7 +17,7 @@ import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.report.fcf.FcfDataMapper;
 import org.eredlab.g4.rif.report.fcf.GraphConfig;
 import org.eredlab.g4.rif.report.fcf.Set;
@@ -107,7 +107,7 @@ public class ServerInfoAction extends BaseAction {
 		long freePhysicalMemorySize = osmxb.getFreePhysicalMemorySize();
 		Double compare = (Double) (1 - freePhysicalMemorySize * 1.0 / totalvirtualMemory) * 100;
 		set0.setValue(compare.intValue() + "");
-		set0.setColor(GlobalConstants.CHART_COLORS[G4Utils.getRandom(0, 10).intValue()]);
+		set0.setColor(G4Constants.CHART_COLORS[G4Utils.getRandom(0, 10).intValue()]);
 		dataList.add(set0);
 		while (dataList.size() > 5) {
 			dataList.remove(dataList.size() - 5);
@@ -147,7 +147,7 @@ public class ServerInfoAction extends BaseAction {
 		Set set0 = new Set();
 		set0.setName(G4Utils.getCurrentTime("hh:mm:ss"));
 		set0.setValue(new BigDecimal(getCpuRatioForWindows()).intValue() + "");
-		set0.setColor(GlobalConstants.CHART_COLORS[G4Utils.getRandom(0, 10).intValue()]);
+		set0.setColor(G4Constants.CHART_COLORS[G4Utils.getRandom(0, 10).intValue()]);
 		dataList.add(set0);
 		while (dataList.size() > 5) {
 			dataList.remove(dataList.size() - 5);
@@ -200,7 +200,7 @@ public class ServerInfoAction extends BaseAction {
 				+ "%");
 
 		set0.setValue(new Double(used / 1024 / 1024).intValue() + "");
-		set0.setColor(GlobalConstants.CHART_COLORS[G4Utils.getRandom(0, 10).intValue()]);
+		set0.setColor(G4Constants.CHART_COLORS[G4Utils.getRandom(0, 10).intValue()]);
 		dataList.add(set0);
 		while (dataList.size() > 10) {
 			dataList.remove(dataList.size() - 10);

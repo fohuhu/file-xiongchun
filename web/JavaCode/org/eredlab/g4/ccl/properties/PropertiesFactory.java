@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * Properties文件静态工厂
@@ -32,7 +32,7 @@ public class PropertiesFactory {
 			  PropertiesHelper ph = new PropertiesHelper(is);
 			  container.put(PropertiesFile.G4, ph);
 			  } catch (Exception e1) {
-			  log.error(GlobalConstants.Exception_Head + "加载属性文件global.g4.properties出错!");
+			  log.error(G4Constants.Exception_Head + "加载属性文件global.g4.properties出错!");
 			  e1.printStackTrace();
 			  }
 		     //加载属性文件global.myconfig.properties
@@ -41,7 +41,7 @@ public class PropertiesFactory {
 				PropertiesHelper ph = new PropertiesHelper(is);
 				container.put(PropertiesFile.APP, ph);
 			 } catch (Exception e1) {
-				log.error(GlobalConstants.Exception_Head + "加载属性文件global.app.properties出错!");
+				log.error(G4Constants.Exception_Head + "加载属性文件global.app.properties出错!");
 				e1.printStackTrace();
 			}
 	}

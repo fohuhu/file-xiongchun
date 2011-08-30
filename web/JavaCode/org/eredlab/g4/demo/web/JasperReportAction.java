@@ -11,7 +11,7 @@ import org.apache.struts.action.ActionMapping;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.report.jasper.ReportData;
 import org.eredlab.g4.rif.web.BaseAction;
 import org.eredlab.g4.rif.web.CommonActionForm;
@@ -62,7 +62,7 @@ public class JasperReportAction extends BaseAction {
 		super.setSessionAttribute(request, "QUERYCATALOGS4PRINT_QUERYDTO", inDto);
 		List catalogList = g4Reader.queryForPage("Demo.queryCatalogsForPrint", inDto);
 		Integer pageCount = (Integer) g4Reader.queryForObject("Demo.queryCatalogsForPrintForPageCount", inDto);
-		String jsonString = encodeList2PageJson(catalogList, pageCount, GlobalConstants.FORMAT_DateTime);
+		String jsonString = encodeList2PageJson(catalogList, pageCount, G4Constants.FORMAT_DateTime);
 		write(jsonString, response);
 		return mapping.findForward(null);
 	}

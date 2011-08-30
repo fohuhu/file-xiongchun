@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * Properties处理器
@@ -32,12 +32,12 @@ public class PropertiesHelper {
 			objProperties.load(is);
 		}
 		catch(FileNotFoundException e){
-			log.error(GlobalConstants.Exception_Head + "未找到属性资源文件!");
+			log.error(G4Constants.Exception_Head + "未找到属性资源文件!");
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e){
-			log.error(GlobalConstants.Exception_Head + "读取属性资源文件发生未知错误!");
+			log.error(G4Constants.Exception_Head + "读取属性资源文件发生未知错误!");
 			e.printStackTrace();
 			throw e;
 		}finally{
@@ -58,7 +58,7 @@ public class PropertiesHelper {
 			outStream = new FileOutputStream(file);
 			objProperties.store(outStream, "#eRedG4");
 		}catch(Exception e){
-			log.error(GlobalConstants.Exception_Head + "保存属性文件出错.");
+			log.error(G4Constants.Exception_Head + "保存属性文件出错.");
 			e.printStackTrace();
 		}finally{
 			try {

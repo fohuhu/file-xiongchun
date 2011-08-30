@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.http.Cookie;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,7 +21,7 @@ import org.eredlab.g4.ccl.properties.PropertiesFactory;
 import org.eredlab.g4.ccl.properties.PropertiesFile;
 import org.eredlab.g4.ccl.properties.PropertiesHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -50,9 +51,9 @@ public class SystemInitListener implements ServletContextListener {
 		String forceLoad = pHelper.getValue("forceLoad", ArmConstants.FORCELOAD_N);
 		long start = System.currentTimeMillis();
 		if (forceLoad.equalsIgnoreCase(ArmConstants.FORCELOAD_N)) {
-			System.out.println("********************************************");
-			System.out.println("易道系统集成与应用开发平台[eRedG4]开始启动...");
-			System.out.println("********************************************");
+			log.info("********************************************");
+			log.info("G4系统集成与应用开发平台[G4Studio]开始启动...");
+			log.info("********************************************");
 		}
 		try {
 			wac = SpringBeanLoader.getApplicationContext();
@@ -70,47 +71,45 @@ public class SystemInitListener implements ServletContextListener {
 			}
 		}
 		if (success) {
-			System.out.println("-------------------------------");
-			System.out.println("系统开始启动字典装载程序...");
-			System.out.println("开始加载字典...");
+			log.info("系统开始启动字典装载程序...");
+			log.info("开始加载字典...");
 			IReader g4Reader = (IReader) SpringBeanLoader.getSpringBean("g4Reader");
 			List codeList = null;
 			try {
 				codeList = g4Reader.queryForList("Resource.getCodeViewList");
-				System.out.println("字典加载成功!");
+				log.info("字典加载成功!");
 			} catch (Exception e) {
 				success = false;
-				System.out.println("字典加载失败!");
+				log.error("字典加载失败!");
 				e.printStackTrace();
 			}
 			servletContext.setAttribute("EACODELIST", codeList);
 		}
 		if (success) {
-			System.out.println("-------------------------------");
-			System.out.println("系统开始启动全局参数表装载程序...");
-			System.out.println("开始加载全局参数表...");
+			log.info("系统开始启动全局参数表装载程序...");
+			log.info("开始加载全局参数表...");
 			List paramList = null;
 			try {
 				IReader g4Reader = (IReader) SpringBeanLoader.getSpringBean("g4Reader");
 				paramList = g4Reader.queryForList("Resource.getParamList");
-				System.out.println("全局参数表加载成功!");
+				log.info("全局参数表加载成功!");
 			} catch (Exception e) {
 				success = false;
-				System.out.println("全局参数表加载失败!");
+				log.error("全局参数表加载失败!");
 				e.printStackTrace();
 			}
 			servletContext.setAttribute("EAPARAMLIST", paramList);
 		}
 		long timeSec = (System.currentTimeMillis() - start) / 1000;
-		System.out.println("********************************************");
+		log.info("********************************************");
 		if (success) {
-			System.out.println("易道系统集成与应用开发平台[eRedG4]启动成功[" + G4Utils.getCurrentTime() + "]");
-			System.out.println("启动总耗时: " + timeSec / 60 + "分 " + timeSec % 60 + "秒 ");
+			log.info("G4系统集成与应用开发平台[G4Studio]启动成功[" + G4Utils.getCurrentTime() + "]");
+			log.info("启动总耗时: " + timeSec / 60 + "分 " + timeSec % 60 + "秒 ");
 		} else {
-			System.out.println("易道系统集成与应用开发平台[eRedG4]启动失败[" + G4Utils.getCurrentTime() + "]");
-			System.out.println("启动总耗时: " + timeSec / 60 + "分" + timeSec % 60 + "秒");
+			log.error("G4系统集成与应用开发平台[G4Studio]启动失败[" + G4Utils.getCurrentTime() + "]");
+			log.error("启动总耗时: " + timeSec / 60 + "分" + timeSec % 60 + "秒");
 		}
-		System.out.println("********************************************");
+		log.info("********************************************");
 	}
 
 	/**
@@ -121,13 +120,20 @@ public class SystemInitListener implements ServletContextListener {
 	private void initDbType() throws SQLException {
 		IDao g4Dao = (IDao) SpringBeanLoader.getSpringBean("g4Dao");
 		Connection connection = g4Dao.getConnection();
-		if (connection.getMetaData().getDatabaseProductName().toLowerCase().indexOf("ora") > -1) {
-			System.setProperty("eRedg4.JdbcType", "oracle");
-		} else if (connection.getMetaData().getDatabaseProductName().toLowerCase().indexOf("mysql") > -1) {
-			System.setProperty("eRedg4.JdbcType", "mysql");
+		String dbString =  connection.getMetaData().getDatabaseProductName().toLowerCase();
+		try {
+			connection.close();
+		} catch (Exception e) {
+			log.error(G4Constants.Exception_Head + "未正常关闭数据库连接");
+			e.printStackTrace();
+		}
+		if (dbString.indexOf("ora") > -1) {
+			System.setProperty("g4.JdbcType", "oracle");
+		} else if (dbString.indexOf("mysql") > -1) {
+			System.setProperty("g4.JdbcType", "mysql");
 		} else {
 			if (log.isErrorEnabled()) {
-				log.error(GlobalConstants.Exception_Head + "G4平台目前还不支持你使用的数据库产品.如需获得支持,请和我们联系!");
+				log.error(G4Constants.Exception_Head + "G4平台目前还不支持你使用的数据库产品.如需获得支持,请和我们联系!");
 			}
 			System.exit(0);
 		}

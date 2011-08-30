@@ -117,6 +117,9 @@
 			<isNotEmpty prepend="AND" property="parentid"> 
 				parentid = #parentid#
 			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="menutype"> 
+				menutype = #menutype#
+			</isNotEmpty>
 			<isNotEmpty prepend="AND" property="menuname"> 
 				menuname like '%'||#menuname#||'%'
 			</isNotEmpty>

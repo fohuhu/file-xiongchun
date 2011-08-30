@@ -6,7 +6,7 @@ import org.eredlab.g4.arm.util.ArmConstants;
 import org.eredlab.g4.ccl.properties.PropertiesFactory;
 import org.eredlab.g4.ccl.properties.PropertiesFile;
 import org.eredlab.g4.ccl.properties.PropertiesHelper;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -41,15 +41,15 @@ public class SpringBeanLoader{
 	    String forceLoad = pHelper.getValue("forceLoad", ArmConstants.FORCELOAD_N);
 		try {
 			if (forceLoad.equalsIgnoreCase(ArmConstants.FORCELOAD_N)) {
-				System.out.println("系统正在初始化服务容器...");
+				log.info("系统正在初始化服务容器...");
 			}
 			applicationContext = new ClassPathXmlApplicationContext(new String[] { "config\\global.config.xml" });
 			if (forceLoad.equalsIgnoreCase(ArmConstants.FORCELOAD_N)) {
-				System.out.println("容器初始化成功啦，您的托管Bean已经被实例化。");
+				log.info("容器初始化成功啦，您的托管Bean已经被实例化。");
 			}
 		} catch (Exception e) {
-			System.out.println("服务容器初始化失败.");
-			log.error(GlobalConstants.Exception_Head + "初始化服务容器发生错误,请仔细检查您的配置文件喔!\n" + e.getMessage());
+			log.error("服务容器初始化失败.");
+			log.error(G4Constants.Exception_Head + "初始化服务容器发生错误,请仔细检查您的配置文件喔!\n" + e.getMessage());
 			e.printStackTrace();
 			System.exit(0);
 			throw e;
@@ -77,7 +77,7 @@ public class SpringBeanLoader{
 		try {
 			springBean = applicationContext.getBean(pBeanId);
 		} catch (NoSuchBeanDefinitionException e) {
-			log.error(GlobalConstants.Exception_Head + "Spring配置文件中没有匹配到ID号为:[" + pBeanId + "]的SpringBean组件,请检查!");
+			log.error(G4Constants.Exception_Head + "Spring配置文件中没有匹配到ID号为:[" + pBeanId + "]的SpringBean组件,请检查!");
 			log.error(e.getMessage());
 		}
 		return springBean;

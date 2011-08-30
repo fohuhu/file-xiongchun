@@ -27,12 +27,4 @@ public interface HelloWorld {
 	 */
 	public String queryBalanceInfo(String jsbh);
 	
-	/**
-	 * 查询结算明细测试数据列表
-	 * @param rownum
-	 * @return XML字符串
-	 */
-	public String queryBalanceInfoLimitRownum(Integer rownum);
-	
-	
 }

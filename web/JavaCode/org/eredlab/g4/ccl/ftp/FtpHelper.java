@@ -16,7 +16,7 @@ import org.eredlab.g4.ccl.net.ftp.FTPClient;
 import org.eredlab.g4.ccl.net.ftp.FTPFile;
 import org.eredlab.g4.ccl.net.ftp.FTPReply;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 基于FTP协议的文件处理支持类<br>
@@ -132,7 +132,7 @@ public class FtpHelper {
 				return status;
 			} catch (IOException e) {
 				if (log.isErrorEnabled()) {
-					log.error(GlobalConstants.Exception_Head + "远程FTP工作目录切换发生异常");
+					log.error(G4Constants.Exception_Head + "远程FTP工作目录切换发生异常");
 				}
 				e.printStackTrace();
 			}
@@ -151,7 +151,7 @@ public class FtpHelper {
 						ftpClient.changeWorkingDirectory(path);
 					} else {
 						if (log.isErrorEnabled()) {
-							log.error(GlobalConstants.Exception_Head + "创建远程FTP工作目录发生异常");
+							log.error(G4Constants.Exception_Head + "创建远程FTP工作目录发生异常");
 						}
 					}
 				}
@@ -178,7 +178,7 @@ public class FtpHelper {
 		boolean status = true;
 		if (G4Utils.isEmpty(ftpClient)) {
 			if (log.isErrorEnabled()) {
-				log.error(GlobalConstants.Exception_Head + "");
+				log.error(G4Constants.Exception_Head + "");
 			}
 			return false;
 		}
@@ -190,7 +190,7 @@ public class FtpHelper {
 			}
 		} catch (IOException e) {
 			if (log.isErrorEnabled()) {
-				log.error(GlobalConstants.Exception_Head + "文件上传失败");
+				log.error(G4Constants.Exception_Head + "文件上传失败");
 			}
 			e.printStackTrace();
 		} finally {
@@ -217,7 +217,7 @@ public class FtpHelper {
 		boolean status = true;
 		if (G4Utils.isEmpty(ftpClient)) {
 			if (log.isErrorEnabled()) {
-				log.error(GlobalConstants.Exception_Head + "");
+				log.error(G4Constants.Exception_Head + "");
 			}
 			return false;
 		}
@@ -231,7 +231,7 @@ public class FtpHelper {
 			}
 		} catch (IOException e) {
 			if (log.isErrorEnabled()) {
-				log.error(GlobalConstants.Exception_Head + "文件上传失败");
+				log.error(G4Constants.Exception_Head + "文件上传失败");
 			}
 			e.printStackTrace();
 		} finally {
@@ -265,13 +265,13 @@ public class FtpHelper {
 					}
 				} else {
 					if (log.isErrorEnabled()) {
-						log.error(GlobalConstants.Exception_Head + "删除文件[" + fullPathFileName
+						log.error(G4Constants.Exception_Head + "删除文件[" + fullPathFileName
 								+ "]失败");
 					}
 				}
 			} else {
 				if (log.isErrorEnabled()) {
-					log.error(GlobalConstants.Exception_Head + "切换工作目录[" + workingPath + "]失败");
+					log.error(G4Constants.Exception_Head + "切换工作目录[" + workingPath + "]失败");
 				}
 			}
 		} catch (IOException e) {
@@ -294,7 +294,7 @@ public class FtpHelper {
 			for (int i = 0; i < files.length; i++) {
 				if (!files[i].getName().equals(".") && !files[i].getName().equals("..")) {
 					if (files[i].isDirectory()) {
-						log.error(GlobalConstants.Exception_Head + "删除目录[" + dirName
+						log.error(G4Constants.Exception_Head + "删除目录[" + dirName
 								+ "]失败,此路径下嵌套有子目录.");
 						return false;
 					}
@@ -312,7 +312,7 @@ public class FtpHelper {
 				log.info("目录删除成功" + ftpClient.getReplyString());
 			} else {
 				if (log.isErrorEnabled()) {
-					log.error(GlobalConstants.Exception_Head + "删除目录[" + dirName + "]失败");
+					log.error(G4Constants.Exception_Head + "删除目录[" + dirName + "]失败");
 				}
 			}
 		} catch (IOException e) {
@@ -343,7 +343,7 @@ public class FtpHelper {
 			if (success) {
 				log.info("下载文件[" + remoteFile + "]成功, 被存储到[" + localFile + "]");
 			}else {
-				log.error(GlobalConstants.Exception_Head + "下载文件[" + remoteFile + "]失败");
+				log.error(G4Constants.Exception_Head + "下载文件[" + remoteFile + "]失败");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

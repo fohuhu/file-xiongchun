@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.eredlab.g4.ccl.datastructure.Dto;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 
 /**
@@ -49,7 +49,7 @@ public class VelocityHelper {
 			props.load(is);
 			is.close();
 		} catch (Exception e) {
-		    log.error(GlobalConstants.Exception_Head + "导入Velocity模板引擎属性配置文件出错");
+		    log.error(G4Constants.Exception_Head + "导入Velocity模板引擎属性配置文件出错");
 		    log.error(e.getMessage());
 		    }
 			return props;

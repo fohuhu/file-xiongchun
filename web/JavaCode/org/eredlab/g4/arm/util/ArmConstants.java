@@ -1,13 +1,13 @@
 package org.eredlab.g4.arm.util;
 
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 常量表
  * @author XiongChun
  * @since 2010-01-13
  */
-public interface ArmConstants extends GlobalConstants{
+public interface ArmConstants extends G4Constants{
 	
 	/**
 	 * 启用状态<br>
@@ -188,4 +188,10 @@ public interface ArmConstants extends GlobalConstants{
 	 * 0:业务菜单
 	 */
 	public static final String MENUTYPE_BUSINESS = "0";
+	
+	/**
+	 * UI元素授权类型<br>
+	 * 0:未授权
+	 */
+	public static final String PARTAUTHTYPE_NOGRANT = "0";
 }

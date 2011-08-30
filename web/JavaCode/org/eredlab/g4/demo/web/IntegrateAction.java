@@ -12,7 +12,7 @@ import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.demo.service.DemoService;
 import org.eredlab.g4.rif.report.jasper.ReportData;
 import org.eredlab.g4.rif.web.BaseAction;
@@ -93,7 +93,7 @@ public class IntegrateAction extends BaseAction {
 		Dto dto = aForm.getParamAsDto(request);
 		List list = g4Reader.queryForPage("Demo.queryBalanceInfo2", dto);
 		Integer countInteger = (Integer) g4Reader.queryForObject("Demo.countBalanceInfo2", dto);
-		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, GlobalConstants.FORMAT_Date);
+		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, G4Constants.FORMAT_Date);
 		super.write(jsonString, response);
 		return mapping.findForward(null);
 	}
@@ -184,7 +184,7 @@ public class IntegrateAction extends BaseAction {
 			outDto.putAll(dto);
 			outDto.put("msg", "ok");
 		}
-		write(JsonHelper.encodeDto2FormLoadJson(outDto, GlobalConstants.FORMAT_Date), response);
+		write(JsonHelper.encodeDto2FormLoadJson(outDto, G4Constants.FORMAT_Date), response);
 		return mapping.findForward(null);
 	}
 
@@ -250,7 +250,7 @@ public class IntegrateAction extends BaseAction {
 		Dto dto = aForm.getParamAsDto(request);
 		List list = g4Reader.queryForPage("Demo.queryCatalogsForGridDemo", dto);
 		Integer countInteger = (Integer) g4Reader.queryForObject("Demo.countCatalogsForGridDemo", dto);
-		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, GlobalConstants.FORMAT_Date);
+		String jsonString = JsonHelper.encodeList2PageJson(list, countInteger, G4Constants.FORMAT_Date);
 		super.write(jsonString, response);
 		return mapping.findForward(null);
 	}

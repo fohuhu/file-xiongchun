@@ -12,7 +12,7 @@ import jxl.Workbook;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 
 /**
@@ -47,7 +47,7 @@ public class ExcelTemplate {
 		fieldObjct = new ArrayList();
 		variableObject = new ArrayList();
 		if(G4Utils.isEmpty(templatePath)){
-			log.error(GlobalConstants.Exception_Head + "Excel模板路径不能为空!");
+			log.error(G4Constants.Exception_Head + "Excel模板路径不能为空!");
 		}
 		templatePath = request.getSession().getServletContext().getRealPath(templatePath);
 		File file = new File(templatePath);

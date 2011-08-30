@@ -22,7 +22,7 @@ import org.eredlab.g4.ccl.tplengine.FileTemplate;
 import org.eredlab.g4.ccl.tplengine.TemplateEngine;
 import org.eredlab.g4.ccl.tplengine.TemplateEngineFactory;
 import org.eredlab.g4.ccl.tplengine.TemplateType;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.taglib.util.TagHelper;
 import org.eredlab.g4.rif.util.WebUtils;
 
@@ -96,7 +96,7 @@ public class ArmRoleGrantMenuTreeTag extends TagSupport {
 		try {
 			pageContext.getOut().write(writer.toString());
 		} catch (IOException e) {
-			log.error(GlobalConstants.Exception_Head + e.getMessage());
+			log.error(G4Constants.Exception_Head + e.getMessage());
 			e.printStackTrace();
 		}
 		return super.SKIP_BODY;

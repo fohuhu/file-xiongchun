@@ -26,4 +26,12 @@ public interface PartService extends BaseService {
 	 * @return
 	 */
 	public Dto deleteItem(Dto pDto);
+	
+	/**
+	 * 保存UI元素人员授权数据
+	 * 
+	 * @param pDto
+	 * @return
+	 */
+	public Dto savePartUserGrantDatas(Dto pDto);
 }

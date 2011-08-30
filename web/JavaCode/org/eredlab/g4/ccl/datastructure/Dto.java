@@ -77,6 +77,15 @@ public interface Dto extends Map {
 	 * @return Timestamp 键值
 	 */
 	public Timestamp getAsTimestamp(String pStr);
+	
+	/**
+	 * 以Boolean类型返回键值
+	 * 
+	 * @param key
+	 *            键名
+	 * @return Timestamp 键值
+	 */
+	public Boolean getAsBoolean(String key);
 
 	/**
 	 * 给Dto压入第一个默认List对象<br>
@@ -158,5 +167,35 @@ public interface Dto extends Map {
 	 * @return string 返回Json格式字符串
 	 */
 	public String toJson(String pFormat);
+	
+	/**
+	 * 设置交易状态
+	 * 
+	 * @param pSuccess
+	 */
+	public void setSuccess(Boolean pSuccess);
+	
+	/**
+	 * 获取交易状态
+	 * 
+	 * @param pSuccess
+	 */
+	public Boolean getSuccess();
+	
+	/**
+	 * 设置交易提示信息
+	 * 
+	 * @param pSuccess
+	 */
+	public void setMsg(String pMsg);
+	
+	/**
+	 * 获取交易提示信息
+	 * 
+	 * @param pSuccess
+	 */
+	public String getMsg();
+	
+	
 	
 }
