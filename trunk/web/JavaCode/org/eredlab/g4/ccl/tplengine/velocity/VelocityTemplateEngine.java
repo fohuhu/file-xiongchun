@@ -10,7 +10,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.tplengine.AbstractTemplateEngine;
 import org.eredlab.g4.ccl.tplengine.DefaultTemplate;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 
 /**
@@ -34,7 +34,7 @@ public class VelocityTemplateEngine extends AbstractTemplateEngine {
 		VelocityEngine ve = VelocityHelper.getVelocityEngine();
 		String strTemplate = pTemplate.getTemplateResource();
 		if(G4Utils.isEmpty(strTemplate)){
-			throw new IllegalArgumentException(GlobalConstants.Exception_Head + "字符串模板不能为空");
+			throw new IllegalArgumentException(G4Constants.Exception_Head + "字符串模板不能为空");
 		}
 		StringWriter writer = new StringWriter();
 		VelocityContext context = VelocityHelper.convertDto2VelocityContext(pDto);
@@ -46,7 +46,7 @@ public class VelocityTemplateEngine extends AbstractTemplateEngine {
 			if(log.isDebugEnabled())
 				log.debug("字符串模板合并成功.合并结果如下:\n" + writer);
 		} catch (Exception e) {
-			log.error(GlobalConstants.Exception_Head + "字符串模板合并失败");
+			log.error(G4Constants.Exception_Head + "字符串模板合并失败");
 			e.printStackTrace();
 		}
 		return writer;
@@ -64,7 +64,7 @@ public class VelocityTemplateEngine extends AbstractTemplateEngine {
 		VelocityEngine ve = VelocityHelper.getVelocityEngine();
 		String filePath = pTemplate.getTemplateResource();
 		if(G4Utils.isEmpty(filePath)){
-			throw new IllegalArgumentException(GlobalConstants.Exception_Head + "文件模板资源路径不能为空");
+			throw new IllegalArgumentException(G4Constants.Exception_Head + "文件模板资源路径不能为空");
 		}
 		StringWriter writer = new StringWriter();
 		Template template = null;
@@ -75,7 +75,7 @@ public class VelocityTemplateEngine extends AbstractTemplateEngine {
 			if(log.isDebugEnabled())
 				log.debug("生成文件模板成功");
 		} catch (Exception e) {
-			log.error(GlobalConstants.Exception_Head + "生成文件模板失败");
+			log.error(G4Constants.Exception_Head + "生成文件模板失败");
 			e.printStackTrace();
 		}
 		VelocityContext context = VelocityHelper.convertDto2VelocityContext(pDto);
@@ -86,7 +86,7 @@ public class VelocityTemplateEngine extends AbstractTemplateEngine {
 			if(log.isDebugEnabled())
 				log.debug("合并文件模板成功.合并结果如下:\n" + writer);
 		} catch (Exception e) {
-			if(log.isDebugEnabled())log.error(GlobalConstants.Exception_Head + "文件模板合并失败");
+			if(log.isDebugEnabled())log.error(G4Constants.Exception_Head + "文件模板合并失败");
 			e.printStackTrace();
 		} 
 		return writer;

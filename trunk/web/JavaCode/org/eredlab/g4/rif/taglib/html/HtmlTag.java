@@ -23,7 +23,7 @@ import org.eredlab.g4.ccl.tplengine.TemplateEngine;
 import org.eredlab.g4.ccl.tplengine.TemplateEngineFactory;
 import org.eredlab.g4.ccl.tplengine.TemplateType;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.taglib.util.TagConstant;
 import org.eredlab.g4.rif.taglib.util.TagHelper;
 import org.eredlab.g4.rif.util.WebUtils;
@@ -66,7 +66,7 @@ public class HtmlTag extends TagSupport{
 		dto.put("urlSecurity", urlSecurity);
 		dto.put("urlSecurity2", urlSecurity2);
 		dto.put("userInfo", userInfo);
-		dto.put("ajaxErrCode", GlobalConstants.Ajax_Timeout);
+		dto.put("ajaxErrCode", G4Constants.Ajax_Timeout);
 		dto.put("requestURL", request.getRequestURL());
 		dto.put("contextPath", contextPath);
 		dto.put("doctypeEnable", doctypeEnable);
@@ -109,7 +109,7 @@ public class HtmlTag extends TagSupport{
 		try {
 			pageContext.getOut().write(writer.toString());
 		} catch (IOException e) {
-			log.error(GlobalConstants.Exception_Head + e.getMessage());
+			log.error(G4Constants.Exception_Head + e.getMessage());
 			e.printStackTrace();
 		}
 		return super.EVAL_BODY_INCLUDE;
@@ -122,7 +122,7 @@ public class HtmlTag extends TagSupport{
 		try {
 			pageContext.getOut().write("</html>");
 		} catch (IOException e) {
-			log.error(GlobalConstants.Exception_Head + e.getMessage());
+			log.error(G4Constants.Exception_Head + e.getMessage());
 			e.printStackTrace();
 		}
 		return super.EVAL_PAGE;

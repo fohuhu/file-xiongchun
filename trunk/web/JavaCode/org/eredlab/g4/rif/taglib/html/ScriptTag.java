@@ -7,7 +7,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * Script标签
@@ -25,7 +25,7 @@ public class ScriptTag extends TagSupport {
 		try {
 			pageContext.getOut().write(begin);
 		} catch (IOException e) {
-			log.error(GlobalConstants.Exception_Head + e.getMessage());
+			log.error(G4Constants.Exception_Head + e.getMessage());
 			e.printStackTrace();
 		}
 		return super.EVAL_BODY_INCLUDE;
@@ -38,7 +38,7 @@ public class ScriptTag extends TagSupport {
 		try {
 			pageContext.getOut().write("</script>");
 		} catch (IOException e) {
-			log.error(GlobalConstants.Exception_Head + e.getMessage());
+			log.error(G4Constants.Exception_Head + e.getMessage());
 			e.printStackTrace();
 		}
     	return super.EVAL_PAGE;

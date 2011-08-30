@@ -13,6 +13,7 @@ import org.eredlab.g4.arm.util.ArmConstants;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.web.BaseAction;
 import org.eredlab.g4.rif.web.CommonActionForm;
 
@@ -51,6 +52,7 @@ public class PartAction extends BaseAction {
 		Dto dto = new BaseDto();
 		String nodeid = request.getParameter("node");
 		dto.put("parentid", nodeid);
+		dto.put("menutype", ArmConstants.MENUTYPE_BUSINESS);
 		List menuList = g4Reader.queryForList("Resource.queryMenuItemsByDto", dto);
 		Dto menuDto = new BaseDto();
 		for (int i = 0; i < menuList.size(); i++) {
@@ -95,10 +97,12 @@ public class PartAction extends BaseAction {
 		List list  = aForm.getGridDirtyData(request);
 		Dto inDto = new BaseDto();
 		inDto.setDefaultAList(list);
-		service.saveDirtyDatas(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "数据保存成功");
+		Dto outDto = service.saveDirtyDatas(inDto);
+		if (outDto.getSuccess()) {
+			outDto.setMsg("数据保存成功");
+		}else {
+			outDto.setMsg("保存操作被取消,同一托管页面上元素Dom标志只能唯一,请检查");
+		}
 		write(JsonHelper.encodeObject2Json(outDto), response);
 		return mapping.findForward(null);
 	}
@@ -114,9 +118,7 @@ public class PartAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		service.deleteItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "数据删除成功");
+		Dto outDto = new BaseDto(G4Constants.TRUE, "数据删除成功");
 		write(JsonHelper.encodeObject2Json(outDto), response);
 		return mapping.findForward(null);
 	}

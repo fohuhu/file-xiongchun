@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.exception.G4Exception;
@@ -14,7 +16,7 @@ import org.eredlab.g4.ccl.properties.PropertiesFactory;
 import org.eredlab.g4.ccl.properties.PropertiesFile;
 import org.eredlab.g4.ccl.properties.PropertiesHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
@@ -27,6 +29,8 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
  * @see org.springframework.orm.ibatis.support.SqlMapClientDaoSupport
  */
 public class IDaoImpl extends SqlMapClientDaoSupport implements IDao {
+	
+	private static Log log = LogFactory.getLog(IDaoImpl.class);
 
 	/**
 	 * 插入一条记录
@@ -97,16 +101,22 @@ public class IDaoImpl extends SqlMapClientDaoSupport implements IDao {
 	 * @throws SQLException 
 	 */
 	public List queryForPage(String statementName, Dto qDto) throws SQLException {
+		Connection connection = getConnection();
+		String dbNameString = connection.getMetaData().getDatabaseProductName().toLowerCase();
+		try {
+			connection.close();
+		} catch (Exception e) {
+			log.error(G4Constants.Exception_Head + "未正常关闭数据库连接");
+			e.printStackTrace();
+		}
 		String start = qDto.getAsString("start");
 		String limit = qDto.getAsString("limit");
 		int startInt = 0;
 		if (G4Utils.isNotEmpty(start)) {
 			startInt = Integer.parseInt(start);
-			if (getConnection().getMetaData().getDatabaseProductName()
-					.toLowerCase().indexOf("ora") > -1) {
+			if (dbNameString.indexOf("ora") > -1) {
 				qDto.put("start", startInt + 1);
-			} else if (getConnection().getMetaData()
-					.getDatabaseProductName().toLowerCase().indexOf("mysql") > -1) {
+			} else if (dbNameString.indexOf("mysql") > -1) {
 				qDto.put("start", startInt);
 			} else {
 				qDto.put("start", startInt);
@@ -114,26 +124,27 @@ public class IDaoImpl extends SqlMapClientDaoSupport implements IDao {
 		}
 		if (G4Utils.isNotEmpty(limit)) {
 			int limitInt = Integer.parseInt(limit);
-			if (getConnection().getMetaData().getDatabaseProductName()
-					.toLowerCase().indexOf("ora") > -1) {
+			if (dbNameString.indexOf("ora") > -1) {
 				qDto.put("end", limitInt + startInt);
-			} else if (getConnection().getMetaData()
-					.getDatabaseProductName().toLowerCase().indexOf("mysql") > -1) {
+			} else if (dbNameString.indexOf("mysql") > -1) {
 				qDto.put("end", limitInt);
 			} else {
 				qDto.put("end", limitInt);
 			}
 		}
+		
 		Integer intStart = qDto.getAsInteger("start");
 		Integer end = qDto.getAsInteger("end");
 		if (G4Utils.isEmpty(start) || G4Utils.isEmpty(end)) {
 			try {
-				throw new G4Exception(GlobalConstants.ERR_MSG_QUERYFORPAGE_STRING);
+				throw new G4Exception(
+						G4Constants.ERR_MSG_QUERYFORPAGE_STRING);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		return getSqlMapClientTemplate().queryForList(statementName, qDto, intStart.intValue(), end.intValue());
+		return getSqlMapClientTemplate().queryForList(statementName, qDto,
+				intStart.intValue(), end.intValue());
 	}
 
 	/**

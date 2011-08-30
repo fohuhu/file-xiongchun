@@ -1,6 +1,6 @@
 package org.eredlab.g4.ccl.exception;
 
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 调用存储过程异常
@@ -15,13 +15,13 @@ public class PrcException extends RuntimeException {
 	private String prcName;
 
 	public PrcException(String prcName, String errorMsg) {
-		super(GlobalConstants.Exception_Head + "调用存储过程[" + prcName
+		super(G4Constants.Exception_Head + "调用存储过程[" + prcName
 				+ "]发生错误,错误原因：[" + errorMsg + "]");
 		setErrorMsg(errorMsg);
 	}
 
 	public PrcException(String prcName, String appCode, String errorMsg) {
-		super(GlobalConstants.Exception_Head + "调用存储过程[" + prcName
+		super(G4Constants.Exception_Head + "调用存储过程[" + prcName
 				+ "]发生错误,错误编码为：[" + appCode + "] 错误原因：[" + errorMsg + "]");
 		setAppCode(appCode);
 		setPrcName(prcName);

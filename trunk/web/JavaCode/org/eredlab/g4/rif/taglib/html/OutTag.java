@@ -8,7 +8,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.rif.util.WebUtils;
 
@@ -41,7 +41,7 @@ public class OutTag extends TagSupport {
 		try {
 			pageContext.getOut().write(valueString);
 		} catch (IOException e) {
-			log.error(GlobalConstants.Exception_Head + e.getMessage());
+			log.error(G4Constants.Exception_Head + e.getMessage());
 			e.printStackTrace();
 		}
 		return super.SKIP_BODY;

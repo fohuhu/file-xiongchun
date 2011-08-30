@@ -26,7 +26,7 @@ import org.eredlab.g4.ccl.properties.PropertiesFactory;
 import org.eredlab.g4.ccl.properties.PropertiesFile;
 import org.eredlab.g4.ccl.properties.PropertiesHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 请求拦截过滤器
@@ -78,8 +78,8 @@ public class RequestFilter implements Filter {
 		PropertiesHelper pHelper = PropertiesFactory.getPropertiesHelper(PropertiesFile.G4);
 		String eventMonitorEnabel = pHelper.getValue("requestMonitor", "1");
 		String postType = request.getParameter("postType");
-		postType = G4Utils.isEmpty(postType) ? GlobalConstants.PostType_Normal : postType;
-		if (postType.equals(GlobalConstants.PostType_Nude)) {
+		postType = G4Utils.isEmpty(postType) ? G4Constants.PostType_Normal : postType;
+		if (postType.equals(G4Constants.PostType_Nude)) {
 			long start = System.currentTimeMillis();
 			fc.doFilter(request, response);
 			if (eventMonitorEnabel.equalsIgnoreCase(ArmConstants.EVENTMONITOR_ENABLE_Y)) {
@@ -96,7 +96,7 @@ public class RequestFilter implements Filter {
 					response.getWriter().flush();
 					response.getWriter().close();
 				} else {
-					response.sendError(GlobalConstants.Ajax_Timeout);
+					response.sendError(G4Constants.Ajax_Timeout);
 				}
 				log.warn("警告:非法的URL请求已被成功拦截,请求已被强制重定向到了登录页面.访问来源IP锁定:" + request.getRemoteAddr() + " 试图访问的URL:"
 						+ request.getRequestURL().toString() + "?reqCode=" + request.getParameter("reqCode"));
@@ -104,7 +104,7 @@ public class RequestFilter implements Filter {
 			}
 			if (G4Utils.isNotEmpty(isAjax) && !uri.equals("/login.ered")) {
 				if (!request.getParameter("loginuserid").equals(userInfo.getUserid())) {
-					response.sendError(GlobalConstants.Ajax_Session_Unavaliable);
+					response.sendError(G4Constants.Ajax_Session_Unavaliable);
 					log.error("当前会话和登录用户会话不一致,请求被重定向到了登录页面");
 					return;
 				}

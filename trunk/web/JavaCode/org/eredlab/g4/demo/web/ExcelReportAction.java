@@ -13,7 +13,7 @@ import org.apache.struts.upload.FormFile;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.util.G4Utils;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.report.excel.ExcelExporter;
 import org.eredlab.g4.rif.report.excel.ExcelReader;
 import org.eredlab.g4.rif.web.BaseAction;
@@ -53,7 +53,7 @@ public class ExcelReportAction extends BaseAction {
 		super.setSessionAttribute(request, "QUERYCATALOGS4EXPORT_QUERYDTO", inDto);
 		List catalogList = g4Reader.queryForPage("Demo.queryCatalogsForPrint", inDto);
 		Integer pageCount = (Integer) g4Reader.queryForObject("Demo.queryCatalogsForPrintForPageCount", inDto);
-		String jsonString = encodeList2PageJson(catalogList, pageCount, GlobalConstants.FORMAT_DateTime);
+		String jsonString = encodeList2PageJson(catalogList, pageCount, G4Constants.FORMAT_DateTime);
 		write(jsonString, response);
 		return mapping.findForward(null);
 	}
@@ -93,7 +93,7 @@ public class ExcelReportAction extends BaseAction {
 			HttpServletResponse response) throws Exception {
 		List catalogList = (List) super.getSessionAttribute(request, "importExcelList");
 		Integer pageCount = new Integer(1); // 演示数据默认在一页上显示
-		String jsonString = encodeList2PageJson(catalogList, pageCount, GlobalConstants.FORMAT_Date);
+		String jsonString = encodeList2PageJson(catalogList, pageCount, G4Constants.FORMAT_Date);
 		write(jsonString, response);
 		return mapping.findForward(null);
 	}

@@ -542,7 +542,7 @@
 	</delete>
 	
 	<!-- 定义出入参对象映射 -->
-	<parameterMap id="demo.prcdto" class="java.util.Map">
+	<parameterMap id="prcdto" class="java.util.Map">
 		<parameter property="myname" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" /> <!-- 入参 -->
 		<parameter property="number1" jdbcType="DOUBLE" javaType="java.math.BigDecimal" mode="IN" /> <!-- 入参 -->
 		<parameter property="number2" jdbcType="DOUBLE" javaType="java.math.BigDecimal" mode="IN" /> <!-- 入参 -->
@@ -552,6 +552,6 @@
 		<parameter property="errMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT" /> <!-- 出错信息 -->
 	</parameterMap>
 	<!-- 演示调用存储过程:如果你将存储过程是通过oracle的package的方式来组织,则使用packagename.prcname的方式来调用 -->
-	<procedure id="g4_prc_demo" parameterMap="demo.prcdto">{call g4_prc_demo(?,?,?,?,?,?,?)}</procedure>
+	<procedure id="g4_prc_demo" parameterMap="prcdto">{call g4_prc_demo(?,?,?,?,?,?,?)}</procedure>
 	
 </sqlMap>

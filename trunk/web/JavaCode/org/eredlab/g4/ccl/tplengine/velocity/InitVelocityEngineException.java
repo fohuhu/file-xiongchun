@@ -1,6 +1,6 @@
 package org.eredlab.g4.ccl.tplengine.velocity;
 
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 初始模板引擎异常类
@@ -20,7 +20,7 @@ public class InitVelocityEngineException extends RuntimeException{
 	 * @param 
 	 */
 	public InitVelocityEngineException(){
-		super(GlobalConstants.Exception_Head + "初始化eRedG4平台缺省模板引擎失败.\n");
+		super(G4Constants.Exception_Head + "初始化eRedG4平台缺省模板引擎失败.\n");
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class InitVelocityEngineException extends RuntimeException{
 	 * @param 
 	 */
 	public InitVelocityEngineException(String msg){
-		super(GlobalConstants.Exception_Head + "初始化eRedG4平台缺省模板引擎失败\n" + msg);
+		super(G4Constants.Exception_Head + "初始化eRedG4平台缺省模板引擎失败\n" + msg);
 	}
 
 }

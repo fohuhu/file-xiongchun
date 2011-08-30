@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eredlab.g4.ccl.tplengine.velocity.VelocityTemplateEngine;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 模板引擎工厂
@@ -53,7 +53,7 @@ public class TemplateEngineFactory {
 			return null;
 		}
 		if (ENGINES.containsKey(pType) == false) {
-			throw new IllegalArgumentException(GlobalConstants.Exception_Head + "不支持的模板类别:" + pType.getType());
+			throw new IllegalArgumentException(G4Constants.Exception_Head + "不支持的模板类别:" + pType.getType());
 		}
 		return (TemplateEngine) ENGINES.get(pType);
 	}

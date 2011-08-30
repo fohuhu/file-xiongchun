@@ -1,6 +1,6 @@
 package org.eredlab.g4.ccl.exception;
 
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 非空异常校验类<br>
@@ -18,7 +18,7 @@ public class NullAbleException extends RuntimeException {
 	 * @param 非空校验类
 	 */
 	public NullAbleException() {
-		super(GlobalConstants.Exception_Head + "对象不能为空,请检查.");
+		super(G4Constants.Exception_Head + "对象不能为空,请检查.");
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class NullAbleException extends RuntimeException {
 	 * @param 非空校验类
 	 */
 	public NullAbleException(Class cs) {
-		super(GlobalConstants.Exception_Head + "对象不能为空,请检查.[" + cs + "]");
+		super(G4Constants.Exception_Head + "对象不能为空,请检查.[" + cs + "]");
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class NullAbleException extends RuntimeException {
 	 *            异常附加信息
 	 */
 	public NullAbleException(String pNullField) {
-		super(GlobalConstants.Exception_Head + "对象属性[" + pNullField + "]不能为空,请检查.");
+		super(G4Constants.Exception_Head + "对象属性[" + pNullField + "]不能为空,请检查.");
 		this.setNullField(pNullField);
 	}
 

@@ -129,13 +129,13 @@ public class G4Utils {
 	public static boolean isTheStyle(String pStr, String pStyle) {
 		for (int i = 0; i < pStr.length(); i++) {
 			char c = pStr.charAt(i);
-			if (pStyle.equals(GlobalConstants.S_STYLE_N)) {
+			if (pStyle.equals(G4Constants.S_STYLE_N)) {
 				if (!Character.isDigit(c))
 					return false;
-			} else if (pStyle.equals(GlobalConstants.S_STYLE_L)) {
+			} else if (pStyle.equals(G4Constants.S_STYLE_L)) {
 				if (!Character.isLetter(c))
 					return false;
-			} else if (pStyle.equals(GlobalConstants.S_STYLE_NL)) {
+			} else if (pStyle.equals(G4Constants.S_STYLE_NL)) {
 				if (Character.isLetterOrDigit(c))
 					return false;
 			}
@@ -765,7 +765,7 @@ public class G4Utils {
 	 */
 	public static boolean defaultJdbcTypeOracle() {
 		boolean out = false;
-		String jdbcType = System.getProperty("eRedg4.JdbcType");
+		String jdbcType = System.getProperty("g4.JdbcType");
 		if (jdbcType.equalsIgnoreCase("oracle")) {
 			out = true;
 		}
@@ -779,7 +779,7 @@ public class G4Utils {
 	 */
 	public static boolean defaultJdbcTypeMysql() {
 		boolean out = false;
-		String jdbcType = System.getProperty("eRedg4.JdbcType");
+		String jdbcType = System.getProperty("g4.JdbcType");
 		if (jdbcType.equalsIgnoreCase("mysql")) {
 			out = true;
 		}

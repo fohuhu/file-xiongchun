@@ -10,7 +10,7 @@ import org.eredlab.g4.ccl.id.SequenceStorer;
 import org.eredlab.g4.ccl.id.fomater.DefaultSequenceFormater;
 import org.eredlab.g4.ccl.id.generator.DefaultIDGenerator;
 import org.eredlab.g4.ccl.id.sequence.DefaultSequenceGenerator;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 
 /**
@@ -74,9 +74,9 @@ public class IdGenerator {
 			}else if(10 <= intMenuId && intMenuId <= 99){
 				menuId = String.valueOf(intMenuId);
 			}else if(intMenuId > 99){
-				log.error(GlobalConstants.Exception_Head + "生成菜单编号越界了.同级兄弟节点编号为[01-99]\n请和您的系统管理员联系!");
+				log.error(G4Constants.Exception_Head + "生成菜单编号越界了.同级兄弟节点编号为[01-99]\n请和您的系统管理员联系!");
 			}else{
-				log.error(GlobalConstants.Exception_Head + "生成菜单编号发生未知错误,请和开发人员联系!");
+				log.error(G4Constants.Exception_Head + "生成菜单编号发生未知错误,请和开发人员联系!");
 			}
 		}
 		return pParentid + menuId;
@@ -103,9 +103,9 @@ public class IdGenerator {
 			}else if (100 <= intDeptId && intDeptId <= 999) {
 				deptid = String.valueOf(intDeptId);
 			}else if(intDeptId >999){
-				log.error(GlobalConstants.Exception_Head + "生成部门编号越界了.同级兄弟节点编号为[001-999]\n请和您的系统管理员联系!");
+				log.error(G4Constants.Exception_Head + "生成部门编号越界了.同级兄弟节点编号为[001-999]\n请和您的系统管理员联系!");
 			}else{
-				log.error(GlobalConstants.Exception_Head + "生成部门编号发生未知错误,请和开发人员联系!");
+				log.error(G4Constants.Exception_Head + "生成部门编号发生未知错误,请和开发人员联系!");
 			}
 		}
 		return pParentid + deptid;

@@ -17,7 +17,7 @@ import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BasePo;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseVo;
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 
 /**
@@ -70,7 +70,7 @@ public class ExcelFiller {
 			wwb.close();
 			wb.close();
 		} catch (Exception e) {
-			log.error(GlobalConstants.Exception_Head + "基于模板生成可写工作表出错了!");
+			log.error(G4Constants.Exception_Head + "基于模板生成可写工作表出错了!");
 			e.printStackTrace();
 		}
 		return bos;
@@ -88,7 +88,7 @@ public class ExcelFiller {
 			try {
 				wSheet.addCell(label);
 			} catch (Exception e) {
-				log.error(GlobalConstants.Exception_Head + "写入静态对象发生错误!");
+				log.error(G4Constants.Exception_Head + "写入静态对象发生错误!");
 				e.printStackTrace();
 			}
 		}
@@ -105,7 +105,7 @@ public class ExcelFiller {
 			String key = getKey(cell.getContents().trim());
 			String type = getType(cell.getContents().trim());
 			try {
-				if (type.equalsIgnoreCase(GlobalConstants.ExcelTPL_DataType_Number)) {
+				if (type.equalsIgnoreCase(G4Constants.ExcelTPL_DataType_Number)) {
 					Number number = new Number(cell.getColumn(), cell.getRow(), parameterDto.getAsBigDecimal(key)
 							.doubleValue());
 					number.setCellFormat(cell.getCellFormat());
@@ -116,7 +116,7 @@ public class ExcelFiller {
 					wSheet.addCell(label);
 				}
 			} catch (Exception e) {
-				log.error(GlobalConstants.Exception_Head + "写入表格参数对象发生错误!");
+				log.error(G4Constants.Exception_Head + "写入表格参数对象发生错误!");
 				e.printStackTrace();
 			}
 		}
@@ -143,14 +143,14 @@ public class ExcelFiller {
 				Dto dto = (BaseDto) object;
 				dataDto.putAll(dto);
 			} else {
-				log.error(GlobalConstants.Exception_Head + "不支持的数据类型!");
+				log.error(G4Constants.Exception_Head + "不支持的数据类型!");
 			}
 			for (int i = 0; i < fields.size(); i++) {
 				Cell cell = (Cell) fields.get(i);
 				String key = getKey(cell.getContents().trim());
 				String type = getType(cell.getContents().trim());
 				try {
-					if (type.equalsIgnoreCase(GlobalConstants.ExcelTPL_DataType_Number)) {
+					if (type.equalsIgnoreCase(G4Constants.ExcelTPL_DataType_Number)) {
 						Number number = new Number(cell.getColumn(), cell.getRow() + j, dataDto.getAsBigDecimal(key)
 								.doubleValue());
 						number.setCellFormat(cell.getCellFormat());
@@ -161,7 +161,7 @@ public class ExcelFiller {
 						wSheet.addCell(label);
 					}
 				} catch (Exception e) {
-					log.error(GlobalConstants.Exception_Head + "写入表格字段对象发生错误!");
+					log.error(G4Constants.Exception_Head + "写入表格字段对象发生错误!");
 					e.printStackTrace();
 				}
 			}
@@ -197,7 +197,7 @@ public class ExcelFiller {
 			String key = getKey(cell.getContents().trim());
 			String type = getType(cell.getContents().trim());
 			try {
-				if (type.equalsIgnoreCase(GlobalConstants.ExcelTPL_DataType_Number)) {
+				if (type.equalsIgnoreCase(G4Constants.ExcelTPL_DataType_Number)) {
 					Number number = new Number(cell.getColumn(), row, parameterDto.getAsBigDecimal(key).doubleValue());
 					number.setCellFormat(cell.getCellFormat());
 					wSheet.addCell(number);
@@ -211,7 +211,7 @@ public class ExcelFiller {
 					wSheet.addCell(label);
 				}
 			} catch (Exception e) {
-				log.error(GlobalConstants.Exception_Head + "写入表格变量对象发生错误!");
+				log.error(G4Constants.Exception_Head + "写入表格变量对象发生错误!");
 				e.printStackTrace();
 			}
 		}
@@ -243,9 +243,9 @@ public class ExcelFiller {
 	 * @return 数据类型
 	 */
 	private static String getType(String pType) {
-		String type = GlobalConstants.ExcelTPL_DataType_Label;
+		String type = G4Constants.ExcelTPL_DataType_Label;
 		if (pType.indexOf(":n") != -1 || pType.indexOf(":N") != -1) {
-			type = GlobalConstants.ExcelTPL_DataType_Number;
+			type = G4Constants.ExcelTPL_DataType_Number;
 		}
 		return type;
 	}

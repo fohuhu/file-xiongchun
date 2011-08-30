@@ -1,6 +1,6 @@
 package org.eredlab.g4.ccl.exception;
 
-import org.eredlab.g4.ccl.util.GlobalConstants;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * G4公共异常类<br>
@@ -15,6 +15,6 @@ public class G4Exception extends RuntimeException {
 	}
 
 	public G4Exception(String msg) {
-		super(GlobalConstants.Exception_Head + msg);
+		super(G4Constants.Exception_Head + msg);
 	}
 }
