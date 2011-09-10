@@ -132,10 +132,7 @@ public class UserAction extends BaseAction {
 		Dto inDto = new BaseDto();
 		inDto.put("strChecked", strChecked);
 		userService.deleteUserItems(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "用户数据删除成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("用户数据删除成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -150,10 +147,7 @@ public class UserAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		userService.updateUserItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "用户数据修改成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("用户数据修改成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -194,10 +188,7 @@ public class UserAction extends BaseAction {
 		inDto.put("roleid", request.getParameter("roleid"));
 		inDto.put("userid", super.getSessionAttribute(request, "USERID_USERACTION"));
 		userService.saveSelectedRole(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("msg", "您选择的人员角色关联数据保存成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+		setOkTipMsg("您选择的人员角色关联数据保存成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -213,10 +204,7 @@ public class UserAction extends BaseAction {
 		inDto.put("menuid", request.getParameter("menuid"));
 		inDto.put("userid", super.getSessionAttribute(request, "USERID_USERACTION"));
 		userService.saveSelectedMenu(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("msg", "您选择的人员菜单关联数据保存成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+		setOkTipMsg("您选择的人员菜单关联数据保存成功", response);
 		return mapping.findForward(null);
 	}
 }

@@ -105,9 +105,8 @@ public class UserPartAction extends BaseAction {
 		List list  = aForm.getGridDirtyData(request);
 		Dto inDto = new BaseDto();
 		inDto.setDefaultAList(list);
-		Dto outDto = partService.savePartUserGrantDatas(inDto);
-		outDto.setMsg("授权数据保存成功");
-		write(outDto.toJson(), response);
+		partService.savePartUserGrantDatas(inDto);
+		setOkTipMsg("授权数据保存成功", response);
 		return mapping.findForward(null);
 	}
 

@@ -72,10 +72,7 @@ public class JdbcMonitorAction extends BaseAction {
 			HttpServletResponse response) throws Exception {
 		CommonActionForm cForm = (CommonActionForm)form;
 		monitorService.resetMonitorData();
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "JDBC监控记录重置成功");
-		write(outDto.toJson(), response);
+		setOkTipMsg("JDBC监控记录重置成功", response);
 		return mapping.findForward(null);
 	}
 

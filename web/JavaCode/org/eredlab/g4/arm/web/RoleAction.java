@@ -113,10 +113,7 @@ public class RoleAction extends BaseAction{
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		roleService.saveRoleItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("msg", "角色数据新增成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+		setOkTipMsg("角色新增成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -132,10 +129,7 @@ public class RoleAction extends BaseAction{
 		Dto inDto = new BaseDto();
 		inDto.put("strChecked", strChecked);
 		roleService.deleteRoleItems(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "角色数据删除成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("角色删除成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -150,10 +144,7 @@ public class RoleAction extends BaseAction{
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		roleService.updateRoleItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "角色数据修改成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("角色修改成功", response);
 		return mapping.findForward(null);
 	}
 		
@@ -208,13 +199,12 @@ public class RoleAction extends BaseAction{
 		inDto.put("authorizelevel", request.getParameter("key"));
 		inDto.put("roleid", super.getSessionAttribute(request, "ROLEID_ROLEACTION"));
 		roleService.saveGrant(inDto);
-		Dto outDto = new BaseDto();
+		String msg = "";
 		if(inDto.getAsString("authorizelevel").equals(ArmConstants.AUTHORIZELEVEL_ACCESS))
-		   outDto.put("msg", "经办权限授权成功");
+			msg = "经办权限授权成功";
 		if(inDto.getAsString("authorizelevel").equals(ArmConstants.AUTHORIZELEVEL_ADMIN))
-			   outDto.put("msg", "管理权限授权成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+			msg = "管理权限授权成功";
+		setOkTipMsg(msg, response);
 		return mapping.findForward(null);
 	}
 	
@@ -230,10 +220,7 @@ public class RoleAction extends BaseAction{
 		inDto.put("userid", request.getParameter("userid"));
 		inDto.put("roleid", super.getSessionAttribute(request, "ROLEID_ROLEACTION"));
 		roleService.saveSelectUser(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("msg", "您选择的角色人员关联数据保存成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+		setOkTipMsg("您选择的角色人员关联数据保存成功", response);
 		return mapping.findForward(null);
 	}
 }

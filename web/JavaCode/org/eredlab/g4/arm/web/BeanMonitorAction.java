@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.eredlab.g4.arm.service.MonitorService;
 import org.eredlab.g4.ccl.datastructure.Dto;
-import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.rif.web.BaseAction;
 import org.eredlab.g4.rif.web.CommonActionForm;
@@ -72,12 +71,10 @@ public class BeanMonitorAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto dto = aForm.getParamAsDto(request);
 		monitorService.deleteMonitorData(dto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "数据删除成功!");
 		if (dto.getAsString("type").equalsIgnoreCase("reset"))
-			outDto.put("msg", "重置成功,所有监控记录已被清除!");
-		write(outDto.toJson(), response);
+			setOkTipMsg("重置成功,所有监控记录已被清除!", response);
+		else 
+			setOkTipMsg("数据删除成功!", response);
 		return mapping.findForward(null);
 	}
 }

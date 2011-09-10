@@ -72,12 +72,10 @@ public class EventTrackAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm)form;
 		Dto dto = aForm.getParamAsDto(request);
 		monitorService.deleteEvent(dto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "数据删除成功!");
 		if (dto.getAsString("type").equalsIgnoreCase("reset"))
-			outDto.put("msg", "重置成功,所有事件已被清除!");
-		super.write(outDto.toJson(), response);
+			setOkTipMsg("重置成功,所有事件已被清除!", response);
+		else
+			setOkTipMsg("数据删除成功!", response);
 		return mapping.findForward(null);
 	}
 }

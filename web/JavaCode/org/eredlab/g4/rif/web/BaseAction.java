@@ -14,10 +14,13 @@ import org.apache.struts.actions.DispatchAction;
 import org.eredlab.g4.bmf.base.IReader;
 import org.eredlab.g4.bmf.util.SpringBeanLoader;
 import org.eredlab.g4.ccl.datastructure.Dto;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
 import org.eredlab.g4.ccl.properties.PropertiesFactory;
 import org.eredlab.g4.ccl.properties.PropertiesFile;
 import org.eredlab.g4.ccl.properties.PropertiesHelper;
+import org.eredlab.g4.ccl.util.G4Constants;
+import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.rif.util.SessionContainer;
 import org.eredlab.g4.rif.util.WebUtils;
 
@@ -218,8 +221,41 @@ public class BaseAction extends DispatchAction {
 	protected String encodeObjectJson(Object pObject) {
 		return JsonHelper.encodeObject2Json(pObject);
 	}
+	
+	/**
+	 * 
+	 * 交易成功提示信息
+	 * 
+	 * @param pMsg
+	 *            提示信息
+	 * @param pResponse
+	 * @return
+	 * @throws IOException 
+	 */
+	protected void setOkTipMsg(String pMsg, HttpServletResponse response) throws IOException {
+		Dto outDto = new BaseDto(G4Constants.TRUE, pMsg);
+		write(outDto.toJson(), response);
+	}
+	
+	/**
+	 * 
+	 * 交易失败提示信息(特指：业务交易失败并不是请求失败)<br>
+	 * 和Form的submit中的failur回调对应,Ajax.request中的failur回调是值请求失败
+	 * 
+	 * @param pMsg
+	 *            提示信息
+	 * @param pResponse
+	 * @return
+	 * @throws IOException 
+	 */
+	protected void setErrTipMsg(String pMsg, HttpServletResponse response) throws IOException {
+		Dto outDto = new BaseDto(G4Constants.FALSE, pMsg);
+		write(outDto.toJson(), response);
+	}
+	
 
 	protected Map getKeyMethodMap() {
 		return null;
 	}
+	
 }

@@ -149,7 +149,7 @@ public class FormAction extends BaseAction {
 		Dto dto = aForm.getParamAsDto(request);
 		List areaList = g4Reader.queryForList("Demo.getChinaDataArea", dto);
 		String jsonString = JsonHelper.encodeObject2Json(areaList);
-		super.write(jsonString, response);
+		write(jsonString, response);
 		return mapping.findForward(null);
 	}
 
@@ -256,10 +256,7 @@ public class FormAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm)form;
 		Dto dto = aForm.getParamAsDto(request);
 		System.out.println("接收到的表单提交参数：\n" + dto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "数据提交成功:" + dto.toString());
-		super.write(JsonHelper.encodeObject2Json(outDto), response);
+		setOkTipMsg("数据提交成功:" + dto.toString(), response);
 		return mapping.findForward(null);
 	}
 	
@@ -279,10 +276,7 @@ public class FormAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm)form;
 		Dto dto = aForm.getParamAsDto(request);
 		System.out.println("接收到的表单提交参数：\n" + dto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(false));
-		outDto.put("msg", "数据提交成功:" + dto.toString());
-		super.write(JsonHelper.encodeObject2Json(outDto), response);
+		setOkTipMsg("数据提交成功:" + dto.toString(), response);
 		return mapping.findForward(null);
 	}
 	
@@ -470,7 +464,7 @@ public class FormAction extends BaseAction {
 			outDto.put("state", "ok");
 			outDto.put("aUrl", request.getContextPath() + "/uploaddata/demo/" + fileName);
 		}
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		write(outDto.toJson(), response);
 		return mapping.findForward(null);
 	}
 }

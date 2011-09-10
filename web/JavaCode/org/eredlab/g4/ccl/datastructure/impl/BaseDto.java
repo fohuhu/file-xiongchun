@@ -30,6 +30,10 @@ public class BaseDto extends HashMap implements Dto, Serializable {
 		put(key, value);
 	}
 	
+	public BaseDto(Boolean success){
+		setSuccess(success);
+	}
+	
 	public BaseDto(Boolean success, String msg){
 		setSuccess(success);
 		setMsg(msg);

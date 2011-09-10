@@ -3,8 +3,10 @@ package org.eredlab.g4.arm.service;
 import org.eredlab.g4.bmf.base.BaseService;
 import org.eredlab.g4.ccl.datastructure.Dto;
 
-/*
+/**
+ * 
  * 权限模型标签业务接口
+ * 
  * @author XiongChun
  * @since 2010-05-13
  */

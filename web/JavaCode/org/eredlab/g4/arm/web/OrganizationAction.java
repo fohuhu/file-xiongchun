@@ -98,10 +98,7 @@ public class OrganizationAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		organizationService.saveDeptItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("msg", "部门数据新增成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+		setOkTipMsg("部门数据新增成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -116,10 +113,7 @@ public class OrganizationAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		organizationService.updateDeptItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "部门数据修改成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("部门数据修改成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -139,10 +133,7 @@ public class OrganizationAction extends BaseAction {
 		inDto.put("type", type);
 		inDto.put("deptid", deptid);
 		organizationService.deleteDeptItems(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "部门数据删除成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("部门数据删除成功", response);
 		return mapping.findForward(null);
 	}
 	

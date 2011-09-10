@@ -204,10 +204,7 @@ public class IntegrateAction extends BaseAction {
 		Dto inDto = cForm.getParamAsDto(request);
 		inDto.put("ggsj", inDto.getAsTimestamp("ggsj"));
 		demoService.updateSfxmDomain(inDto);
-		Dto dto = new BaseDto();
-		dto.put("success", new Boolean(true));
-		dto.put("msg", "数据修改成功!");
-		write(JsonHelper.encodeObject2Json(dto), response);
+		setOkTipMsg("数据修改成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -227,10 +224,8 @@ public class IntegrateAction extends BaseAction {
 		Dto inDto = aForm.getParamAsDto(request);
 		inDto.put("ggsj", inDto.getAsTimestamp("ggsj"));
 		inDto.put("yybm", "03010001");
-		Dto outDto = demoService.saveSfxmDomain(inDto);
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "收费项目数据保存成功!");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		demoService.saveSfxmDomain(inDto);
+		setOkTipMsg("收费项目数据保存成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -269,10 +264,8 @@ public class IntegrateAction extends BaseAction {
 			HttpServletResponse response) throws Exception {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
-		Dto outDto = demoService.deleteSfxm(inDto);
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "收费项目删除成功!");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		demoService.deleteSfxm(inDto);
+		setOkTipMsg("收费项目删除成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -324,7 +317,7 @@ public class IntegrateAction extends BaseAction {
 	    outDto.put("result", result);
 	    outDto.put("success", new Boolean(true));
 		outDto.put("msg", "存储过程调用成功");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		write(outDto.toJson(), response);
 		return mapping.findForward(null);
 	}
 	
@@ -346,10 +339,7 @@ public class IntegrateAction extends BaseAction {
 		inDto.put("ggsj", inDto.getAsTimestamp("ggsj"));
 		inDto.put("yybm", "03010001");
 		demoService.batchSaveSfxmDomains(inDto);
-        Dto outDto = new BaseDto();
-	    outDto.put("success", new Boolean(true));
-	    outDto.put("msg", "保存成功(以batch方式一次性向数据库服务器批量提交了3条SQL语句)");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		setOkTipMsg("保存成功(以batch方式一次性向数据库服务器批量提交了3条SQL语句)", response);
 		return mapping.findForward(null);
 	}
 }

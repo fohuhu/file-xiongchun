@@ -227,7 +227,7 @@ public class GridAction extends BaseAction {
 		Dto outDto = new BaseDto();
 		outDto.put("success", new Boolean(true));
 		outDto.put("msg", "数据已提交到后台,但演示程序没有将其持久化到数据库.<br>" + request.getParameter("dirtydata"));
-		super.write(JsonHelper.encodeObject2Json(outDto), response);
+		super.write(outDto.toJson(), response);
 		return mapping.findForward(null);
 	}
 }

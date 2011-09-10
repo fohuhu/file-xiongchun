@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.http.Cookie;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,8 +19,8 @@ import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.properties.PropertiesFactory;
 import org.eredlab.g4.ccl.properties.PropertiesFile;
 import org.eredlab.g4.ccl.properties.PropertiesHelper;
-import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.ccl.util.G4Constants;
+import org.eredlab.g4.ccl.util.G4Utils;
 import org.springframework.context.ApplicationContext;
 
 /**

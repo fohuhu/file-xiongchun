@@ -119,15 +119,6 @@
 		</property>
 	</bean>
 	
-	<!-- 项目主页  -->
-	<bean id="projectHomeService" parent="baseTransactionProxyG4">
-		<property name="target">
-			<bean class="org.eredlab.g4.arm.service.impl.ProjectHomeServiceImpl">
-				<property name="g4Dao" ref="g4Dao" />
-			</bean>
-		</property>
-	</bean>
-	
 	<!-- 系统演示 -->
 	<bean id="demoService" parent="baseTransactionProxyG4">
 		<property name="target">

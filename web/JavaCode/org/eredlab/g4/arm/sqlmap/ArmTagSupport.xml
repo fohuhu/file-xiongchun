@@ -211,4 +211,16 @@
 		SELECT theme FROM eausersubinfo
 		  WHERE userid = #userid#
 	</select>
+	
+	<!-- 查询UI元素角色授权信息 -->
+	<select id="getUiRoleGrantInfo" parameterClass="map" resultClass="dto">
+		SELECT distinct a.cmpid,a.cmptype,b.partauthtype FROM eamenupart a, earolemenupart b 
+		  WHERE a.partid = b.partid and b.menuid = #menuid# and b.roleid in (SELECT roleid FROM eauserauthorize WHERE userid = #userid#)
+	</select>
+	
+	<!-- 查询UI元素人员授权信息 -->
+	<select id="getUiUserGrantInfo" parameterClass="map" resultClass="dto">
+		SELECT a.cmpid,a.cmptype,b.partauthtype FROM eamenupart a, eausermenupart b 
+		  WHERE a.partid = b.partid and b.userid = #userid# and b.menuid = #menuid#
+	</select>
 </sqlMap>

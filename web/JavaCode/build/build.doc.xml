@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- eRedG4 JavaDoc API导出脚本 -->
-<project name="eRedG4" default="startup" basedir="../../">
+<!-- G4Studio JavaDoc API导出脚本 -->
+<project name="G4Studio" default="startup" basedir="../../">
 	
 	<!-- 初始化 -->
 	<target name="init">
-		<property name="name" value="eRedG4" />
+		<property name="name" value="G4Studio" />
 		<property name="src" value="${basedir}/JavaCode" />
 		<property name="lib" value="${basedir}/Lib" />
 		<property name="packages" value="org.eredlab.*"/>  
 		
 		<property name="temp.src" value="${basedir}/AntBuild/src" />
-		<property name="build" value="${basedir}/AntBuild/eRedG4" />
-		<property name="build.bin" value="${basedir}/AntBuild/eRedG4/WEB-INF/classes" />
+		<property name="build" value="${basedir}/AntBuild/G4Studio" />
+		<property name="build.bin" value="${basedir}/AntBuild/G4Studio/WEB-INF/classes" />
 		<property name="build.javadoc" value="${basedir}/AntBuild/javadoc"/> 
 
 		<path id="classpath">

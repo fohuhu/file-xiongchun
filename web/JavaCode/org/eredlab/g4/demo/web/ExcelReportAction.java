@@ -71,15 +71,12 @@ public class ExcelReportAction extends BaseAction {
 	public ActionForward importExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		CommonActionForm actionForm = (CommonActionForm) form;
-		Dto outDto = new BaseDto();
 		FormFile theFile = actionForm.getTheFile();
 		String metaData = "xmid,xmmc,xmrj,gg,dw,jx,zfbl,cd,ggsj";
 		ExcelReader excelReader = new ExcelReader(metaData, theFile.getInputStream());
 		List list = excelReader.read(3, 1);
 		super.setSessionAttribute(request, "importExcelList", list);
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "导入成功！");
-		super.write(outDto.toJson(), response);
+		setOkTipMsg("导入成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -106,6 +103,7 @@ public class ExcelReportAction extends BaseAction {
 	 */
 	public ActionForward exportExcel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		Thread.sleep(2000);
 		Dto parametersDto = new BaseDto();
 		parametersDto.put("reportTitle", "北京市第一人民医院收费项目表");
 		parametersDto.put("jbr", super.getSessionContainer(request).getUserInfo().getUsername());
