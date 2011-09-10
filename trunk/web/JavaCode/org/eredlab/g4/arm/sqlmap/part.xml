@@ -81,9 +81,21 @@
 	        WHERE partid = #partid#    
 	</update>
 	
-	<!-- 删除 -->
+	<!-- 删除UI元素 -->
 	<delete id="deletePartItem" parameterClass="map" >
 		DELETE FROM eamenupart
+		      WHERE partid = #partid#
+	</delete>
+	
+	<!-- 删除UI元素人员授权信息 -->
+	<delete id="deletePartUserGrantItem" parameterClass="map" >
+		DELETE FROM eausermenupart
+		      WHERE partid = #partid#
+	</delete>
+	
+	<!-- 删除UI元素角色授权信息 -->
+	<delete id="deletePartRoleGrantItem" parameterClass="map" >
+		DELETE FROM earolemenupart
 		      WHERE partid = #partid#
 	</delete>
 	
@@ -113,7 +125,7 @@
 		ORDER BY a.partid DESC
 	</select>
 	
-	<!-- 查询UI组件 -->
+	<!-- 查询授权信息 -->
 	<select id="queryPart4UserGrant" parameterClass="map" resultClass="dto">
 		SELECT
 			   a.authorizeid,
@@ -121,6 +133,16 @@
 			   a.userid
 		FROM eausermenupart a
 	   WHERE a.userid = #userid# and a.menuid=#menuid# and a.partid = #partid#
+	</select>
+	
+	<!-- 查询授权信息 -->
+	<select id="queryPart4RoleGrant" parameterClass="map" resultClass="dto">
+		SELECT
+			   a.authorizeid,
+			   a.partauthtype,
+			   a.roleid
+		FROM earolemenupart a
+	   WHERE a.roleid = #roleid# and a.menuid=#menuid# and a.partid = #partid#
 	</select>
 	
 	<!-- 插入一条UI人员授权记录 -->
@@ -138,6 +160,29 @@
 	<!-- 修改UI人员授权类型 -->
 	<update id="updateEausermenupartItem" parameterClass="dto">
          UPDATE eausermenupart
+		<dynamic prepend="SET"> 
+			<isNotNull prepend="," property="partauthtype">
+	         partauthtype = #partauthtype#
+			</isNotNull>										
+		</dynamic> 
+	        WHERE authorizeid = #authorizeid#   
+	</update>
+	
+	<!-- 插入一条UI角色授权记录 -->
+	<insert id="insertEarolemenupartItem" parameterClass="dto">
+		INSERT INTO earolemenupart ( authorizeid, roleid,menuid, partid, partauthtype) 
+		     VALUES (#authorizeid#, #roleid#, #menuid#, #partid#, #partauthtype#)
+	</insert>
+	
+	<!-- 删除一条UI角色授权记录 -->
+	<delete id="deleteEarolemenupartItem" parameterClass="dto">
+		DELETE FROM earolemenupart
+		      WHERE authorizeid = #authorizeid#
+	</delete>
+	
+	<!-- 修改UI角色授权类型 -->
+	<update id="updateEarolemenupartItem" parameterClass="dto">
+         UPDATE earolemenupart
 		<dynamic prepend="SET"> 
 			<isNotNull prepend="," property="partauthtype">
 	         partauthtype = #partauthtype#

@@ -102,10 +102,7 @@ public class ResourceAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		resourceService.saveMenuItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("msg", "菜单数据新增成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+		setOkTipMsg("菜单数据新增成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -120,10 +117,7 @@ public class ResourceAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		resourceService.updateMenuItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "菜单数据修改成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("菜单数据修改成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -143,10 +137,7 @@ public class ResourceAction extends BaseAction {
 		inDto.put("type", type);
 		inDto.put("menuid", menuid);
 		resourceService.deleteMenuItems(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "菜单数据删除成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("菜单数据删除成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -206,10 +197,7 @@ public class ResourceAction extends BaseAction {
 		Dto inDto = new BaseDto();
 		inDto.put("strChecked", strChecked);
 		resourceService.deleteCodeItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "字典数据删除成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("字典数据删除成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -224,10 +212,7 @@ public class ResourceAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		resourceService.updateCodeItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "字典数据修改成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("字典数据修改成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -243,9 +228,7 @@ public class ResourceAction extends BaseAction {
 	    List codeList = g4Reader.queryForList("Resource.getCodeViewList");
 	    getServlet().getServletContext().removeAttribute("EACODELIST");
 	    getServlet().getServletContext().setAttribute("EACODELIST", codeList);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		write(JsonHelper.encodeObject2Json(outDto), response);
+	    setOkTipMsg("内存同步成功", response);
 		return mapping.findForward(null);
 	}
 

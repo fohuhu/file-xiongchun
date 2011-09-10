@@ -65,10 +65,7 @@ public class ParamAction extends BaseAction{
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		paramService.saveParamItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("msg", "参数数据新增成功");
-		outDto.put("success", new Boolean(true));
-		write(outDto.toJson(), response);
+		setOkTipMsg("参数数据新增成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -84,10 +81,7 @@ public class ParamAction extends BaseAction{
 		Dto inDto = new BaseDto();
 		inDto.put("strChecked", strChecked);
 		paramService.deleteParamItem(inDto);
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "参数数据删除成功!");
-		write(outDto.toJson(), response);
+		setOkTipMsg("参数数据删除成功", response);
 		return mapping.findForward(null);
 	}
 	

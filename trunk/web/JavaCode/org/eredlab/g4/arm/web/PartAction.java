@@ -99,9 +99,9 @@ public class PartAction extends BaseAction {
 		inDto.setDefaultAList(list);
 		Dto outDto = service.saveDirtyDatas(inDto);
 		if (outDto.getSuccess()) {
-			outDto.setMsg("数据保存成功");
+			setOkTipMsg("数据保存成功", response);
 		}else {
-			outDto.setMsg("保存操作被取消,同一托管页面上元素Dom标志只能唯一,请检查");
+			setOkTipMsg("保存操作被取消,同一托管页面上元素Dom标志只能唯一,请检查", response);
 		}
 		write(JsonHelper.encodeObject2Json(outDto), response);
 		return mapping.findForward(null);
@@ -118,8 +118,7 @@ public class PartAction extends BaseAction {
 		CommonActionForm aForm = (CommonActionForm) form;
 		Dto inDto = aForm.getParamAsDto(request);
 		service.deleteItem(inDto);
-		Dto outDto = new BaseDto(G4Constants.TRUE, "数据删除成功");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		setOkTipMsg("数据删除成功", response);
 		return mapping.findForward(null);
 	}
 	

@@ -118,10 +118,8 @@ public class OtherAction extends BaseAction {
 		inDto.put("title", G4Utils.isEmpty(inDto.getAsString("title")) ? fileName : inDto.getAsString("title"));
 		inDto.put("filesize", myFile.getFileSize());
 		inDto.put("path", savePath + fileName);
-		Dto outDto = demoService.doUpload(inDto);
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "文件上传成功");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		demoService.doUpload(inDto);
+		setOkTipMsg("文件上传成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -148,10 +146,7 @@ public class OtherAction extends BaseAction {
 			file.delete();
 			demoService.delFile(fileid);
 		}
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "文件删除成功");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		setOkTipMsg("文件删除成功", response);
 		return mapping.findForward(null);
 	}
 
@@ -240,10 +235,8 @@ public class OtherAction extends BaseAction {
 		inDto.put("title", G4Utils.isEmpty(inDto.getAsString("title")) ? fileName : inDto.getAsString("title"));
 		inDto.put("filesize", myFile.getFileSize());
 		inDto.put("path", savePath + fileName);
-		Dto outDto = demoService.doUpload(inDto);
-		outDto.put("success", new Boolean(true));
-		outDto.put("msg", "文件上传成功");
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		demoService.doUpload(inDto);
+		setOkTipMsg("文件上传成功", response);
 		return mapping.findForward(null);
 	}
 	
@@ -268,14 +261,13 @@ public class OtherAction extends BaseAction {
 		//释放连接非常重要
 		ftpHelper.disconnect();
 		
-		Dto outDto = new BaseDto();
-		outDto.put("success", new Boolean(true));
+		String msg = "";
 		if (b) {
-			outDto.put("msg", "文件上传成功,此操作需要FTP服务器配合,请查看后台代码");
+			msg = "文件上传成功,此操作需要FTP服务器配合,请查看后台代码";
 		}else {
-			outDto.put("msg", "文件上传失败");
+			msg = "文件上传失败";
 		}
-		write(JsonHelper.encodeObject2Json(outDto), response);
+		setOkTipMsg(msg, response);
 		return mapping.findForward(null);
 	}
 }

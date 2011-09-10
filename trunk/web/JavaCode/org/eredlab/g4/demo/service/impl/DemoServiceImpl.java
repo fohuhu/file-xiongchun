@@ -129,7 +129,7 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
 		pDto.put("fileid", IDHelper.getFileID());
 		pDto.put("uploaddate", G4Utils.getCurrentTimestamp());
 		g4Dao.insert("Demo.insertEa_demo_uploadPo", pDto);
-		return new BaseDto();
+		return null;
 	}
 
 	/**

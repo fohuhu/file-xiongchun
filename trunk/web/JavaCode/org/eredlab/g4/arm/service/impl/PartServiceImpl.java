@@ -11,8 +11,6 @@ import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 
-import com.sun.jndi.url.ldaps.ldapsURLContextFactory;
-
 /**
  * UI组件授权服务实现
  * 
@@ -81,6 +79,8 @@ public class PartServiceImpl extends BaseServiceImpl implements PartService {
 	 */
 	public Dto deleteItem(Dto pDto){
 		g4Dao.delete("Part.deletePartItem", pDto);
+		g4Dao.delete("Part.deletePartUserGrantItem", pDto);
+		g4Dao.delete("Part.deletePartRoleGrantItem", pDto);
 		return null;
 	}
 	
@@ -91,7 +91,6 @@ public class PartServiceImpl extends BaseServiceImpl implements PartService {
 	 * @return
 	 */
 	public Dto savePartUserGrantDatas(Dto pDto){
-		Dto outDto = new BaseDto();
 		List list = pDto.getDefaultAList();
 		for (int i = 0; i < list.size(); i++) {
 			Dto lDto = (BaseDto)list.get(i);
@@ -108,7 +107,32 @@ public class PartServiceImpl extends BaseServiceImpl implements PartService {
 				}
 			}
 		}
-		outDto.setSuccess(G4Constants.TRUE);
-		return outDto;
+		return null;
+	}
+	
+	/**
+	 * 保存UI元素角色授权数据
+	 * 
+	 * @param pDto
+	 * @return
+	 */
+	public Dto savePartRoleGrantDatas(Dto pDto){
+		List list = pDto.getDefaultAList();
+		for (int i = 0; i < list.size(); i++) {
+			Dto lDto = (BaseDto)list.get(i);
+			if (G4Utils.isEmpty(lDto.getAsString("authorizeid"))) {
+				if (!lDto.getAsString("partauthtype").equals(ArmConstants.PARTAUTHTYPE_NOGRANT)) {
+					lDto.put("authorizeid", IDHelper.getAuthorizeid4Earoleauthorize());
+					g4Dao.insert("Part.insertEarolemenupartItem", lDto);
+				}
+			}else {
+				if (lDto.getAsString("partauthtype").equals(ArmConstants.PARTAUTHTYPE_NOGRANT)) {
+					g4Dao.delete("Part.deleteEarolemenupartItem", lDto);
+				}else {
+					g4Dao.update("Part.updateEarolemenupartItem", lDto);
+				}
+			}
+		}
+		return null;
 	}
 }

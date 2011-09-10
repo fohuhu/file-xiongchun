@@ -85,10 +85,7 @@ public class HttpSessionMonitorAction extends BaseAction {
 				msg += " 提示：不能自杀哦!";
 			}
 		}
-		Dto dto = new BaseDto();
-		dto.put("success", new Boolean(true));
-		dto.put("msg", msg);
-	    write(JsonHelper.encodeObject2Json(dto), response);
+		setOkTipMsg(msg, response);
 		return mapping.findForward(null);
 	}
 }

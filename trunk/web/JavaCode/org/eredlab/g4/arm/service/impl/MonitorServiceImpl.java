@@ -5,6 +5,8 @@ import org.eredlab.g4.arm.util.idgenerator.IDHelper;
 import org.eredlab.g4.arm.vo.UserInfoVo;
 import org.eredlab.g4.bmf.base.BaseServiceImpl;
 import org.eredlab.g4.ccl.datastructure.Dto;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
+import org.eredlab.g4.ccl.util.G4Constants;
 
 /**
  * 系统监控业务接口

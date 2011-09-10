@@ -12,6 +12,5 @@
 	<sqlMap resource="org/eredlab/g4/arm/sqlmap/ArmTagSupport.xml" />
 	<sqlMap resource="org/eredlab/g4/arm/sqlmap/Monitor.xml" />
 	<sqlMap resource="org/eredlab/g4/arm/sqlmap/Part.xml" />
-	<sqlMap resource="org/eredlab/g4/arm/sqlmap/ProjectHome.xml" />
 	<sqlMap resource="org/eredlab/g4/demo/sqlmap/Demo.xml" />
 </sqlMapConfig>

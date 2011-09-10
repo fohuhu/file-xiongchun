@@ -34,4 +34,12 @@ public interface PartService extends BaseService {
 	 * @return
 	 */
 	public Dto savePartUserGrantDatas(Dto pDto);
+	
+	/**
+	 * 保存UI元素角色授权数据
+	 * 
+	 * @param pDto
+	 * @return
+	 */
+	public Dto savePartRoleGrantDatas(Dto pDto);
 }

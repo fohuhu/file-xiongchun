@@ -44,7 +44,6 @@ public class CommonUiAction extends BaseAction {
 	 */
 	public ActionForward windowDemo1Init(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
 		return mapping.findForward("windowDemo1View");
 	}
 
