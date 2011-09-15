@@ -228,6 +228,7 @@ function exportExcel(url) {
 	exportIframe.src = url;
 	exportIframe.style.display = "none";
 	document.body.appendChild(exportIframe);
+	hideWaitMsg();
 }
 
 // 这个可以验证15位和18位的身份证，并且包含生日和校验位的验证。
