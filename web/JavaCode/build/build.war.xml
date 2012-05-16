@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- eRedG4应用部署ANT打War包脚本 -->
-<project name="eRedG4" default="startup" basedir="../../">
+<!-- G4Studio应用部署ANT打War包脚本 -->
+<project name="G4Studio" default="startup" basedir="../../">
 	
 	<!-- 初始化 -->
 	<target name="init">
-		<property name="name" value="eRedG4" />
+		<property name="name" value="G4Studio" />
 		<property name="src" value="${basedir}/JavaCode" />
 		<property name="lib" value="${basedir}/Lib" />
 		<property name="webapp" value="${basedir}/WebRoot" />
 
 		<property name="temp.src" value="${basedir}/AntBuild/src" />
-		<property name="build" value="${basedir}/AntBuild/eRedG4" />
-		<property name="build.bin" value="${basedir}/AntBuild/eRedG4/WEB-INF/classes" />
-		<property name="build.lib" value="${basedir}/AntBuild/eRedG4/WEB-INF/lib" />
+		<property name="build" value="${basedir}/AntBuild/G4Studio" />
+		<property name="build.bin" value="${basedir}/AntBuild/G4Studio/WEB-INF/classes" />
+		<property name="build.lib" value="${basedir}/AntBuild/G4Studio/WEB-INF/lib" />
 		<property name="war.output" value="${basedir}/AntBuild/war" />
 
 		<path id="classpath">
@@ -62,7 +62,7 @@
 	<!-- 打war包 -->
 	<target name="war" depends="build">
     	<echo message="正在打war包..." />
-		<war warfile="${war.output}/eRedG4.war" webxml="${build}/WEB-INF/web.xml">
+		<war warfile="${war.output}/G4Studio.war" webxml="${build}/WEB-INF/web.xml">
 			<fileset dir="${build}" />
 		</war>
 	</target>
