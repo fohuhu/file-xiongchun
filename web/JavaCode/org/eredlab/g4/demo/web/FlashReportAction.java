@@ -323,51 +323,7 @@ public class FlashReportAction extends BaseAction {
 		return mapping.findForward("circularityView");
 	}
 	
-	/**
-	 * FCF 漏斗图初始化
-	 * 
-	 * @param
-	 * @return
-	 */
-	public ActionForward fcfFunnelInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		//实例化一个图形配置对象
-		GraphConfig graphConfig = new GraphConfig();
-		//主标题
-		graphConfig.setCaption("Google软件2010年月度销售业绩图表");
-		//设置数字值的前缀
-		graphConfig.setNumberPrefix("$");
-		//使用这种方式可以加入框架没有封装的原生报表属性,原生属可以参考《开发指南》的相关章节
-		//graphConfig.put("propertyName", "value");
-        Dto qDto = new BaseDto();		
-        qDto.put("product", "1");
-        qDto.put("rownum", new Integer(7));
-        //查询原始数据
-		List list = null;
-		if (G4Utils.defaultJdbcTypeOracle()) {
-			list = g4Reader.queryForList("Demo.getFcfDataList", qDto);
-		}else if(G4Utils.defaultJdbcTypeMysql()){
-			list = g4Reader.queryForList("Demo.getFcfDataListMysql", qDto);
-		}
-		List dataList = new ArrayList();
-		//将原始数据对象转换为框架封装的Set报表数据对象
-		for (int i = 0; i < list.size(); i++) {
-			Dto dto = (BaseDto)list.get(i);
-			//实例化一个图表元数据对象
-			Set set = new Set();
-			set.setName(dto.getAsString("name")); //名称
-			set.setValue(dto.getAsString("value")); //数据值
-			set.setColor(dto.getAsString("color")); 
-			set.setAlpha("80");
-			dataList.add(set);
-		}
-		//将图表数据转为Flash能解析的XML资料格式
-		String xmlString = FcfDataMapper.toFcfXmlData(dataList, graphConfig);
-		//此Key对应的<flashReport />标签的datavar属性
-		request.setAttribute("xmlString", xmlString);
-		return mapping.findForward("funnelView");
-	}
-	
+
 	/**
 	 * 2D柱形组合图初始化
 	 * 综合图和前面的单一图使用的元数据格式是不一样的,请大家注意它们的区别
@@ -513,22 +469,29 @@ public class FlashReportAction extends BaseAction {
 	}
 	
 	/**
-	 * 2D交叉图初始化
+	 * 折线组合图初始化(双Y轴)
 	 * 
 	 * @param
 	 * @return
 	 */
-	public ActionForward fcf2DLineColumnInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	public ActionForward fcfLineMs2YInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		//实例化一个图形配置对象
 		GraphConfig graphConfig = new GraphConfig();
 		//主标题
 		graphConfig.setCaption("Google软件2010年月度销售业绩图表");
 		//设置数字值的前缀
-		graphConfig.setNumberPrefix("$");
+		//graphConfig.setNumberPrefix("$");
 		//使用这种方式可以加入框架没有封装的原生报表属性,原生属可以参考《开发指南》的相关章节
 		//graphConfig.put("propertyName", "value");
+		//主Y轴坐标名
+		graphConfig.put("PYAxisName", "Product A"); //不支持中文
+		//次Y轴坐标名
+		graphConfig.put("SYAxisName", "Product B"); //不支持中文
 		graphConfig.setCanvasBorderThickness(new Boolean(true));
+		graphConfig.setShowValues(new Boolean(false));
+		//是否格式化数字,默认为1(True),自动的给你的数字加上K（千）或M（百万）；若取0,则不加K或M
+		graphConfig.put("formatNumberScale ", "0");
 		//实例化组合种类配置对象
 		CategoriesConfig categoriesConfig = new CategoriesConfig();
 		List cateList = new ArrayList();
@@ -545,10 +508,11 @@ public class FlashReportAction extends BaseAction {
 		cateList.add(new Categorie("十一月"));
 		cateList.add(new Categorie("十二月"));
 		categoriesConfig.setCategories(cateList);
-		List list = getFcfDataList4JCT(new BaseDto());
+		List list = getFcfDataList4LineGroup42Y(new BaseDto());
 		String xmlString = FcfDataMapper.toFcfXmlData(list, graphConfig, categoriesConfig);
 		request.setAttribute("xmlString", xmlString);
-		return mapping.findForward("2dLineColumnView");
+		System.out.println(xmlString);
+		return mapping.findForward("lineMs2YView");
 	}
 	
 	/**
@@ -685,7 +649,7 @@ public class FlashReportAction extends BaseAction {
 		dataSet3.setSeriesname("合计");
 		dataSet3.setColor("3CBBD7");
 		dataSet3.setShowValues(new Boolean(false));
-		dataSet3.setParentYAxis(new Boolean(true));
+		dataSet3.setParentYAxis(G4Constants.REPORT2Y_SECOND);
 		List sumlist = g4Reader.queryForList("Demo.getFcfSumDataList", pDto);
 		List sumSetList = new ArrayList();
 		for (int i = 0; i < sumlist.size(); i++) {
@@ -730,6 +694,59 @@ public class FlashReportAction extends BaseAction {
 		DataSet dataSet2 = new DataSet();
 		dataSet2.setSeriesname("产品B");
 		dataSet2.setColor("44BC2F");
+		pDto.put("product", "2");
+		List blist = null;
+		if (G4Utils.defaultJdbcTypeOracle()) {
+			blist = g4Reader.queryForList("Demo.getFcfDataList", pDto);
+		}else if(G4Utils.defaultJdbcTypeMysql()){
+			blist = g4Reader.queryForList("Demo.getFcfDataListMysql", pDto);
+		}
+		List bSetList = new ArrayList();
+		for (int i = 0; i < blist.size(); i++) {
+			Dto dto = (BaseDto)blist.get(i);
+			Set set = new Set();
+			set.setValue(dto.getAsString("value"));
+			bSetList.add(set);
+		}
+		dataSet2.setData(bSetList);
+		dataList.add(dataSet2);
+		return dataList;
+	}
+	
+	/**
+	 * 获取FlashReport元数据 (折线组合图)(双Y轴)
+	 * @param pDto
+	 * @return
+	 */
+	private List getFcfDataList4LineGroup42Y(Dto pDto){
+		pDto.put("rownum", "12");
+		List dataList = new ArrayList();
+		DataSet dataSet1 = new DataSet();
+		dataSet1.setSeriesname("产品A");
+		dataSet1.setColor("FDC12E");
+		dataSet1.setParentYAxis(G4Constants.REPORT2Y_FIRST);
+		dataSet1.setRenderAs("Line");
+		pDto.put("product", "1");
+		List alist = null;
+		if (G4Utils.defaultJdbcTypeOracle()) {
+			alist = g4Reader.queryForList("Demo.getFcfDataList", pDto);
+		}else if(G4Utils.defaultJdbcTypeMysql()){
+			alist = g4Reader.queryForList("Demo.getFcfDataListMysql", pDto);
+		}
+		List aSetList = new ArrayList();
+		for (int i = 0; i < alist.size(); i++) {
+			Dto dto = (BaseDto)alist.get(i);
+			Set set = new Set();
+			set.setValue(dto.getAsString("value"));
+			aSetList.add(set);
+		}
+		dataSet1.setData(aSetList);
+		dataList.add(dataSet1);
+		
+		DataSet dataSet2 = new DataSet();
+		dataSet2.setSeriesname("产品B");
+		dataSet2.setColor("44BC2F");
+		dataSet2.setParentYAxis(G4Constants.REPORT2Y_SECOND);
 		pDto.put("product", "2");
 		List blist = null;
 		if (G4Utils.defaultJdbcTypeOracle()) {
@@ -1047,5 +1064,17 @@ public class FlashReportAction extends BaseAction {
 		outDto.put("xmlstring", xmlString);
 		write(JsonHelper.encodeObject2Json(outDto), response);
 		return mapping.findForward(null);
+	}
+	
+	/**
+	 * FlashReport动态却换图表种类
+	 * 
+	 * @param
+	 * @return
+	 */
+	public ActionForward integrateFlashReport3Init(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		return mapping.findForward("integrateFlashReport3View");
 	}
 }

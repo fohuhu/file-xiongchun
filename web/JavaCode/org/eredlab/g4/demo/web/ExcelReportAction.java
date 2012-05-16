@@ -36,7 +36,7 @@ public class ExcelReportAction extends BaseAction {
 	 */
 	public ActionForward exportInit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
+		removeSessionAttribute(request, "QUERYCATALOGS4EXPORT_QUERYDTO");
 		return mapping.findForward("exportExcelView");
 	}
 

@@ -1,7 +1,14 @@
 package org.eredlab.g4.ccl.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -901,7 +908,7 @@ public class G4Utils {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 获取start到end区间的随机数,不包含start+end
 	 * 
@@ -909,8 +916,111 @@ public class G4Utils {
 	 * @param end
 	 * @return
 	 */
-	public static  BigDecimal getRandom(int start, int end){
+	public static BigDecimal getRandom(int start, int end) {
 		return new BigDecimal(start + Math.random() * end);
+	}
+
+	/**
+	 * 将字符串写入指定文件 (当指定的父路径中文件夹不存在时，会最大限度去创建，以保证保存成功！)
+	 * 
+	 * @param res
+	 *            原字符串
+	 * @param filePath
+	 *            文件路径
+	 * @return 成功标记
+	 */
+	public static boolean writeString2File(String res, String filePath) {
+		boolean flag = true;
+		BufferedReader bufferedReader = null;
+		BufferedWriter bufferedWriter = null;
+		try {
+			File distFile = new File(filePath);
+			if (!distFile.getParentFile().exists())
+				distFile.getParentFile().mkdirs();
+			bufferedReader = new BufferedReader(new StringReader(res));
+			bufferedWriter = new BufferedWriter(new FileWriter(distFile));
+			char buf[] = new char[1024];
+			int len;
+			while ((len = bufferedReader.read(buf)) != -1) {
+				bufferedWriter.write(buf, 0, len);
+			}
+			bufferedWriter.flush();
+			bufferedReader.close();
+			bufferedWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			flag = false;
+			return flag;
+		} finally {
+			if (bufferedReader != null) {
+				try {
+					bufferedReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 * 文本文件转换为指定编码的字符串
+	 * 
+	 * @param file
+	 *            文本文件
+	 * @param encoding
+	 *            编码类型
+	 * @return 转换后的字符串
+	 * @throws IOException
+	 */
+	public static String readStringFromFile(File file, String encoding) {
+		InputStreamReader reader = null;
+		StringWriter writer = new StringWriter();
+		try {
+			if (encoding == null || "".equals(encoding.trim())) {
+				reader = new InputStreamReader(new FileInputStream(file), encoding);
+			} else {
+				reader = new InputStreamReader(new FileInputStream(file));
+			}
+			char[] buffer = new char[1024];
+			int n = 0;
+			while (-1 != (n = reader.read(buffer))) {
+				writer.write(buffer, 0, n);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (reader != null)
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+		if (writer != null)
+			return writer.toString();
+		else
+			return null;
+	}
+	
+	/**
+	 * 字符串编码转换工具类
+	 * 
+	 * @param pString
+	 * @return
+	 */
+	public static String getGBK(String pString){
+		if (isEmpty(pString)) {
+			return "";
+		}
+		try {
+			pString = new String(pString.getBytes("ISO-8859-1"), "GBK");
+		} catch (UnsupportedEncodingException e) {
+			log.error(G4Constants.Exception_Head + "不支持的字符集编码");
+			e.printStackTrace();
+		}
+		return pString;
 	}
 
 }

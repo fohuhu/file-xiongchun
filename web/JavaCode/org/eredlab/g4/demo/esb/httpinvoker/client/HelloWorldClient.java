@@ -1,16 +1,17 @@
 package org.eredlab.g4.demo.esb.httpinvoker.client;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eredlab.g4.ccl.datastructure.Dto;
-import org.eredlab.g4.ccl.datastructure.impl.BasePo;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDomain;
 
 /**
  * Httpinvoker接口
  * 
  * @author XiongChun
  * @since 2010-10-13
- * @see BasePo
+ * @see BaseDomain
  */
 public interface HelloWorldClient {
 	/**

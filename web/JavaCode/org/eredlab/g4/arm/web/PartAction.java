@@ -13,7 +13,6 @@ import org.eredlab.g4.arm.util.ArmConstants;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
-import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.rif.web.BaseAction;
 import org.eredlab.g4.rif.web.CommonActionForm;
 

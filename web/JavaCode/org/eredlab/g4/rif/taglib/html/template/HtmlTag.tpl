@@ -1,7 +1,7 @@
 <!--
-此页面代码由易道系统集成与应用开发平台模板引擎组件强力驱动生成
-     copyRight(c) 2007-2010, 易道软件实验室(eRedLab).
-                  www.eredlab.org
+此页面代码由G4系统集成与应用开发平台模板引擎组件强力驱动生成
+     copyRight(c) 2007-2012, G4软件实验室(G4Lab).
+                  www.g4studio.org
 -->
 <!-- 您请求的URL为:$requestURL -->
 <!-- 导入DOCTYPE会引起登陆页面表单元素错位的Bug -->
@@ -11,9 +11,9 @@
 <html>
 <head>
 <title>${title}</title>
-<meta http-equiv="keywords" content="eRedG4,eRedLab,ExtJS,Demo,在线演示,易道系统集成与应用开发平台,易道软件实验室">
+<meta http-equiv="keywords" content="G4Studio,G4Studio在线演示,G4系统集成与应用开发平台">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta http-equiv="description" content="It's Based eRedG4！copyRight(c) eRedLab">
+<meta http-equiv="description" content="It's Based G4Studio！copyRight(c) G4Lab">
 <meta http-equiv="pragma" content="no-cache">  
 <meta http-equiv="cache-control" content="no-cache, must-revalidate">  
 <meta http-equiv="expires" content="0">

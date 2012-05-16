@@ -59,11 +59,4 @@ public interface UserService extends BaseService {
 	 */
 	public Dto updateUserItem4IndexPage(Dto pDto);
 	
-	/**
-	 * 保存用户(演示系统主页注册用户)
-	 * 
-	 * @param pDto
-	 * @return
-	 */
-	public Dto saveUserItem4Reg(Dto pDto);
 }

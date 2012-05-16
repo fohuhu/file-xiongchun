@@ -130,6 +130,16 @@ public interface G4Constants {
 	 * 交易状态:失败
 	 */
 	public static final Boolean FALSE = new Boolean(false);
+	
+	/**
+	 * 交易状态:成功
+	 */
+	public static final String SUCCESS = "1";
+	
+	/**
+	 * 交易状态:失败
+	 */
+	public static final String FAILURE = "0";
 
 	/**
 	 * 分页查询分页参数缺失错误信息
@@ -141,4 +151,15 @@ public interface G4Constants {
 	 */
 	public static String[] CHART_COLORS = {"AFD8F8","F6BD0F","8BBA00","008E8E","D64646","8E468E","588526","B3AA00","008ED6","9D080D","A186BE","1EBE38"};
 
+	/**
+	 * Flash图表双Y轴
+	 * p:主轴
+	 */
+	public static final String REPORT2Y_FIRST = "P";
+	
+	/**
+	 * Flash图表双Y轴
+	 * S:次轴
+	 */
+	public static final String REPORT2Y_SECOND = "S";
 }

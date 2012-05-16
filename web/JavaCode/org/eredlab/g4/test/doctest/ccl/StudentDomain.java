@@ -1,18 +1,19 @@
-package org.eredlab.g4.test.doctest;
+package org.eredlab.g4.test.doctest.ccl;
 
 import java.sql.Date;
 
 import org.eredlab.g4.ccl.datastructure.PKey;
-import org.eredlab.g4.ccl.datastructure.impl.BasePo;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDomain;
+import org.eredlab.g4.ccl.datastructure.impl.BasePKey;
 
 /**
- * 一个学生信息实体持久化对象
+ * 一个学生信息领域实体对象
  *  技术白皮书随书代码示例
  * 
  * @author XiongChun
  * @since 2011-03-29
  */
-public class StudentPo extends BasePo {
+public class StudentDomain extends BaseDomain {
 
 	private String studentid;
 	
@@ -23,7 +24,9 @@ public class StudentPo extends BasePo {
 	private Date birthday;
 
 	public PKey getPk() {
-		return null;
+		PKey pKey = new BasePKey();
+		pKey.put("studentid", studentid);
+		return pKey;
 	}
 
 	public String getStudentid() {

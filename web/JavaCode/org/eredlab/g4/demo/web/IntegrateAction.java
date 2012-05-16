@@ -301,13 +301,6 @@ public class IntegrateAction extends BaseAction {
 	 */
 	public ActionForward callPrc(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		if (G4Utils.defaultJdbcTypeMysql()) {
-			Dto outDto = new BaseDto();
-		    outDto.put("success", new Boolean(true));
-			outDto.put("msg", "你正在使用非Oracle数据库产品, G4当前版本只支持Oracle存储过程调用");
-			write(JsonHelper.encodeObject2Json(outDto), response);
-			return mapping.findForward(null);
-		}
 		CommonActionForm cForm = (CommonActionForm) form;
 		Dto inDto = cForm.getParamAsDto(request);
 		inDto.put("myname", getSessionContainer(request).getUserInfo().getUsername());
@@ -342,4 +335,5 @@ public class IntegrateAction extends BaseAction {
 		setOkTipMsg("保存成功(以batch方式一次性向数据库服务器批量提交了3条SQL语句)", response);
 		return mapping.findForward(null);
 	}
+	
 }

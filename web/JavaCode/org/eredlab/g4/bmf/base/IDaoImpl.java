@@ -201,7 +201,11 @@ public class IDaoImpl extends SqlMapClientDaoSupport implements IDao {
 	public void callPrc(String prcName, Dto prcDto) throws PrcException {
 		PropertiesHelper pHelper = PropertiesFactory.getPropertiesHelper(PropertiesFile.G4);
 		String callPrcSuccessFlag = pHelper.getValue("callPrcSuccessFlag", "1");
-		getSqlMapClientTemplate().queryForObject(prcName, prcDto);
+		if (G4Utils.defaultJdbcTypeMysql()) {
+			getSqlMapClientTemplate().insert(prcName, prcDto);
+		}else {
+			getSqlMapClientTemplate().queryForObject(prcName, prcDto);
+		}
 		if (G4Utils.isEmpty(prcDto.getAsString("appCode")) ){
 			throw new PrcException(prcName, "存储过程没有返回状态码appCode");
 		}else {
@@ -225,7 +229,11 @@ public class IDaoImpl extends SqlMapClientDaoSupport implements IDao {
 	 *             存储过程调用异常
 	 */
 	public void callPrc(String prcName, Dto prcDto, String successFlag) throws PrcException {
-		getSqlMapClientTemplate().queryForObject(prcName, prcDto);
+		if (G4Utils.defaultJdbcTypeMysql()) {
+			getSqlMapClientTemplate().insert(prcName, prcDto);
+		}else {
+			getSqlMapClientTemplate().queryForObject(prcName, prcDto);
+		}
 		if (G4Utils.isEmpty(prcDto.getAsString("appCode")) ){
 			throw new PrcException(prcName, "存储过程没有返回状态码appCode");
 		}else {

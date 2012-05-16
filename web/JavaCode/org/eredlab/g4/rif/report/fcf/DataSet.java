@@ -3,6 +3,7 @@ package org.eredlab.g4.rif.report.fcf;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.rif.web.BaseAction;
 
 /**
@@ -84,10 +85,24 @@ public class DataSet extends HashMap {
 	/**
 	 * 设置是否为总线<br>
 	 * <b>只适用于交叉图
+	 * parentYAxis[P:左Y轴；S:右Y轴]
 	 * @param pAreaBorderThickness
 	 */
-	public void setParentYAxis(Boolean parentYAxis){
-		this.put("parentYAxis", parentYAxis.booleanValue() ? "S" : "");
+	public void setParentYAxis(String parentYAxis){
+		if (G4Utils.isNotEmpty(parentYAxis)) {
+			this.put("parentYAxis", parentYAxis);
+		}
+	}
+	
+	/**
+	 * 设置是图渲染类型
+	 * <b>只适用于交叉图
+	 * @param render
+	 */
+	public void setRenderAs(String render){
+		if (G4Utils.isNotEmpty(render)) {
+			this.put("renderAs", render);
+		}
 	}
 	
 	

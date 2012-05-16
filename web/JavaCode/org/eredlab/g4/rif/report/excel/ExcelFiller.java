@@ -2,7 +2,10 @@ package org.eredlab.g4.rif.report.excel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import jxl.Cell;
 import jxl.Workbook;
@@ -14,7 +17,7 @@ import jxl.write.WritableWorkbook;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eredlab.g4.ccl.datastructure.Dto;
-import org.eredlab.g4.ccl.datastructure.impl.BasePo;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDomain;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseVo;
 import org.eredlab.g4.ccl.util.G4Constants;
@@ -53,11 +56,12 @@ public class ExcelFiller {
 	 * 
 	 * @return ByteArrayOutputStream
 	 */
-	public ByteArrayOutputStream fill() {
+	public ByteArrayOutputStream fill(HttpServletRequest request) {
 		WritableSheet wSheet = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
-			Workbook wb = Workbook.getWorkbook(new File(getExcelTemplate().getTemplatePath()));
+	        InputStream is = request.getSession().getServletContext().getResourceAsStream(getExcelTemplate().getTemplatePath()); 
+			Workbook wb = Workbook.getWorkbook(is);
 			WritableWorkbook wwb = Workbook.createWorkbook(bos, wb);
 			wSheet = wwb.getSheet(0);
 			fillStatics(wSheet);
@@ -133,8 +137,8 @@ public class ExcelFiller {
 		for (int j = 0; j < fieldList.size(); j++) {
 			Dto dataDto = new BaseDto();
 			Object object = fieldList.get(j);
-			if (object instanceof BasePo) {
-				BasePo domain = (BasePo) object;
+			if (object instanceof BaseDomain) {
+				BaseDomain domain = (BaseDomain) object;
 				dataDto.putAll(domain.toDto());
 			} else if (object instanceof BaseVo) {
 				BaseVo vo = (BaseVo) object;

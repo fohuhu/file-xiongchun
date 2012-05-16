@@ -7,7 +7,7 @@ import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 
 /**
- * eRedG4产品代码注释规范模版
+ * G4Studio产品代码注释规范模版
  * 这里是类注释的描述部分,这部分支持HTML标记哦。<br>换行了哦
  * <p>文本块显示哦<p>很方便的哈<strong>这里是粗体显示哦</strong>
  * 还支持更多的html标记,请查看《eRedBOS产品代码注释规范》文档

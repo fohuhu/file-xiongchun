@@ -1,5 +1,5 @@
 <!-- 由<eRedG4:flashReport/>标签生成的代码开始 -->
-<div id="${id}_div" class="${cls}" align="${align}"></div>
+<div id="${id}_div" class="${cls}" align="${align}" style="${style}"></div>
 <script type="text/javascript">
 		var ${id}_chart_object = new FusionCharts("${swfModelPath}", "${id}", "${width}", "${height}");
 		${id}_chart_object.setDataXML("${reportXMLData}");

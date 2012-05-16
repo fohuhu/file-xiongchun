@@ -26,7 +26,7 @@ public class BasePKey extends BaseDto implements PKey {
 				throw new NullAbleException(this.getClass());
 			} catch (NullAbleException e) {
 				e.printStackTrace();
-				System.exit(0);
+				//System.exit(1);
 			}
 		} else {
 			Iterator keyIterator = keySet().iterator();
@@ -38,7 +38,7 @@ public class BasePKey extends BaseDto implements PKey {
 						throw new NullAbleException(key);
 					} catch (NullAbleException e) {
 						e.printStackTrace();
-						System.exit(0);
+						//System.exit(1);
 					}
 				}
 			}

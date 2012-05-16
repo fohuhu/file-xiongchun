@@ -34,6 +34,7 @@ public class FlashReportTag extends TagSupport{
 	private String height = "350"; 
 	private String visible;
 	private String dataVar;
+	private String style;
 	
 	
 	/**
@@ -48,6 +49,7 @@ public class FlashReportTag extends TagSupport{
 		dto.put("align", align);
 		dto.put("width", width);
 		dto.put("height", height);
+		dto.put("style", style);
 		dto.put("cls", visible == "true" ? "" : "x-hidden");
 		dto.put("swfModelPath", contextPath + "/resource/fcf/" + FcfConstant.getReportModel(type));
 		String xmlString = (String)request.getAttribute(dataVar);
@@ -76,11 +78,14 @@ public class FlashReportTag extends TagSupport{
 	 * 释放资源
 	 */
 	public void release(){
-		this.id = null;
-		this.align = null;
-		this.height = null;
-		this.width = null;
-		this.visible = null;
+		id = null;
+		align = null;
+		height = null;
+		width = null;
+		visible = null;
+		type = null;
+		style= null;
+		dataVar = null;
 		super.release();
 	}
 
@@ -134,5 +139,9 @@ public class FlashReportTag extends TagSupport{
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
 	}
 }

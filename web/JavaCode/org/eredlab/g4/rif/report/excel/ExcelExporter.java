@@ -53,7 +53,7 @@ public class ExcelExporter {
 		excelTemplate.setTemplatePath(getTemplatePath());
 		excelTemplate.parse(request);
 		ExcelFiller excelFiller = new ExcelFiller(excelTemplate, excelData);
-		ByteArrayOutputStream bos = excelFiller.fill();
+		ByteArrayOutputStream bos = excelFiller.fill(request);
 		ServletOutputStream os = response.getOutputStream();
 		os.write(bos.toByteArray());
 		os.flush();

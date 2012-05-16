@@ -1,4 +1,4 @@
-package org.eredlab.g4.test.doctest;
+package org.eredlab.g4.test.doctest.ccl;
 
 import org.eredlab.g4.ccl.datastructure.impl.BaseVo;
 
