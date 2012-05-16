@@ -16,11 +16,12 @@
 	<!-- 测试WebService -->
 	<jaxws:client id="client" serviceClass="org.eredlab.g4.demo.esb.webservice.HelloWorld" 
 		address="http://127.0.0.1:8899/eRedG4/esb/webservice/HelloWorld" />
+	
 	<!-- 测试Httpinvoker -->
 	<bean id="client_httpinvoker"
 		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 		<property name="serviceUrl"
-			value="http://localhost:8899/eRedG4/esb/httpinvoker/helloWorldService" />
+			value="http://localhost:8899/G4Studio/esb/httpinvoker/helloWorldService" />
 		<property name="serviceInterface"
 			value="org.eredlab.g4.demo.esb.httpinvoker.client.HelloWorldClient" />
 	</bean>

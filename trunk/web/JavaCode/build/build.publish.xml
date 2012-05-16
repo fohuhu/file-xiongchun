@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- G4Studio社区开源版发布脚本 -->
+<!-- G4Studio发布脚本 -->
 <project name="G4Studio" default="publish" basedir="../../">
 	
 	<!-- 发布 -->
