@@ -6,7 +6,7 @@ import org.eredlab.g4.bmf.base.IReader;
 import org.eredlab.g4.bmf.util.SpringBeanLoader;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
-import org.eredlab.g4.ccl.datastructure.impl.BasePo;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDomain;
 import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.ccl.xml.XmlHelper;
 
@@ -15,7 +15,7 @@ import org.eredlab.g4.ccl.xml.XmlHelper;
  * 
  * @author XiongChun
  * @since 2010-10-13
- * @see BasePo
+ * @see BaseDomain
  */
 @WebService
 public class HelloWorldImpl implements HelloWorld {

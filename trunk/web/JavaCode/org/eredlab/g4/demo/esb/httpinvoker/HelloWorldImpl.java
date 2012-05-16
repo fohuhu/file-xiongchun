@@ -2,20 +2,27 @@ package org.eredlab.g4.demo.esb.httpinvoker;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eredlab.g4.bmf.base.IReader;
 import org.eredlab.g4.bmf.util.SpringBeanLoader;
 import org.eredlab.g4.ccl.datastructure.Dto;
-import org.eredlab.g4.ccl.datastructure.impl.BasePo;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDomain;
+
+import bsh.This;
 
 /**
  * Httpinvoker实现类
  * 
  * @author XiongChun
  * @since 2010-10-13
- * @see BasePo
+ * @see BaseDomain
  */
 public class HelloWorldImpl implements HelloWorld {
+	
+	Log log = LogFactory.getLog(This.class);
+	
 	/**
 	 * sayHello
 	 */
@@ -48,5 +55,6 @@ public class HelloWorldImpl implements HelloWorld {
 		List outList = reader.queryForList("queryBalanceInfo", inDto);
 		return outList;
 	}
+	
 
 }

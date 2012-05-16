@@ -1,4 +1,4 @@
-package org.eredlab.g4.test.doctest;
+package org.eredlab.g4.test.doctest.ccl;
 
 import org.eredlab.g4.ccl.util.G4Constants;
 
@@ -8,16 +8,18 @@ import org.eredlab.g4.ccl.util.G4Constants;
  * @author XiongChun
  * @since 2011-03-29
  */
-public class PoTest {
+public class DomainTest {
 	
 	public static void main(String[] args) {
-		StudentPo studentPo = new StudentPo();
+		StudentDomain studentDomain = new StudentDomain();
+		studentDomain.setStudentid("001");
+		//省略其实属性赋值
 		// 将PO对象转为Dto对象
-		studentPo.toDto();
+		studentDomain.toDto();
 		// 将PO对象转换为JSON资料格式
-		studentPo.toJson();
+		studentDomain.toJson();
 		// 将PO对象转换为XML资料格式
-		studentPo.toXml(G4Constants.XML_Node);
+		studentDomain.toXml(G4Constants.XML_Node);
 	}
 
 }

@@ -74,6 +74,8 @@ public class UserInfoVo extends BaseVo {
 	 * 浏览器
 	 */
 	private String explorer;
+	
+	private String deptname;
 
 	/**
 	 * Constractor
@@ -192,6 +194,14 @@ public class UserInfoVo extends BaseVo {
 
 	public void setExplorer(String explorer) {
 		this.explorer = explorer;
+	}
+
+	public String getDeptname() {
+		return deptname;
+	}
+
+	public void setDeptname(String deptname) {
+		this.deptname = deptname;
 	}
 
 }

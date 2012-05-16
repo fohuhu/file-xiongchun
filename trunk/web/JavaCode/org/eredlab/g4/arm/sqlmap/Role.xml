@@ -85,6 +85,12 @@
 		      WHERE roleid = #roleid#
 	</delete>
 	
+	<!-- 删除UI元素角色授权表  -->
+	<delete id="deleteEarolemenupartInRoleManage" parameterClass="map" >
+		DELETE FROM earolemenupart
+		      WHERE roleid = #roleid#
+	</delete>
+	
 	<!-- 根据主键更新角色 -->
 	<update id="updateRoleItem" parameterClass="dto">
          UPDATE earole

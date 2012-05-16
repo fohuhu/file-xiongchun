@@ -1,7 +1,7 @@
 <script type="text/javascript">
 Ext.onReady(function() {
 #foreach($grant in $grantList)
-	if(!Ext.isEmpty(Ext.getCmp('${grant.cmpid}'))){
+	if(Ext.getCmp('${grant.cmpid}')){
 	    #if(${grant.partauthtype} == "1")
             Ext.getCmp('${grant.cmpid}').disable();
             #if(${grant.cmptype} == "2")

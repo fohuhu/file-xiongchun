@@ -8,13 +8,19 @@ package org.eredlab.g4.ccl.properties;
 public interface PropertiesFile {
 	/**
 	 * Properties文件类型<br>
-	 * EREDBOS对应global.eredbos.properties属性文件
+	 * 对应global.eredbos.properties属性文件
 	 */
 	public static final String G4 = "g4";
 	
 	/**
 	 * Properties文件类型<br>
-	 * EREDBOS对应global.myconfig.properties属性文件
+	 * 对应global.app.properties属性文件
 	 */
 	public static final String APP = "app";
+	
+	/**
+	 * Properties文件类型<br>
+	 * 对应global.app.properties属性文件
+	 */
+	public static final String G4SERVER = "g4server";
 }

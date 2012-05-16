@@ -1,6 +1,6 @@
 package org.eredlab.g4.rif.report.jasper;
 
-import java.io.File;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.List;
@@ -43,7 +43,7 @@ public class ReportAcion extends BaseAction {
 	public ActionForward initAppletPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String flag = request.getParameter("flag");
-		String url = request.getContextPath() + "/report.ered?reqCode=appletPreview";
+		String url = request.getContextPath() + "/report.ered?reqCode=appletPreview&jsessionid=" + request.getSession().getId();
 		if (!G4Utils.isEmpty(flag)) {
 			url = url + "&reportflag=" + flag;
 		}
@@ -60,7 +60,7 @@ public class ReportAcion extends BaseAction {
 	public ActionForward initPdfPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String flag = request.getParameter("flag");
-		String url = request.getContextPath() + "/report.ered?reqCode=pdfPreview";
+		String url = request.getContextPath() + "/report.ered?reqCode=pdfPreview&jsessionid=" + request.getSession().getId();
 		if (!G4Utils.isEmpty(flag)) {
 			url = url + "&reportflag=" + flag;
 		}
@@ -130,12 +130,12 @@ public class ReportAcion extends BaseAction {
 		if (G4Utils.isEmpty(reportData)) {
 			throw new JRRuntimeException("没有获取到报表数据对象[ReportData],请检查!");
 		}
-		File file = new File(request.getSession().getServletContext().getRealPath(reportData.getReportFilePath()));
-		if (!file.exists()) {
+        InputStream is = getServlet().getServletContext().getResourceAsStream(reportData.getReportFilePath()); 
+		if (is == null) {
 			throw new JRRuntimeException("模板文件未找到,请确认模板文件路径是否正确" + "[" + reportData.getReportFilePath() + "]");
 		}
 		JasperPrint jasperPrint = null;
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(file.getPath());
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(is);
 		List fieldsList = reportData.getFieldsList();
 		if (G4Utils.isEmpty(fieldsList)) {
 			jasperPrint = JasperFillManager.fillReport(jasperReport, reportData.getParametersDto(),

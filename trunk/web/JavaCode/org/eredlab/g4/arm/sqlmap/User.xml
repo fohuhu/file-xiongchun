@@ -10,7 +10,7 @@
 		       (SELECT deptname
 		          FROM eadept
 		         WHERE deptid = a.deptid) AS deptname, sex, LOCKED, remark
-		  FROM eauser a WHERE a.usertype != '3'
+		  FROM eauser a WHERE a.usertype != '3' and enabled = '1'
 		<dynamic>
 			<isNotEmpty prepend="AND" property="usertype"> 
 									a.usertype != #usertype#
@@ -33,7 +33,7 @@
 	<!-- 用户管理与授权-用户列表 -->
 	<select id="queryUsersForManageForPageCount" parameterClass="map" resultClass="java.lang.Integer">
 		SELECT count(*) as count
-		  FROM eauser a WHERE a.usertype != '3'
+		  FROM eauser a WHERE a.usertype != '3' and enabled = '1'
 		<dynamic>
 			<isNotEmpty prepend="AND" property="userid"> 
 									a.userid like '$userid$%'
@@ -55,10 +55,9 @@
 		INSERT INTO EAUSER (
 		   userid, username, account, 
 		   password, sex, deptid, 
-		   locked, remark, usertype) 
-		VALUES (#userid#, #username#, #account#,
-		    #password#, #sex#, #deptid#,
-		    #locked#,#remark#, #usertype# )
+		   locked, remark, usertype,enabled) 
+		VALUES (#userid#, #username#, #account#, #password#, #sex#, #deptid#,
+		        #locked#,#remark#, #usertype#, #enabled# )
 	</insert>
 	
 	<!-- 保存用户附属信息 -->
@@ -69,10 +68,11 @@
 	</insert>
 	
 	<!-- 删除用户表  -->
-	<delete id="deleteEauserInUserManage" parameterClass="map" >
-		DELETE FROM eauser
+	<update id="updateEauserInUserManage" parameterClass="map" >
+		UPDATE eauser
+	       SET enabled = '0'
 		      WHERE userid = #userid#
-	</delete>
+	</update>
 	
 	<!-- 删除人员授权表  -->
 	<delete id="deleteEauserauthorizeInUserManage" parameterClass="map" >
@@ -157,7 +157,7 @@
 	
 	<!-- 根据登录账户查询人员信息  -->
 	<select id="checkAccount" parameterClass="map" resultClass="java.lang.Integer">
-		SELECT count(*) FROM eauser where account = #account#
+		SELECT count(*) FROM eauser where account = #account# and enabled = #enabled#
 	</select>
 	
 	<!-- 根据主键查询个人信息  -->

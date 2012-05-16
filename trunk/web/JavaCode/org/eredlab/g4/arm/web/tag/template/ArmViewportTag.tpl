@@ -88,7 +88,8 @@ Ext.onReady(function(){
 function addTab(url,name,menuid,pathCh,icon){
   var id = "tab_id_" + menuid;
   if(url == '#' || url == ''){
-    Ext.Msg.alert('提示', '此菜单还没有指定请求地址,无法为您打开页面.');
+    //Ext.Msg.alert('提示', '此菜单还没有指定请求地址,无法为您打开页面.');
+    return;
   }else{
   var index = url.indexOf('.ered');
   if(index != -1)

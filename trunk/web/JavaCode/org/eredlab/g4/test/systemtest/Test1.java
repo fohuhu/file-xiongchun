@@ -2,9 +2,10 @@ package org.eredlab.g4.test.systemtest;
 
 import java.util.List;
 
-import org.eredlab.g4.bmf.base.IDao;
 import org.eredlab.g4.bmf.base.IReader;
 import org.eredlab.g4.bmf.util.SpringBeanLoader;
+import org.eredlab.g4.ccl.datastructure.Dto;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 
 public class Test1 {
 
@@ -13,11 +14,10 @@ public class Test1 {
 	 */
 	public static void main(String[] args) {
 		IReader g4Reader = (IReader) SpringBeanLoader.getSpringBean("g4Reader");
-		List list = g4Reader.queryForList("Demo.testMyqlJDBC");
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i));
-			System.out.println("---------");
-		}
+		Dto inDto = new BaseDto();
+		inDto.put("xb", "xb");
+		inDto.put("rq", "2009-09-04");
+		List list = g4Reader.queryForList("Demo.testDynamicGroupField1", inDto);
+		System.out.println(list.size());
 	}
-
 }

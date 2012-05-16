@@ -309,4 +309,12 @@ public class BaseDto extends HashMap implements Dto, Serializable {
 	public String getMsg(){
 		return getAsString("msg");
 	}
+	
+	/**
+	 * 打印DTO对象
+	 * 
+	 */
+	public void println(){
+		System.out.println(this);
+	}
 }

@@ -12,17 +12,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.eredlab.g4.arm.service.MonitorService;
 import org.eredlab.g4.arm.service.OrganizationService;
-import org.eredlab.g4.arm.service.UserService;
 import org.eredlab.g4.arm.util.idgenerator.IDHelper;
 import org.eredlab.g4.arm.vo.UserInfoVo;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
-import org.eredlab.g4.ccl.json.JsonHelper;
 import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.rif.util.SessionListener;
 import org.eredlab.g4.rif.util.WebUtils;
 import org.eredlab.g4.rif.web.BaseAction;
-import org.eredlab.g4.rif.web.CommonActionForm;
 
 /**
  * 登录页面Action
@@ -62,8 +59,6 @@ public class LoginAction extends BaseAction {
 	 */
 	public ActionForward login(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		Cookie cookies[] = request.getCookies();
-		Cookie cookie = cookies[0];
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
 		password = G4Utils.encryptBasedDes(password);
@@ -91,13 +86,13 @@ public class LoginAction extends BaseAction {
 		}
 		String multiSession = WebUtils.getParamValue("MULTI_SESSION", request);
 		if ("0".equals(multiSession)) {
-			Integer sessions = (Integer) g4Reader.queryForObject("countHttpSessions", account);
+			Integer sessions = (Integer) g4Reader.queryForObject("Organization.countHttpSessions", account);
 			if (sessions.intValue() > 0) {
 				jsonDto.put("success", new Boolean(false));
 				jsonDto.put("msg", "此用户已经登录,系统不允许建立多个会话连接!");
 				jsonDto.put("errorType", "3");
 				log.warn(userInfo.getUsername() + "[" + userInfo.getAccount() + "]"
-						+ "登录系统失败(失败原因：此用户已经登录,系统不允许建立多个会话连接)");
+						+ "登录系统失败(失败原因：此用户已经登录,系统参数配置为不允许一个用户建立多个连接)");
 				write(jsonDto.toJson(), response);
 				return mapping.findForward("");
 			}
@@ -215,26 +210,4 @@ public class LoginAction extends BaseAction {
 		monitorService.saveEvent(dto);
 	}
 
-	/**
-	 * 注册新帐户(在线演示系统项目主页使用)
-	 * 
-	 * @param
-	 * @return
-	 */
-	public ActionForward regAccount(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		CommonActionForm aForm = (CommonActionForm) form;
-		UserService userService = (UserService) super.getService("userService");
-		Dto dto = aForm.getParamAsDto(request);
-		dto.put("sex", "0");
-		dto.put("deptid", "001003");
-		dto.put("roleid", "10000056");
-		dto.put("locked", "0");
-		// 项目主页注册用户
-		dto.put("usertype", "1");
-		dto.put("remark", "项目主页注册用户");
-		Dto outDto = userService.saveUserItem4Reg(dto);
-		write(JsonHelper.encodeObject2Json(outDto), response);
-		return mapping.findForward(null);
-	}
 }

@@ -41,3 +41,13 @@
 #if(${uxType} == "headgroup")
 <script type="text/javascript" src="${contextPath}/resource/myux/headgroup/GroupHeaderPlugin.js"></script>
 #end
+
+<!-- 提示窗 -->
+#if(${uxType} == "tipwindow")
+<script type="text/javascript" src="${contextPath}/resource/myux/tipwindow/tipWindow.js"></script>
+#end
+
+<!-- 年月输入组件 -->
+#if(${uxType} == "monthpicker")
+<script type="text/javascript" src="${contextPath}/resource/myux/monthpicker/MonthPickerPlugin.js"></script>
+#end

@@ -160,6 +160,12 @@ public interface Dto extends Map {
 	 * @return string 返回Json格式字符串
 	 */
 	public String toJson();
+	
+	/**
+	 * 打印DTO对象<br>
+	 * 
+	 */
+	public void println();
 
 	/**
 	 * 将此Dto对象转换为Json格式字符串(带日期时间型)<br>

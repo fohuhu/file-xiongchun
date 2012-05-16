@@ -90,28 +90,32 @@ public class FcfConstant {
 	 */
 	private static final String BAR_2D_MS = "2DB_MS";
 	
+	/**
+	 * 双Y图
+	 */
+	private static final String MS_DY = "MS_DY";
+	
 	
 	
 	private static Dto typeDto;
 	
 	static{
 		typeDto = new BaseDto();
-		typeDto.put(COLUMN_2D, "FCF_Column2D.swf");
-		typeDto.put(COLUMN_3D, "FCF_Column3D.swf");
-		typeDto.put(LINE, "FCF_Line.swf");
-		typeDto.put(AREA, "FCF_Area2D.swf");
-		typeDto.put(PIE_2D, "FCF_Pie2D.swf");
-		typeDto.put(PIE_3D, "FCF_Pie3D.swf");
-		typeDto.put(CIRCULARITY, "FCF_Doughnut2D.swf");
-		typeDto.put(FUNNEL, "FCF_Funnel.swf");
-		typeDto.put(COLUMN_2D_MS, "FCF_MSColumn2D.swf");
-		typeDto.put(COLUMN_3D_MS, "FCF_MSColumn3D.swf");
-		typeDto.put(AREA_MS, "FCF_MSArea2D.swf");
-		typeDto.put(LINE_MS, "FCF_MSLine.swf");
-		typeDto.put(LINE_COLUMN_2D_MS, "FCF_MSColumn2DLineDY.swf");
-		typeDto.put(LINE_COLUMN_3D_MS, "FCF_MSColumn3DLineDY.swf");
-		typeDto.put(BAR_2D, "FCF_Bar2D.swf");
-		typeDto.put(BAR_2D_MS, "FCF_MSBar2D.swf");
+		typeDto.put(COLUMN_2D, "Column2D.swf");
+		typeDto.put(COLUMN_3D, "Column3D.swf");
+		typeDto.put(LINE, "Line.swf");
+		typeDto.put(AREA, "Area2D.swf");
+		typeDto.put(PIE_2D, "Pie2D.swf");
+		typeDto.put(PIE_3D, "Pie3D.swf");
+		typeDto.put(CIRCULARITY, "Doughnut2D.swf");
+		typeDto.put(COLUMN_2D_MS, "MSColumn2D.swf");
+		typeDto.put(COLUMN_3D_MS, "MSColumn3D.swf");
+		typeDto.put(AREA_MS, "MSArea.swf");
+		typeDto.put(LINE_MS, "MSLine.swf");
+		typeDto.put(LINE_COLUMN_3D_MS, "MSColumn3DLineDY.swf");
+		typeDto.put(BAR_2D, "Bar2D.swf");
+		typeDto.put(BAR_2D_MS, "MSBar2D.swf");
+		typeDto.put(MS_DY, "MSCombiDY2D.swf");
 	}
 	
 	/**

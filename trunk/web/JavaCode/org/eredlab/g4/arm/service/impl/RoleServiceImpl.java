@@ -36,8 +36,9 @@ public class RoleServiceImpl extends BaseServiceImpl implements RoleService{
 		for(int i = 0; i < arrChecked.length; i++){
 			dto.put("roleid", arrChecked[i]);
 			g4Dao.delete("Role.deleteEaroleAuthorizeInRoleManage", dto);
-			g4Dao.delete("Role.deleteEaroleInRoleManage", dto);
 			g4Dao.delete("Role.deleteEauserauthorizeInRoleManage", dto);
+			g4Dao.delete("Role.deleteEarolemenupartInRoleManage", dto);
+			g4Dao.delete("Role.deleteEaroleInRoleManage", dto);
 		}
 		return null;
 	}

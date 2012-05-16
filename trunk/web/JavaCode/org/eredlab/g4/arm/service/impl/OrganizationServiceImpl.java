@@ -29,6 +29,7 @@ public class OrganizationServiceImpl extends BaseServiceImpl implements Organiza
 	public Dto getUserInfo(Dto pDto) {
 		Dto outDto = new BaseDto();
 		pDto.put("lock", ArmConstants.LOCK_N);
+		pDto.put("enabled", ArmConstants.ENABLED_Y);
 		UserInfoVo userInfo = (UserInfoVo) g4Dao.queryForObject("Organization.getUserInfo", pDto);
 		outDto.put("userInfo", userInfo);
 		return outDto;
@@ -70,6 +71,7 @@ public class OrganizationServiceImpl extends BaseServiceImpl implements Organiza
 		// MYSQL下int类型字段不能插入空字符
 		pDto.put("sortno",
 				G4Utils.isEmpty(pDto.getAsString("sortno")) ? Integer.valueOf("0") : pDto.getAsString("sortno"));
+		pDto.put("enabled", ArmConstants.ENABLED_Y);
 		g4Dao.insert("Organization.saveDeptItem", pDto);
 		Dto updateDto = new BaseDto();
 		updateDto.put("deptid", pDto.getAsString("parentid"));
@@ -92,7 +94,7 @@ public class OrganizationServiceImpl extends BaseServiceImpl implements Organiza
 			pDto.remove("parentid");
 			g4Dao.update("Organization.updateDeptItem", pDto);
 		} else {
-			g4Dao.delete("Organization.deleteEadeptItem", pDto);
+			g4Dao.update("Organization.updateEadeptItem", pDto);
 			saveDeptItem(pDto);
 			pDto.put("parentid", pDto.getAsString("parentid_old"));
 			updateLeafOfDeletedParent(pDto);
@@ -147,18 +149,21 @@ public class OrganizationServiceImpl extends BaseServiceImpl implements Organiza
 	 */
 	private void deleteDept(Dto pDto) {
 		Dto changeLeafDto = new BaseDto();
-		Dto tempdDto = (BaseDto) g4Dao.queryForObject("Organization.queryDeptItemsByDto", pDto);
-		if (G4Utils.isNotEmpty(tempdDto)) {
-			changeLeafDto.put("parentid", tempdDto.getAsString("parentid"));
+		Dto tempDto = (BaseDto) g4Dao.queryForObject("Organization.queryDeptItemsByDto", pDto);
+		if (G4Utils.isNotEmpty(tempDto)) {
+			changeLeafDto.put("parentid", tempDto.getAsString("parentid"));
 		}
 		g4Dao.delete("Organization.deleteEaroleAuthorizeInDeptManage", pDto);
 		g4Dao.delete("Organization.deleteEaroleInDeptManage", pDto);
 		g4Dao.delete("Organization.deleteEauserauthorizeInDeptManage", pDto);
 		g4Dao.delete("Organization.deleteEauserauthorizeInDeptManage2", pDto);
-		g4Dao.delete("Organization.deleteEauserInDeptManage", pDto);
 		g4Dao.delete("Organization.deleteEausermenumapInDeptManage", pDto);
-		g4Dao.delete("Organization.deleteEadeptItem", pDto);
-		if (G4Utils.isNotEmpty(tempdDto)) {
+		g4Dao.delete("Organization.deleteEausersubinfoInDeptManage", pDto);
+		g4Dao.delete("Organization.deleteEausermenumapInDeptManage", pDto);
+		g4Dao.delete("Organization.deleteEarolemenumapInDeptManage", pDto);
+		g4Dao.update("Organization.updateEauserInDeptManage", pDto);
+		g4Dao.update("Organization.updateEadeptItem", pDto);
+		if (G4Utils.isNotEmpty(tempDto)) {
 			updateLeafOfDeletedParent(changeLeafDto);
 		}
 	}

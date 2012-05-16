@@ -15,7 +15,7 @@ import org.eredlab.g4.ccl.util.G4Utils;
  * @since 2009-06-23
  * @see java.io.Serializable
  */
-public abstract class BasePo implements Serializable{
+public abstract class BaseDomain implements Serializable{
 	
     /**
      * 将实体领域对象转换为Dto对象

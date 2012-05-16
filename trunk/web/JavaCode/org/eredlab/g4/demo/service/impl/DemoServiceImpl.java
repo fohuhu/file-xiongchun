@@ -90,7 +90,11 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
 		prcDto.put("myname", inDto.getAsString("myname"));
 		prcDto.put("number1", inDto.getAsBigDecimal("number1"));
 		prcDto.put("number2", inDto.getAsBigDecimal("number2"));
-		g4Dao.callPrc("Demo.g4_prc_demo", prcDto);
+		if (G4Utils.defaultJdbcTypeMysql()) {
+			g4Dao.callPrc("Demo.g4_prc_demo_mysql", prcDto);
+		} else if (G4Utils.defaultJdbcTypeOracle()) {
+			g4Dao.callPrc("Demo.g4_prc_demo", prcDto);
+		}
 		return prcDto;
 	}
 
@@ -142,4 +146,5 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
 		g4Dao.delete("Demo.delFileByFileID", pFileId);
 		return null;
 	}
+	
 }

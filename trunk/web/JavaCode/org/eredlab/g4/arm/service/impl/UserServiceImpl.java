@@ -24,6 +24,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	 */
 	public Dto saveUserItem(Dto pDto) {
 		Dto outDto = new BaseDto();
+		pDto.put("enabled", ArmConstants.ENABLED_Y);
 		Integer temp = (Integer) g4Dao.queryForObject("User.checkAccount", pDto);
 		if (temp.intValue() != 0) {
 			outDto.put("msg", "登录账户" + outDto.getAsString("account") + "已被占用,请尝试其它帐户!");
@@ -36,34 +37,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		pDto.put("password", mPasswor);
 		g4Dao.insert("User.saveUserItem", pDto);
 		g4Dao.insert("User.saveEausersubinfoItem", pDto);
-		outDto.put("msg", "用户数据新增成功");
-		outDto.put("success", new Boolean(true));
-		return outDto;
-	}
-	
-	/**
-	 * 保存用户(演示系统主页注册用户)
-	 * 
-	 * @param pDto
-	 * @return
-	 */
-	public Dto saveUserItem4Reg(Dto pDto) {
-		Dto outDto = new BaseDto();
-		Integer temp = (Integer) g4Dao.queryForObject("User.checkAccount", pDto);
-		if (temp.intValue() != 0) {
-			outDto.put("msg", "登录账户" + outDto.getAsString("account") + "已被占用,请尝试其它帐户!");
-			outDto.put("success", new Boolean(false));
-			return outDto;
-		}
-		pDto.put("userid", IDHelper.getUserID());
-		String password = pDto.getAsString("password");
-		String mPasswor = G4Utils.encryptBasedDes(password);
-		pDto.put("password", mPasswor);
-		g4Dao.insert("User.saveUserItem", pDto);
-		g4Dao.insert("User.saveEausersubinfoItem", pDto);
-		pDto.put("authorizeid", IDHelper.getAuthorizeid4User());
-		pDto.put("roleid", "10000056");
-		g4Dao.insert("User.saveSelectUser", pDto);
 		outDto.put("msg", "用户数据新增成功");
 		outDto.put("success", new Boolean(true));
 		return outDto;
@@ -80,7 +53,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 		String[] arrChecked = pDto.getAsString("strChecked").split(",");
 		for (int i = 0; i < arrChecked.length; i++) {
 			dto.put("userid", arrChecked[i]);
-			g4Dao.delete("User.deleteEauserInUserManage", dto);
+			g4Dao.update("User.updateEauserInUserManage", dto);
 			g4Dao.delete("User.deleteEauserauthorizeInUserManage", dto);
 			g4Dao.delete("User.deleteEausermenumapByUserid", dto);
 			g4Dao.delete("User.deleteEausersubinfoByUserid", dto);
@@ -154,14 +127,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 	 * @return
 	 */
 	public Dto updateUserItem4IndexPage(Dto pDto) {
-		Dto outDto = new BaseDto();
 		String password = pDto.getAsString("password");
 		String mPasswor = G4Utils.encryptBasedDes(password);
 		pDto.put("password", mPasswor);
 		pDto.put("updatemode", "notnull");
 		g4Dao.update("User.updateUserItem", pDto);
-		outDto.put("success", new Boolean(true));
-		return outDto;
+		return null;
 	}
 
 }

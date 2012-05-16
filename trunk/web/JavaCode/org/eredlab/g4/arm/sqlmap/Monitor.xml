@@ -218,6 +218,9 @@
 		    FROM eabeanmonitor a
 		   WHERE 1 = 1
 		<dynamic> 
+			<isNotEmpty prepend="and" property="monitorid">
+	           monitorid = #monitorid#
+			</isNotEmpty>
 			<isNotEmpty prepend="and" property="pointcuttype">
 	           pointcuttype = #pointcuttype#
 			</isNotEmpty>	
@@ -285,6 +288,9 @@
 		    FROM eabeanmonitor a
 		   WHERE 1 = 1
 		<dynamic> 
+		    <isNotEmpty prepend="and" property="monitorid">
+	           monitorid = #monitorid#
+			</isNotEmpty>
 			<isNotEmpty prepend="and" property="pointcuttype">
 	           pointcuttype = #pointcuttype#
 			</isNotEmpty>	

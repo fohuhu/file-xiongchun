@@ -2,14 +2,14 @@ package org.eredlab.g4.demo.esb.webservice;
 
 import javax.jws.WebService;
 
-import org.eredlab.g4.ccl.datastructure.impl.BasePo;
+import org.eredlab.g4.ccl.datastructure.impl.BaseDomain;
 
 /**
  * WebService接口
  * 
  * @author XiongChun
  * @since 2010-10-13
- * @see BasePo
+ * @see BaseDomain
  */
 @WebService
 public interface HelloWorld {

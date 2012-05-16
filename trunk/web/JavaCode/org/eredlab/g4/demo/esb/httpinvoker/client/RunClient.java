@@ -1,6 +1,8 @@
 package org.eredlab.g4.demo.esb.httpinvoker.client;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eredlab.g4.bmf.base.IReader;
 import org.eredlab.g4.bmf.util.SpringBeanLoader;
@@ -11,7 +13,7 @@ public class RunClient {
 	private IReader g4Reader;
 	public static void main(String[] args) {
 		//sayHello();
-		queryBalanceInfo();
+		//queryBalanceInfo();
 		//queryBalanceInfoLimitRownum();
 	}
 	

@@ -1,6 +1,6 @@
 package org.eredlab.g4.rif.report.excel;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +49,14 @@ public class ExcelTemplate {
 		if(G4Utils.isEmpty(templatePath)){
 			log.error(G4Constants.Exception_Head + "Excel模板路径不能为空!");
 		}
-		templatePath = request.getSession().getServletContext().getRealPath(templatePath);
-		File file = new File(templatePath);
+		//templatePath = request.getSession().getServletContext().getRealPath(templatePath);
+        InputStream is = request.getSession().getServletContext().getResourceAsStream(templatePath); 
+		if(G4Utils.isEmpty(is)){
+			log.error(G4Constants.Exception_Head + "未找到模板文件,请确认模板路径是否正确[" + templatePath + "]");
+		}
 		Workbook workbook = null;
 		try {
-			workbook = Workbook.getWorkbook(file);
+			workbook = Workbook.getWorkbook(is);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

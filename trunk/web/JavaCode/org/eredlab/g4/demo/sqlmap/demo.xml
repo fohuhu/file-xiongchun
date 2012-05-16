@@ -4,6 +4,7 @@
 <sqlMap namespace="Demo">
 	<typeAlias alias="dto" type="org.eredlab.g4.ccl.datastructure.impl.BaseDto" />
 	<typeAlias alias="catalogVO" type="org.eredlab.g4.demo.vo.CatalogVO" />
+	<typeAlias alias="userVo" type="org.eredlab.g4.arm.web.tag.vo.UserVo"/>
 
 	<!-- 查询FlashReport元数据  -->
 	<select id="getFcfDataList" parameterClass="map" resultClass="dto">
@@ -553,5 +554,21 @@
 	</parameterMap>
 	<!-- 演示调用存储过程:如果你将存储过程是通过oracle的package的方式来组织,则使用packagename.prcname的方式来调用 -->
 	<procedure id="g4_prc_demo" parameterMap="prcdto">{call g4_prc_demo(?,?,?,?,?,?,?)}</procedure>
+	<!-- 演示调用存储过程:MYSQL数据库 -->
+	<procedure id="g4_prc_demo_mysql" parameterMap="prcdto">{call g4_prc_demo(?,?,?,?,?,?,?)}</procedure>
 	
+	<!-- 测试动态分组列 -->
+	<select id="testDynamicGroupField" parameterClass="map" resultClass="dto">
+			SELECT   sum(fyze)
+			    FROM ea_demo_byjsb
+			group by $xb$
+	</select>
+	<select id="testDynamicGroupField1" parameterClass="map" resultClass="dto">
+		SELECT   SUM(fyze) FROM ea_demo_byjsb GROUP BY xb
+	</select>
+	
+	<!-- 查询用户数据 -->
+	<select id="queryUserInfo4Doc" parameterClass="map" resultClass="userVo">
+		SELECT  userid, username, usertype FROM eauser
+	</select>
 </sqlMap>

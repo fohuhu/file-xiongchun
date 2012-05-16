@@ -13,6 +13,7 @@ import org.eredlab.g4.bmf.util.SpringBeanLoader;
 import org.eredlab.g4.ccl.datastructure.Dto;
 import org.eredlab.g4.ccl.datastructure.impl.BaseDto;
 import org.eredlab.g4.ccl.json.JsonHelper;
+import org.eredlab.g4.ccl.util.G4Constants;
 import org.eredlab.g4.ccl.util.G4Utils;
 import org.eredlab.g4.rif.web.BaseAction;
 import org.eredlab.g4.rif.web.CommonActionForm;
@@ -97,11 +98,44 @@ public class IndexAction extends BaseAction {
 	public ActionForward updateUserInfo(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		CommonActionForm cForm = (CommonActionForm)form;
+		UserInfoVo userInfoVo = getSessionContainer(request).getUserInfo();
 		UserService service = (UserService)getService("userService");
 		Dto indDto = cForm.getParamAsDto(request);
-		Dto dto = service.updateUserItem4IndexPage(indDto);
-		String jsonString = JsonHelper.encodeObject2Json(dto);
-		write(jsonString, response);
+		Dto outDto = new BaseDto(G4Constants.TRUE);
+		outDto.put("flag", G4Constants.SUCCESS);
+		String password = G4Utils.encryptBasedDes(indDto.getAsString("password2")); 
+		if (password.equals(userInfoVo.getPassword())) {
+			service.updateUserItem4IndexPage(indDto);
+			outDto.put("flag", G4Constants.SUCCESS);
+			userInfoVo.setPassword(G4Utils.encryptBasedDes(indDto.getAsString("password1")));
+			getSessionContainer(request).setUserInfo(userInfoVo);
+		}else {
+			outDto.setSuccess(G4Constants.FALSE);
+			outDto.put("flag", G4Constants.FAILURE);
+		}
+		write(outDto.toJson(), response);
+		return mapping.findForward(null);
+	}
+	
+	/**
+	 * 解锁系统
+	 * 
+	 * @param
+	 * @return
+	 */
+	public ActionForward unlockSystem(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		CommonActionForm cForm = (CommonActionForm)form;
+		UserInfoVo userInfoVo = getSessionContainer(request).getUserInfo();
+		Dto indDto = cForm.getParamAsDto(request);
+		String password = G4Utils.encryptBasedDes(indDto.getAsString("password"));
+		Dto outDto = new BaseDto(G4Constants.TRUE);
+		if (password.equals(userInfoVo.getPassword())) {
+			outDto.put("flag", G4Constants.SUCCESS);
+		}else {
+			outDto.put("flag", G4Constants.FAILURE);
+		}
+		write(outDto.toJson(), response);
 		return mapping.findForward(null);
 	}
 

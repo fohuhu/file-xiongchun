@@ -115,6 +115,9 @@ public class JsonHelper {
 			subJsonString = encodeObject2Json(list, dataFormat);
 		}
 		String jsonString = "{TOTALCOUNT:" + totalCount + ", ROOT:" + subJsonString + "}";
+		if (log.isInfoEnabled()) {
+			log.info("序列化后的JSON资料输出:\n" + jsonString);
+		}
 		return jsonString;
 	}
 
